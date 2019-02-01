@@ -1,14 +1,14 @@
 Package: gemini
 Title: GEMINI for comparing with two institution data
-Version: 0.9.9
+Version: 1.0.0
 Authors@R: person("JunHyeong", "Kim", email = "wnsuddlsla@gmail.com", role = c("aut", "cre"))
 Description: Extract data from CDM and visualize data to compare with other data.
 Depends: R (>= 3.4.4)
-License: What license is it under?
+License: 
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
 NeedsCompilation: no
-Packaged: 2018-12-05 06:15:32 UTC; K.JunHyeong
+Packaged: 2019-02-01 15:11:50 UTC; K.JunHyeong
 Author: JunHyeong Kim [aut, cre]
 Maintainer: JunHyeong Kim <wnsuddlsla@gmail.com>

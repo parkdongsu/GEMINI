@@ -31,8 +31,17 @@ gemini <- function(){
         }
     }
     # Check rds data files
-    str_name_list <- list.files(paste0(getwd(), "/Standard RDS/"), pattern = "*.rds$")
-    tar_name_list <- list.files(paste0(getwd(), "/Target RDS/"), pattern = "*.rds$")
+    if(length(list.files(paste0(getwd(), "/Standard RDS/"), pattern = "*.zip$"))>0){
+        unzip(zipfile = paste0("Standard RDS/",list.files(paste0(getwd(), "/Standard RDS/"), pattern = "*.zip$")))
+    }else{
+        str_name_list <- list.files(paste0(getwd(), "/Standard RDS/"), pattern = "*.rds$")
+    }
+    if(length(list.files(paste0(getwd(), "/Target RDS/"), pattern = "*.zip$"))>0){
+        unzip(zipfile = paste0("Target RDS/",list.files(paste0(getwd(), "/Target RDS/"), pattern = "*.zip$")))
+    }else{
+        tar_name_list <- list.files(paste0(getwd(), "/Target RDS/"), pattern = "*.rds$")
+    }
+
 
     name_list <- intersect(str_name_list,tar_name_list)
     no_files <- setdiff(str_name_list,tar_name_list)
