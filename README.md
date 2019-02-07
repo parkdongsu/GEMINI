@@ -1,8 +1,9 @@
 # GEMINI
 
-This repository provides visuallization to compare data from some tables of two CDM.
+Gemini means 'GEneral exaMINing and visualizing application for paired Institution'.
+It uses a connection of DB for extract a part of CDM data and makes rds files where you want.
 
-# TABLE LIST
+# TABLE required in CDM
 
 PERSON
 
@@ -29,12 +30,6 @@ install_github("https://github.com/ABMI/GEMINI.git")
 library(gemini)
 ```
 
-> Until merging, you should be use this code when install package.
-
-```
-install_github("https://github.com/ABMI/GEMINI.git", ref="gemini_temp")
-```
-
 2. After install, create_rds() to create RDS files.
 
 You can set your own work directory path and create server_info.cfg file to connect DB server.
@@ -50,13 +45,15 @@ user=<ID>
 password=<password>
 ```
 
+This process creates rds files zipped.
+
 If you already have RDS files, put them in 'Standard RDS' folder and follow next process.
 
 3. Request RDS files to other institution.
 
-This RDS files must be stored in 'Target RDS' folder.
+This RDS files(or zip file) must be stored in 'Target RDS' folder.
 
-Just standard rds files can run GEMINI but line graph will be shown single institution rds data.
+For testing, only standard rds files can run GEMINI but line graph will be shown single institution rds data.
   
 4. Run Gemini()
 
@@ -66,4 +63,4 @@ Then GEMINI will create images folder(with image files), markdown file and html 
 
 If data is NULL (or image file shows 'No Data'), check the CDM data really it NULL.
 
-> If R studio encoding is CP949 (Window default), don't open gemini_md.Rmd file until change R studio encoding to UTF-8. It occurs .Rmd file crash.
+> If R studio encoding is CP949 (Window default), don't open gemini_md.Rmd file until change R studio encoding to UTF-8. If not, it occurs encoding crashes.

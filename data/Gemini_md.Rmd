@@ -13,9 +13,9 @@ output:
 <a name="Top"></a>
 
 ### **GEMINI info** 
-CDM으로 변환된 데이터를 기반으로 다기관 데이터 특성 비교 및 시각화 하여 데이터 품질 관리할 수 있는 툴.
+This tool for data quality management by comparing and visualizing manifold data characteristics based on data converted to CDM.
 
-CDM의 PERSON, DEATH, VISIT OCCURRENCE, CONDITION OCCURRENCE, DRUG EXPOSURE, DRUG ERA 테이블을 비교합니다.
+Compare CDM's PERSON, DEATH, VISIT OCCURRENCE, CONDITION OCCURRENCE, DRUG EXPOSURE, DRUG ERA tables.
 
 <style>
   .col2{
@@ -54,15 +54,16 @@ CDM의 PERSON, DEATH, VISIT OCCURRENCE, CONDITION OCCURRENCE, DRUG EXPOSURE, DRU
 
 ![전체 레코드 백분율 비교](images/Whole/00.Record.jpg)
 
-비교 대상이 되는 테이블의 레코드 수 총합을 기준으로 한 테이블 별 레코드 백분율. 
-<!-- This figure shows that Standard CDM's record each assigned table ratio and Target CDM's record each assigned table ratio.-->
+The number of records in the table being compared Percentage of records per table based on the sum
+<!--비교 대상이 되는 테이블의 레코드 수 총합을 기준으로 한 테이블 별 레코드 백분율. -->
+
 </div>
 
 <div class="pull_right">
 ![전체 환자 백분율 비교](images/Whole/01.Person.jpg)
 
-비교 대상이 되는 테이블의 전체 환자 수를 기준으로 한 테이블 별 환자 백분율.
-<!-- This figure shows that Standard CDM's person each assigned person ratio and Target CDM's person each assigned person ratio. -->
+The percentage of patients by table based on the total number of patients in the table being compared.
+<!--비교 대상이 되는 테이블의 전체 환자 수를 기준으로 한 테이블 별 환자 백분율.-->
 
 </div>
 </div>
@@ -77,15 +78,17 @@ CDM의 PERSON, DEATH, VISIT OCCURRENCE, CONDITION OCCURRENCE, DRUG EXPOSURE, DRU
 <div class="pull_left">
 ![Person 테이블 레코드](images/Person/00.Person_record.jpg)
 
-Person 테이블의 레코드가 차지하는 백분율
-<!-- This figure shows that Standard CDM's PERSON Table record ratio and Target CDM's PERSON Table record ratio. -->
+The ercentage of records in the Person table
+<!--Person 테이블의 레코드가 차지하는 백분율-->
+
 </div>
 
 <div class="pull_right">
 ![Person 테이블 성비](images/Person/01.Person_gender.jpg)
 
-환자들의 성비
-<!-- This figure shows that Standard CDM's gender ratio and Target CDM's gender ratio. -->
+Gender ratio of patients
+<!--환자들의 성비-->
+
 </div>
 </div>
 
@@ -96,22 +99,24 @@ Person 테이블의 레코드가 차지하는 백분율
 ![Person 테이블 마지막 진료 연도](images/Person/03.Person_max_year.jpg)
 
 </div>
-환자들이 처음으로 진료받은 연도와 마지막으로 진료받은 연도를 기준으로 한 연령별 백분율 및 성비
-<!-- This figure shows that Standard CDM's, Target CDM's Observation Period Start and End. -->
+
+The percentage and sex ratio by age, based on the year the patients were first treated and the last year they were treated
+<!--환자들이 처음으로 진료받은 연도와 마지막으로 진료받은 연도를 기준으로 한 연령별 백분율 및 성비-->
+
 <div class="row">
 <div class="pull_left">
 
 ![Person 인종](images/Person/04.Person_race.jpg)
 
-환자 인종별 백분율
-<!-- This figure shows that Standard CDM's Race ratio and Target CDM's Race ratio-->
+The percentage of patient race
+<!-- 환자 인종별 백분율-->
 </div>
 
 <div class="pull_right">
 ![Person 민족](images/Person/05.Person_ethnicity.jpg)
 
-환자 민족별 백분율
-<!-- This figure shows that Standard CDM's Ethnicity ratio and Target CDM's Ethnicity ratio-->
+The percentage of patient ethnicity
+<!-- 환자 민족별 백분율 -->
 </div>
 </div>
 
@@ -120,23 +125,24 @@ Person 테이블의 레코드가 차지하는 백분율
 
 ![Person 주소](images/Person/06.Person_location.jpg)
 
-환자의 거주 주소의 수 및 Null 값의 백분율
-<!-- This figure shows the number of location types, the null ratio in the standard CDM and target CDM.-->
+The number of patients' residential addresses and the percentage of null values
+
+<!-- 환자의 거주 주소의 수 및 Null 값의 백분율.-->
 </div>
 
 <div class="pull_right">
 ![Person 담당자](images/Person/07.Person_provider.jpg)
 
-환자를 관리하는 인원 수와 Null 값의 백분율
-<!-- This figure shows the number of provider types, the null ratio in the standard CDM and target CDM.-->
+The number of people managing patients and the percentage of null values
+<!-- 환자를 관리하는 인원 수와 Null 값의 백분율.-->
 </div>
 </div>
 
 <SPAN class="col2">
 ![Person 의료 서비스 장소](images/Person/08.Person_care_site.jpg)
 
-환자에게 의료 서비스를 제공하는 장소의 수 및 Null 값의 백분율
-<!-- This figure shows the number of care site types, the null ratio in the standard CDM and target CDM.-->
+The number of places that provide medical care to the patient and the percentage of null values
+<!-- 환자에게 의료 서비스를 제공하는 장소의 수 및 Null 값의 백분율.-->
 </SPAN>
 
 <a href="#Top">TOP</a>
@@ -149,15 +155,15 @@ Person 테이블의 레코드가 차지하는 백분율
 <div class="pull_left">
 ![Death ETL check](images/Death/00.Death_deathcheck.jpg)
 
-사망자의 사망 날짜가 기록된 개수에 따른 백분율
-<!-- This figure shows Percentage of people with multiple death times for check data ETL fault.-->
+The percentage of deaths recorded by the number of deaths recorded
+<!-- 사망자의 사망 날짜가 기록된 개수에 따른 백분율.-->
 </div>
 
 <div class="pull_right">
 ![Death 유형](images/Death/01.Death_type.jpg)
 
-사망자의 사망 유형 별 백분율
-<!-- This figure shows that Standard CDM's Death Type ratio and Target CDM's Death Type ratio-->
+The percentage of deaths by type of death
+<!-- 사망자의 사망 유형 별 백분율-->
 
 </div>
 
@@ -172,16 +178,15 @@ Person 테이블의 레코드가 차지하는 백분율
 <div class="pull_left">
 ![Visit 테이블 레코드](images/Visit/00.Visit_record.jpg)
 
-Visit Occurrence 테이블의 레코드가 차지하는 백분율
-
-<!-- This figure shows that Standard CDM's Visit Occurrenece Table record ratio and Target CDM's Visit Occurrenece Table record ratio.-->
+The percentage of records in the Visit Occurrence table
+<!-- Visit Occurrence 테이블의 레코드가 차지하는 백분율.-->
 </div>
 
 <div class="pull_right">
 ![Visit 테이블 Person](images/Visit/01.Visit_person.jpg)
 
-Visit Occurrence 테이블의 환자가 차지하는 백분율
-<!-- This figure shows that Standard CDM's Visit Occurrenece Table person ratio and Target CDM's Visit Occurrenece Table person ratio.-->
+The percentage of patients in the Visit Occurrence table
+<!-- Visit Occurrence 테이블의 환자가 차지하는 백분율.-->
 </div>
 </div>
 
@@ -189,15 +194,15 @@ Visit Occurrence 테이블의 환자가 차지하는 백분율
 <div class="pull_left">
 ![Visit 방문 유형](images/Visit/02.Visit_concept.jpg)
 
-병원 방문 유형별 백분율
-<!-- This figure shows that Standard CDM's Visit Concept ratio and Target CDM's Visit Concept ratio.-->
+The percentage by hospital visit type
+<!-- 병원 방문 유형별 백분율.-->
 </div>
 
 <div class="pull_right">
 ![Visit 기간](images/Visit/03.Visit_duration.jpg)
 
-환자의 방문 기간 히스토그램
-<!-- This figure shows that Standard CDM's Visit Duration histogram and Target CDM's Visit Duration histogram.-->
+Patient visit duration histogram
+<!-- 환자의 방문 기간 히스토그램.-->
 </div>
 </div>
 
@@ -206,24 +211,25 @@ Visit Occurrence 테이블의 환자가 차지하는 백분율
 
 ![Visit 종료 연도](images/Visit/05.Visit_end.jpg)
 </div>
-연도별 병원 최초 방문 및 마지막 방문 백분율
-<!-- This figure shows that the Visit occurrence start, end with person ratio.-->
+
+The percentage of first visit and last visit to hospital by year
+<!-- 연도별 병원 최초 방문 및 마지막 방문 백분율.-->
 
 <div class="row">
 <div class="pull_left">
 ![Visit 유형](images/Visit/06.Visit_type.jpg)
 
-방문 기록 유형 구분별 백분율
 
-<!-- This figure shows that Standard CDM's Visit type ratio and Target CDM's Visit type ratio.-->
+The percentage of visit type
+<!-- 방문 기록 유형 구분별 백분율.-->
 </div>
 
 <div class="pull_right">
 ![Visit 의료 서비스 장소](images/Visit/07.Visit_care_site.jpg)
 
-방문자가 의료 서비스를 받는 장소의 종류 수 및 Null 값의 백분율
+The number of types of places where visitors receive medical care and the percentage of null values
 
-<!-- This figure shows that the number of care site types, the null ratio in the standard CDM and target CDM.-->
+<!-- 방문자가 의료 서비스를 받는 장소의 종류 수 및 Null 값의 백분율.-->
 </div>
 </div>
 
@@ -231,17 +237,17 @@ Visit Occurrence 테이블의 환자가 차지하는 백분율
 <div class="pull_left">
 ![Visit 구분 코드](images/Visit/08.Visit_source.jpg)
 
-방문 구분 코드 별 백분율
+The percentage of visit source
 
-<!-- This figure shows that Standard CDM's Visit source ratio and Target CDM's Visit source ratio.-->
+<!-- 방문 구분 코드 별 백분율.-->
 </div>
 
 <div class="pull_right">
 ![Visit 허용](images/Visit/09.Visit_admitting.jpg)
 
-방문 허용 코드 별 백분율
+The percentage of visit admitting source
 
-<!-- This figure shows that Standard CDM's Visit admitting ratio and Target CDM's Visit admitting ratio.-->
+<!-- 방문 허용 코드 별 백분율.-->
 </div>
 </div>
 
@@ -249,15 +255,15 @@ Visit Occurrence 테이블의 환자가 차지하는 백분율
 <div class="pull_left">
 ![Visit 종료 사유](images/Visit/10.Visit_discharge.jpg)
 
-방문 종료 사유별 백분율
-<!-- This figure shows that Standard CDM's Visit discharge ratio and Target CDM's Visit discharge ratio.-->
+The percentage of visit dischage
+<!-- 방문 종료 사유별 백분율.-->
 </div>
 
 <div class="pull_right">
 ![Visit 방문 여부](images/Visit/11.Visit_preceding.jpg)
 
-이전의 방문과 재방문 연관에 따른 비율
-<!-- This figure shows that Standard CDM's Visit preceding ratio and Target CDM's Visit preceding ratio.-->
+The percentage of visits returned per previous visit
+<!-- 이전의 방문과 재방문 연관에 따른 비율.-->
 
 </div>
 </div>
@@ -271,17 +277,17 @@ Visit Occurrence 테이블의 환자가 차지하는 백분율
 <div class="pull_left">
 ![Condition 테이블 레코드](images/Condition/00.Condition_record.jpg)
 
-Condition Occurrence 테이블의 레코드가 차지하는 백분율
+The percentage of records in the Condition Occurrence table
 
-<!-- This figure shows that Standard CDM's Visit Occurrenece Table record ratio and Target CDM's Visit Occurrenece Table record ratio.-->
+<!-- Condition Occurrence 테이블의 레코드가 차지하는 백분율.-->
 </div>
 
 <div class="pull_right">
 ![Condition 테이블 person](images/Condition/01.Condition_person.jpg)
 
-Condition Occurrence 테이블의 환자가 차지하는 백분율
+The percentage of patients in the Condition Occurrence table
 
-<!-- This figure shows that Standard CDM's Visit Occurrenece Table people ratio and Target CDM's Visit Occurrenece Table people ratio.-->
+<!-- Condition Occurrence 테이블의 환자가 차지하는 백분율.-->
 </div>
 </div>
 
@@ -290,22 +296,23 @@ Condition Occurrence 테이블의 환자가 차지하는 백분율
 
 ![Condition 종료 연도](images/Condition/03.Condition_end.jpg)
 </div>
-<!-- This figure shows that the start condition and end condition.-->
-질병 확인 및 종료에 따른 연도별 백분율
+
+The percentage by year based on condition identification and termination
+<!-- 질병 확인 및 종료에 따른 연도별 백분율.-->
 
 <div class="row">
 <div class="pull_left">
 ![Condition 기간](images/Condition/04.Condition_duration.jpg)
 
-질병 기간별 히스토그램
-<!-- This figure shows that Standard CDM's Condition histogram and Target CDM's Condition Duration histogram.-->
+Patient condition duration histogram
+<!-- 질병 기간별 히스토그램.-->
 </div>
 
 <div class="pull_right">
 ![Condition 유형](images/Condition/05.Condition_type.jpg)
 
-질병 발생 유형별 백분율
-<!-- This figure shows that Standard CDM's Condition type ratio and Target CDM's Condition type ratio.-->
+The percentage of condition type
+<!-- 질병 발생 유형별 백분율.-->
 </div>
 </div>
 
@@ -313,15 +320,15 @@ Condition Occurrence 테이블의 환자가 차지하는 백분율
 <div class="pull_left">
 ![Condition 중단 사유](images/Condition/06.Condition_stop.jpg)
 
-증상이 나타나지 않게 된 이유의 종류 수
-<!-- This figure shows the number of stop reason in the standard CDM and target CDM. -->
+The number of reasons for stopping condition
+<!-- 증상이 나타나지 않게 된 이유의 종류 수. -->
 </div>
 
 <div class="pull_right">
 ![Condition / visit occurrence](images/Condition/07.Condition_visit_occurrence.jpg)
 
-증상 확인과 방문 간 상관 관계의 비율
-<!-- This figure shows that Standard CDM's and Target CDM's Condition occurrence Associate with Visit occurrence ratio.-->
+The percentage of correlation between condition check and visits
+<!-- 증상 확인과 방문 간 상관 관계의 비율.-->
 </div>
 </div>
 
@@ -329,8 +336,8 @@ Condition Occurrence 테이블의 환자가 차지하는 백분율
 <SPAN class="col2">
 ![Condition 방문 상세](images/Condition/08.Condition_visit_detail.jpg)
 
-증상과 방문 내용과의 상관 관계 비율
-<!-- This figure shows the number of care site types, the null ratio in the standard CDM and target CDM.-->
+The percentageof correlation between conition and visit
+<!-- 증상과 방문 내용과의 상관 관계 비율.-->
 </SPAN>
 </div>
 
@@ -344,17 +351,17 @@ Condition Occurrence 테이블의 환자가 차지하는 백분율
 <div class="pull_left">
 ![DrugExp 테이블 레코드](images/Drug exposure/00.Drug_exp_record.jpg)
 
-Drug Exposue 테이블의 레코드가 차지하는 백분율
+The percentage of records in the Drug Exposure table
 </div>
 
 <div class="pull_right">
-<!-- This figure shows that Standard CDM's Drug Exposure Table record ratio and Target CDM's Drug Exposure Table record ratio.-->
+<!-- Drug Exposue 테이블의 레코드가 차지하는 백분율.-->
 
 ![DrugExp 테이블 person](images/Drug exposure/01.Drug_exp_person.jpg)
 
-Drug Exposue 테이블의 환자가 차지하는 백분율
 
-<!-- This figure shows that Standard CDM's Drug Exposure Table person ratio and Target CDM's Drug Exposure Table person ratio.-->
+The percentage of patients in the Drug Exposue table
+<!-- Drug Exposue 테이블의 환자가 차지하는 백분율.-->
 </div>
 </div>
 
@@ -363,22 +370,22 @@ Drug Exposue 테이블의 환자가 차지하는 백분율
 
 ![DrugExp 종료 연도](images/Drug exposure/03.Drug_exp_end.jpg)
 </div>
-약물을 제공하기 시작한 연도 및 종료 연도별 백분율
-<!-- This figure shows that the Drug Exposure start and end.-->
 
+<!-- 약물을 제공하기 시작한 연도 및 종료 연도별 백분율.-->
+The percentage by year and ending year in which the drug was offered
 <div class="row">
 <div class="pull_left">
 ![DrugExp 기간](images/Drug exposure/04.Drug_exp_duration.jpg)
 
-약물 제공 기간에 대한 히스토그램
-<!-- This figure shows that Standard CDM's Drug Exposure Duration histogram and Target CDM's Drug Exposure Duration histogram.-->
+Drug exposure duration histogram
+<!-- 약물 제공 기간에 대한 히스토그램.-->
 </div>
 
 <div class="pull_right">
 ![DrugExp 유형](images/Drug exposure/05.Drug_exp_type.jpg)
 
-약물 제공 유형별 백분율
-<!-- This figure shows that Standard CDM's Drug exposure type ratio and Target CDM's Drug exposure type ratio.-->
+The percentage of drug exposure type
+<!-- 약물 제공 유형별 백분율.-->
 </div>
 </div>
 
@@ -386,15 +393,15 @@ Drug Exposue 테이블의 환자가 차지하는 백분율
 <div class="pull_left">
 ![DrugExp 중단 사유](images/Drug exposure/06.Drug_stop.jpg)
 
-약물 제공을 중지한 사유의 종류 수
-<!-- This figure shows the number of stop reason in the standard CDM and target CDM. -->
+The number of reasons for stopping drug exposure
+<!-- 약물 제공을 중지한 사유의 종류 수. -->
 </div>
 
 <div class="pull_right">
 ![DrugExp 경로](images/Drug exposure/07.Drug_exp_route.jpg)
 
-약물 제공을 한 경로별 백분율
-<!-- This figure shows that Standard CDM's Drug exposure route ratio and Target CDM's Drug exposure route ratio.-->
+The percentage of drug exposure route
+<!-- 약물 제공을 한 경로별 백분율.-->
 </div>
 </div>
 
@@ -402,8 +409,8 @@ Drug Exposue 테이블의 환자가 차지하는 백분율
 <SPAN class="col2">
 ![DrugExp / visit occurrence](images/Drug exposure/08.Drug_exp_visit_occurrence.jpg)
 
-약물 제공과 방문 간 연관 관계의 비율
-<!-- This figure shows that Standard CDM's Drug exposure Associate with Visit occurrence ratio and Target CDM's Drug exposure Associate with Visit occurrence ratio.-->
+The percentage of correlation of drug exposure and visit
+<!-- 약물 제공과 방문 간 연관 관계의 비율.-->
 
 </SPAN>
 </div>
@@ -418,15 +425,15 @@ Drug Exposue 테이블의 환자가 차지하는 백분율
 <div class="pull_left">
 ![DrugEra 테이블 레코드](images/Drug era/00.Drug_era_record.jpg)
 
-Drug Era 테이블의 레코드가 차지하는 백분율
-<!-- This figure shows that Standard CDM's Drug Era Table record ratio and Target CDM's Drug Era Table record ratio.-->
+The percentage of records in the Drug Era table
+<!-- Drug Era 테이블의 레코드가 차지하는 백분율.-->
 </div>
 
 <div class="pull_right">
 ![DrugEra 테이블 person](images/Drug era/01.Drug_era_person.jpg)
 
-Drug Era 테이블의 환자가 차지하는 백분율
-<!-- This figure shows that Standard CDM's Drug Era Table people ratio and Target CDM's Drug Era Table people ratio.-->
+The percentage of patients in the Drug Era table
+<!-- Drug Era 테이블의 환자가 차지하는 백분율.-->
 </div>
 </div>
 
@@ -435,22 +442,22 @@ Drug Era 테이블의 환자가 차지하는 백분율
 
 ![DrugEra 종료 연도](images/Drug era/03.Drug_era_end.jpg)
 </div>
-약물을 복용하기 시작한 연도 및 종료 연도별 백분율
+
 <!-- This figure shows that the Drug Era start and end.-->
 
 <div class="row">
 <div class="pull_left">
 ![DrugEra 기간](images/Drug era/04.Drug_era_duration.jpg)
 
-약물 복용 기간에 대한 히스토그램
-<!-- This figure shows that Standard CDM's Drug Era Duration histogram and Target CDM's Drug Era Duration histogram.-->
+Drug era duration histogram
+<!--Drug - 약물 복용 기간에 대한 히스토그램-->
 </div>
 
 <div class="pull_right">
 ![DrugEra 약물 제공일과 차이](images/Drug era/05.Drug_era_gap.jpg)
 
-약물 제공일과 약물 복용일 차이에 대한 히스토그램
-<!-- This figure shows that Standard CDM's Gap Days histogram and Target CDM's Gap Days histogram. -->
+Histogram of drug delivery day and drug day difference
+<!-- 약물 제공일과 약물 복용일 차이에 대한 히스토그램. -->
 </div>
 </div>
 
