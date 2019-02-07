@@ -55,7 +55,7 @@ This RDS files(or zip file) must be stored in 'Target RDS' folder.
 
 For testing, only standard rds files can run GEMINI but line graph will be shown single institution rds data.
   
-4. Run Gemini()
+4. Run gemini()
 
 You should set path where 'Standard RDS' folder and 'Target RDS' folder exist.
 
