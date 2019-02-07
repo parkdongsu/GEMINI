@@ -52,7 +52,7 @@ Compare CDM's PERSON, DEATH, VISIT OCCURRENCE, CONDITION OCCURRENCE, DRUG EXPOSU
 <div class="row">
 <div class="pull_left">
 
-![전체 레코드 백분율 비교](images/Whole/00.Record.jpg)
+![All records](images/Whole/00.Record.jpg)
 
 The number of records in the table being compared Percentage of records per table based on the sum
 <!--비교 대상이 되는 테이블의 레코드 수 총합을 기준으로 한 테이블 별 레코드 백분율. -->
@@ -60,7 +60,7 @@ The number of records in the table being compared Percentage of records per tabl
 </div>
 
 <div class="pull_right">
-![전체 환자 백분율 비교](images/Whole/01.Person.jpg)
+![All patients](images/Whole/01.Person.jpg)
 
 The percentage of patients by table based on the total number of patients in the table being compared.
 <!--비교 대상이 되는 테이블의 전체 환자 수를 기준으로 한 테이블 별 환자 백분율.-->
@@ -76,15 +76,15 @@ The percentage of patients by table based on the total number of patients in the
 
 <div class="row">
 <div class="pull_left">
-![Person 테이블 레코드](images/Person/00.Person_record.jpg)
+![Person record](images/Person/00.Person_record.jpg)
 
-The ercentage of records in the Person table
+The Percentage of records in the Person table
 <!--Person 테이블의 레코드가 차지하는 백분율-->
 
 </div>
 
 <div class="pull_right">
-![Person 테이블 성비](images/Person/01.Person_gender.jpg)
+![Person gender ratio](images/Person/01.Person_gender.jpg)
 
 Gender ratio of patients
 <!--환자들의 성비-->
@@ -94,9 +94,9 @@ Gender ratio of patients
 
 <div class="col2">
 
-![Person 테이블 첫 진료 연도](images/Person/02.Person_min_year.jpg)
+![Person first treat](images/Person/02.Person_min_year.jpg)
 
-![Person 테이블 마지막 진료 연도](images/Person/03.Person_max_year.jpg)
+![Person last treat](images/Person/03.Person_max_year.jpg)
 
 </div>
 
@@ -106,14 +106,14 @@ The percentage and sex ratio by age, based on the year the patients were first t
 <div class="row">
 <div class="pull_left">
 
-![Person 인종](images/Person/04.Person_race.jpg)
+![Person race](images/Person/04.Person_race.jpg)
 
 The percentage of patient race
 <!-- 환자 인종별 백분율-->
 </div>
 
 <div class="pull_right">
-![Person 민족](images/Person/05.Person_ethnicity.jpg)
+![Person ethnicity](images/Person/05.Person_ethnicity.jpg)
 
 The percentage of patient ethnicity
 <!-- 환자 민족별 백분율 -->
@@ -123,7 +123,7 @@ The percentage of patient ethnicity
 <div class="row">
 <div class="pull_left">
 
-![Person 주소](images/Person/06.Person_location.jpg)
+![Person address](images/Person/06.Person_location.jpg)
 
 The number of patients' residential addresses and the percentage of null values
 
@@ -131,7 +131,7 @@ The number of patients' residential addresses and the percentage of null values
 </div>
 
 <div class="pull_right">
-![Person 담당자](images/Person/07.Person_provider.jpg)
+![Person provider](images/Person/07.Person_provider.jpg)
 
 The number of people managing patients and the percentage of null values
 <!-- 환자를 관리하는 인원 수와 Null 값의 백분율.-->
@@ -139,7 +139,7 @@ The number of people managing patients and the percentage of null values
 </div>
 
 <SPAN class="col2">
-![Person 의료 서비스 장소](images/Person/08.Person_care_site.jpg)
+![Person care site](images/Person/08.Person_care_site.jpg)
 
 The number of places that provide medical care to the patient and the percentage of null values
 <!-- 환자에게 의료 서비스를 제공하는 장소의 수 및 Null 값의 백분율.-->
@@ -160,7 +160,7 @@ The percentage of deaths recorded by the number of deaths recorded
 </div>
 
 <div class="pull_right">
-![Death 유형](images/Death/01.Death_type.jpg)
+![Death type](images/Death/01.Death_type.jpg)
 
 The percentage of deaths by type of death
 <!-- 사망자의 사망 유형 별 백분율-->
@@ -176,14 +176,14 @@ The percentage of deaths by type of death
 ### **VISIT OCCURRENCE Table**
 <div class="row">
 <div class="pull_left">
-![Visit 테이블 레코드](images/Visit/00.Visit_record.jpg)
+![Visit record](images/Visit/00.Visit_record.jpg)
 
 The percentage of records in the Visit Occurrence table
 <!-- Visit Occurrence 테이블의 레코드가 차지하는 백분율.-->
 </div>
 
 <div class="pull_right">
-![Visit 테이블 Person](images/Visit/01.Visit_person.jpg)
+![Visit person](images/Visit/01.Visit_person.jpg)
 
 The percentage of patients in the Visit Occurrence table
 <!-- Visit Occurrence 테이블의 환자가 차지하는 백분율.-->
@@ -192,14 +192,14 @@ The percentage of patients in the Visit Occurrence table
 
 <div class="row">
 <div class="pull_left">
-![Visit 방문 유형](images/Visit/02.Visit_concept.jpg)
+![Visit concept](images/Visit/02.Visit_concept.jpg)
 
-The percentage by hospital visit type
+The percentage by hospital visit concept
 <!-- 병원 방문 유형별 백분율.-->
 </div>
 
 <div class="pull_right">
-![Visit 기간](images/Visit/03.Visit_duration.jpg)
+![Visit duration](images/Visit/03.Visit_duration.jpg)
 
 Patient visit duration histogram
 <!-- 환자의 방문 기간 히스토그램.-->
@@ -207,9 +207,9 @@ Patient visit duration histogram
 </div>
 
 <div class="col2">
-![Visit 시작 연도](images/Visit/04.Visit_start.jpg)
+![Visit start year](images/Visit/04.Visit_start.jpg)
 
-![Visit 종료 연도](images/Visit/05.Visit_end.jpg)
+![Visit end year](images/Visit/05.Visit_end.jpg)
 </div>
 
 The percentage of first visit and last visit to hospital by year
@@ -217,7 +217,7 @@ The percentage of first visit and last visit to hospital by year
 
 <div class="row">
 <div class="pull_left">
-![Visit 유형](images/Visit/06.Visit_type.jpg)
+![Visit type](images/Visit/06.Visit_type.jpg)
 
 
 The percentage of visit type
@@ -225,7 +225,7 @@ The percentage of visit type
 </div>
 
 <div class="pull_right">
-![Visit 의료 서비스 장소](images/Visit/07.Visit_care_site.jpg)
+![Visit care site](images/Visit/07.Visit_care_site.jpg)
 
 The number of types of places where visitors receive medical care and the percentage of null values
 
@@ -235,7 +235,7 @@ The number of types of places where visitors receive medical care and the percen
 
 <div class="row">
 <div class="pull_left">
-![Visit 구분 코드](images/Visit/08.Visit_source.jpg)
+![Visit source](images/Visit/08.Visit_source.jpg)
 
 The percentage of visit source
 
@@ -243,7 +243,7 @@ The percentage of visit source
 </div>
 
 <div class="pull_right">
-![Visit 허용](images/Visit/09.Visit_admitting.jpg)
+![Visit admitting](images/Visit/09.Visit_admitting.jpg)
 
 The percentage of visit admitting source
 
@@ -253,14 +253,14 @@ The percentage of visit admitting source
 
 <div class="row">
 <div class="pull_left">
-![Visit 종료 사유](images/Visit/10.Visit_discharge.jpg)
+![Visit discharge](images/Visit/10.Visit_discharge.jpg)
 
 The percentage of visit dischage
 <!-- 방문 종료 사유별 백분율.-->
 </div>
 
 <div class="pull_right">
-![Visit 방문 여부](images/Visit/11.Visit_preceding.jpg)
+![Visit preceding](images/Visit/11.Visit_preceding.jpg)
 
 The percentage of visits returned per previous visit
 <!-- 이전의 방문과 재방문 연관에 따른 비율.-->
@@ -275,7 +275,7 @@ The percentage of visits returned per previous visit
 ### **CONDITION OCCURRENCE Table**
 <div class="row">
 <div class="pull_left">
-![Condition 테이블 레코드](images/Condition/00.Condition_record.jpg)
+![Condition record](images/Condition/00.Condition_record.jpg)
 
 The percentage of records in the Condition Occurrence table
 
@@ -283,7 +283,7 @@ The percentage of records in the Condition Occurrence table
 </div>
 
 <div class="pull_right">
-![Condition 테이블 person](images/Condition/01.Condition_person.jpg)
+![Condition person](images/Condition/01.Condition_person.jpg)
 
 The percentage of patients in the Condition Occurrence table
 
@@ -292,9 +292,9 @@ The percentage of patients in the Condition Occurrence table
 </div>
 
 <div class="col2">
-![Condition 시작 연도](images/Condition/02.Condition_start.jpg)
+![Condition start year](images/Condition/02.Condition_start.jpg)
 
-![Condition 종료 연도](images/Condition/03.Condition_end.jpg)
+![Condition end year](images/Condition/03.Condition_end.jpg)
 </div>
 
 The percentage by year based on condition identification and termination
@@ -302,14 +302,14 @@ The percentage by year based on condition identification and termination
 
 <div class="row">
 <div class="pull_left">
-![Condition 기간](images/Condition/04.Condition_duration.jpg)
+![Condition duration](images/Condition/04.Condition_duration.jpg)
 
 Patient condition duration histogram
 <!-- 질병 기간별 히스토그램.-->
 </div>
 
 <div class="pull_right">
-![Condition 유형](images/Condition/05.Condition_type.jpg)
+![Condition type](images/Condition/05.Condition_type.jpg)
 
 The percentage of condition type
 <!-- 질병 발생 유형별 백분율.-->
@@ -318,7 +318,7 @@ The percentage of condition type
 
 <div class="row">
 <div class="pull_left">
-![Condition 중단 사유](images/Condition/06.Condition_stop.jpg)
+![Condition stop reason](images/Condition/06.Condition_stop.jpg)
 
 The number of reasons for stopping condition
 <!-- 증상이 나타나지 않게 된 이유의 종류 수. -->
@@ -334,7 +334,7 @@ The percentage of correlation between condition check and visits
 
 <div class="row">
 <SPAN class="col2">
-![Condition 방문 상세](images/Condition/08.Condition_visit_detail.jpg)
+![Condition / visit detail](images/Condition/08.Condition_visit_detail.jpg)
 
 The percentageof correlation between conition and visit
 <!-- 증상과 방문 내용과의 상관 관계 비율.-->
@@ -349,7 +349,7 @@ The percentageof correlation between conition and visit
 ### **DRUG EXPOSURE Table**
 <div class="row">
 <div class="pull_left">
-![DrugExp 테이블 레코드](images/Drug exposure/00.Drug_exp_record.jpg)
+![DrugExp record](images/Drug exposure/00.Drug_exp_record.jpg)
 
 The percentage of records in the Drug Exposure table
 </div>
@@ -357,7 +357,7 @@ The percentage of records in the Drug Exposure table
 <div class="pull_right">
 <!-- Drug Exposue 테이블의 레코드가 차지하는 백분율.-->
 
-![DrugExp 테이블 person](images/Drug exposure/01.Drug_exp_person.jpg)
+![DrugExp person](images/Drug exposure/01.Drug_exp_person.jpg)
 
 
 The percentage of patients in the Drug Exposue table
@@ -366,23 +366,23 @@ The percentage of patients in the Drug Exposue table
 </div>
 
 <div class="col2">
-![DrugExp 시작 연도](images/Drug exposure/02.Drug_exp_start.jpg)
+![DrugExp start year](images/Drug exposure/02.Drug_exp_start.jpg)
 
-![DrugExp 종료 연도](images/Drug exposure/03.Drug_exp_end.jpg)
+![DrugExp end year](images/Drug exposure/03.Drug_exp_end.jpg)
 </div>
 
 <!-- 약물을 제공하기 시작한 연도 및 종료 연도별 백분율.-->
 The percentage by year and ending year in which the drug was offered
 <div class="row">
 <div class="pull_left">
-![DrugExp 기간](images/Drug exposure/04.Drug_exp_duration.jpg)
+![DrugExp duration](images/Drug exposure/04.Drug_exp_duration.jpg)
 
 Drug exposure duration histogram
 <!-- 약물 제공 기간에 대한 히스토그램.-->
 </div>
 
 <div class="pull_right">
-![DrugExp 유형](images/Drug exposure/05.Drug_exp_type.jpg)
+![DrugExp type](images/Drug exposure/05.Drug_exp_type.jpg)
 
 The percentage of drug exposure type
 <!-- 약물 제공 유형별 백분율.-->
@@ -391,14 +391,14 @@ The percentage of drug exposure type
 
 <div class="row">
 <div class="pull_left">
-![DrugExp 중단 사유](images/Drug exposure/06.Drug_stop.jpg)
+![DrugExp stop reason](images/Drug exposure/06.Drug_stop.jpg)
 
 The number of reasons for stopping drug exposure
 <!-- 약물 제공을 중지한 사유의 종류 수. -->
 </div>
 
 <div class="pull_right">
-![DrugExp 경로](images/Drug exposure/07.Drug_exp_route.jpg)
+![DrugExp route](images/Drug exposure/07.Drug_exp_route.jpg)
 
 The percentage of drug exposure route
 <!-- 약물 제공을 한 경로별 백분율.-->
@@ -423,14 +423,14 @@ The percentage of correlation of drug exposure and visit
 ### **DRUG ERA Table**
 <div class="row">
 <div class="pull_left">
-![DrugEra 테이블 레코드](images/Drug era/00.Drug_era_record.jpg)
+![DrugEra record](images/Drug era/00.Drug_era_record.jpg)
 
 The percentage of records in the Drug Era table
 <!-- Drug Era 테이블의 레코드가 차지하는 백분율.-->
 </div>
 
 <div class="pull_right">
-![DrugEra 테이블 person](images/Drug era/01.Drug_era_person.jpg)
+![DrugEra person](images/Drug era/01.Drug_era_person.jpg)
 
 The percentage of patients in the Drug Era table
 <!-- Drug Era 테이블의 환자가 차지하는 백분율.-->
@@ -438,23 +438,23 @@ The percentage of patients in the Drug Era table
 </div>
 
 <div class="col2">
-![DrugEra 시작 연도](images/Drug era/02.Drug_era_start.jpg)
+![DrugEra start year](images/Drug era/02.Drug_era_start.jpg)
 
-![DrugEra 종료 연도](images/Drug era/03.Drug_era_end.jpg)
+![DrugEra end year](images/Drug era/03.Drug_era_end.jpg)
 </div>
 
 <!-- This figure shows that the Drug Era start and end.-->
 
 <div class="row">
 <div class="pull_left">
-![DrugEra 기간](images/Drug era/04.Drug_era_duration.jpg)
+![DrugEra duration](images/Drug era/04.Drug_era_duration.jpg)
 
 Drug era duration histogram
 <!--Drug - 약물 복용 기간에 대한 히스토그램-->
 </div>
 
 <div class="pull_right">
-![DrugEra 약물 제공일과 차이](images/Drug era/05.Drug_era_gap.jpg)
+![DrugEra gap day](images/Drug era/05.Drug_era_gap.jpg)
 
 Histogram of drug delivery day and drug day difference
 <!-- 약물 제공일과 약물 복용일 차이에 대한 히스토그램. -->
