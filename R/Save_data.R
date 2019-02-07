@@ -105,7 +105,7 @@ save_data <- function(){
     temp <- sapply(FUN = paste0, "Standard RDS/", drug_eratbl_name_list, ".rds")
     mapply(saveRDS, object = drug_eratbl_list, file = temp)
 
-    zip(files = "Standard RDS/", zipfile = paste0("Standard RDS/",cdmDatabaseSchema,".zip"))
+    zip(zipfile = paste0("Standard RDS/",cdmDatabaseSchema,".zip"),files = "Standard RDS/", flag= c("-j", "-r"))
     file.remove(paste0("Standard RDS/",list.files(path = "Standard RDS/", pattern = ".rds$")))
 
     # time check

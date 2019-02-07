@@ -9,6 +9,12 @@ gemini <- function(){
     message("Choose where 'Standard RDS' folder exist.")
     gemini::path_set()
     gemini::create_folder()
+    if(length(list.files(paste0(getwd(), "/Standard RDS/"), pattern = "*.zip$"))>0){
+        unzip(zipfile = paste0("Standard RDS/",list.files(paste0(getwd(), "/Standard RDS/"), pattern = "*.zip$")), overwrite = T, exdir = "Standard RDS")
+    }
+    if(length(list.files(paste0(getwd(), "/Target RDS/"), pattern = "*.zip$"))>0){
+        unzip(zipfile = paste0("Target RDS/",list.files(paste0(getwd(), "/Target RDS/"), pattern = "*.zip$")), , overwrite = T, exdir = "Target RDS")
+    }
     ask_test <- function(){
         ask <- readline('No RDS file in Target RDS folder. Do you want to test gemini? (y / n) ')
         if(ask == "y" || ask == "Y"){
@@ -31,12 +37,6 @@ gemini <- function(){
         }
     }
     # Check rds data files
-    if(length(list.files(paste0(getwd(), "/Standard RDS/"), pattern = "*.zip$"))>0){
-        unzip(zipfile = paste0("Standard RDS/",list.files(paste0(getwd(), "/Standard RDS/"), pattern = "*.zip$")))
-    }
-    if(length(list.files(paste0(getwd(), "/Target RDS/"), pattern = "*.zip$"))>0){
-        unzip(zipfile = paste0("Target RDS/",list.files(paste0(getwd(), "/Target RDS/"), pattern = "*.zip$")))
-    }
 
     str_name_list <- list.files(paste0(getwd(), "/Standard RDS/"), pattern = "*.rds$")
     tar_name_list <- list.files(paste0(getwd(), "/Target RDS/"), pattern = "*.rds$")
