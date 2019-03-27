@@ -14,4 +14,5 @@ make_report<-function(){
     },error = function(x){
         message("Need Rmd file.")
     })
+    rm(list=ls())
 }

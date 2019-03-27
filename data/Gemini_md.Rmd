@@ -1,5 +1,8 @@
 ---
 title: "GEMINI Report"
+params:
+    std_schema: !r std_schema
+    tar_schema: !r tar_schema
 output: 
   html_document:
     self_contained: yes
@@ -9,6 +12,7 @@ output:
     toc_float:
       collapsed: false
       smooth_scroll: TRUE
+
 ---
 <a name="Top"></a>
 
@@ -16,6 +20,10 @@ output:
 This tool for data quality management by comparing and visualizing manifold data characteristics based on data converted to CDM.
 
 Compare CDM's PERSON, DEATH, VISIT OCCURRENCE, CONDITION OCCURRENCE, DRUG EXPOSURE, DRUG ERA tables.
+
+```{r, echo=FALSE, comment= NULL} 
+paste0(params$std_schema, " : ", params$tar_schema)
+```
 
 <style>
   .col2{

@@ -9,11 +9,17 @@
 ################################################################################
 draw_drug_era <- function(std_schema_name,tar_schema_name){
     cat("Drug era data visualizing...\n")
+    drug_era_record_title <- "Comparison of records between institutions"
+    drug_era_person_title <-"Comparison of person ratio between institutions"
+    drug_era_start_title <- "Drug Era Start Date"
+    drug_era_end_title <- "Drug Era End Date"
+    drug_era_diff_title <- "Comparison of duration between institutions"
+    drug_era_gap_title <- "Comparison of gap day between institutions"
 ################################################################################
 # drug_era_record
 ################################################################################
 draw_table_pie(std_drug_eratbl_record, tar_drug_eratbl_record, "DRUG ERA\nTABLE", "Drug era/00.Drug_era_record.jpg")
-mtext("Comparison of records between institutions", font = 2, side = 3, line = -5, outer = T, cex = 2.0)
+mtext(drug_era_record_title, font = 2, side = 3, line = -5, outer = T, cex = 2.0)
 mtext(paste0("count : ",std_drug_eratbl_record$count), side = 1, line = -15, at=0.75, outer = T, cex = 1.5)
 mtext(paste0("count : ",tar_drug_eratbl_record$count), side = 1, line = -15, at=0.25, outer = T, cex = 1.5)
 # Graph Save
@@ -22,13 +28,13 @@ dev.off() # It protect previous jpg file to not change current jpg image.
 # drug_era person_id
 ################################################################################
 draw_table_pie(std_drug_eratbl_person_ratio, tar_drug_eratbl_person_ratio, "DRUG ERA\nPERSON", "Drug era/01.Drug_era_person.jpg")
-mtext("Comparison of person ratio between institutions", font = 2, side = 3, line = -5, outer = T, cex = 2.0)
+mtext(drug_era_person_title, font = 2, side = 3, line = -5, outer = T, cex = 2.0)
 # Graph Save
 dev.off() # It protect previous jpg file to not change current jpg image.
 ################################################################################
 # drug_era start_date
 ################################################################################
-draw_line_start(std_drug_eratbl_start, tar_drug_eratbl_start, "Drug Era", "Drug era/02.Drug_era_start.jpg")
+draw_line_start(std_drug_eratbl_start, tar_drug_eratbl_start, drug_era_start_title, "Drug era/02.Drug_era_start.jpg")
 # Graph Save
 dev.off() # It protect previous jpg file to not change current jpg image.
 ################################################################################
@@ -69,7 +75,7 @@ drug_era_over_end <<- c(std_drug_eratbl_over_end, tar_drug_eratbl_over_end)
 
 draw_line_end(
     std_drug_eratbl_end[temp_std_s:temp_std_e, ], tar_drug_eratbl_end[temp_tar_s:temp_tar_e, ], drug_era_na_end, drug_era_over_end,
-    "Drug Era", "Drug era/03.Drug_era_end.jpg"
+    drug_era_end_title, "Drug era/03.Drug_era_end.jpg"
 )
 
 # Graph Save
@@ -98,7 +104,7 @@ tryCatch(
         afterError()
     }
 )
-title("Comparison of duration between institutions", outer = T, cex.main = 2.0)
+title(drug_era_diff_title, outer = T, cex.main = 2.0)
 # Graph Save
 dev.off() # It protect previous jpg file to not change current jpg image.
 ################################################################################
@@ -133,6 +139,6 @@ tryCatch(
         afterError()
     }
 )
-title("Comparison of gap day between institutions", outer = T, cex.main = 2.0)
+title(drug_era_gap_title, outer = T, cex.main = 2.0)
 dev.off() # It protect previous jpg file to not change current jpg image.
 }
