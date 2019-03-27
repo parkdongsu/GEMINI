@@ -6,11 +6,7 @@
 #'
 
 # Function for data visualization
-draw_func<-function(){
-
-    check.packages('plotrix')
-    check.packages('ggplot2')
-
+draw_func<-function(std_schema_name,tar_schema_name){
     # Library for Pie 3D function
     options(scipen = 999999)
     # Draw graph in one bar chart
@@ -105,29 +101,17 @@ draw_func<-function(){
         temp <- data.frame(temp_cpt,temp_col,stringsAsFactors = F)
         return(temp)
     }
-    # concept1<-std_visittbl_visit_concept
-    # concept2<-tar_visittbl_visit_concept
-    # color <- concept_piecolor(concept1,concept2)
-    # concept1[is.na(concept1$attributeName),] <-"NA"
-    # unlist(sapply(concept1$attributeName, FUN=function(x) color[color$temp_cpt==x,])[2,],use.names = F)
-    # concept1<-std_drug_exptbl_route
-    # concept2<-tar_drug_exptbl_route
-    # concept_piecolor(tar_drug_exptbl_route,std_drug_exptbl_route)
-    # color <- concept_piecolor(std_drug_exptbl_route,tar_drug_exptbl_route)
-    # concept1[is.na(concept1$attributeName),] <-"NA"
-    # unlist(sapply(concept1$attributeName, FUN=function(x)
-    #     color[color$temp_cpt==x,]
-    # )[2,],use.names = F)
-
-
 
     # Create Pie chart which use attribute_name
     draw_ratio_pie <<- function(std_value, tar_value, path) {
       jpeg(filename = paste0("images/", path), width = 720, height = 720, quality = 75, bg = "white")
-      # par(mfrow = c(1,2))
+
       par(mfrow = c(1, 2), xpd = T)
       # standard CDM
       tryCatch({
+          if(!is.null(std_value$conceptId)){
+              std_value <- std_value[order(std_value$conceptId),]
+          }
         # If NA, value must get 0. So this NA value get error range 0.1
         cpt_col <- concept_piecolor(std_value,tar_value)
         std_value <- naTostring(std_value)
@@ -142,12 +126,20 @@ draw_func<-function(){
           } else {
             (x)
           })
+        if(is.null(std_value$conceptId)){
+            std_legend <- std_value[order(std_value$attributeName),]$attributeName
+        }
+        else{
+            std_legend <- paste0(std_value$conceptId,',',std_value[order(std_value$conceptId),]$attributeName)
+        }
+
         # Draw Pie
         pie3D(std_slices,
-          labels = paste0(std_value$ratio, "%"), explode = 0.1, main = "A CDM",
+          labels = paste0(std_value$ratio, "%"), explode = 0.1, main = std_schema_name,
           radius = 1.0, labelcex = 1.5, theta = 0.8, start = pi / 2, cex.main = 2.0, col = std_cols)
-        legend(-1.5, -1.5, std_value$attributeName, cex = 1.5, fill = std_cols, xpd = T)
-      }, # If data isn't exist...
+        legend(-1.5, -1.5,std_legend, cex = 1.3, fill = std_cols, xpd = T)
+        },
+        # If data isn't exist...
       error = function(error_message) {
         print(error_message)
         afterError()
@@ -156,8 +148,10 @@ draw_func<-function(){
       # target CDM
 
       tryCatch({
+          if(!is.null(std_value$conceptId)){
+              tar_value <- tar_value[order(tar_value$conceptId),]
+          }
         # If NA, value must get 0. And this NA value get error range 0.1
-
         tar_value <- naTostring(tar_value)
         tar_cols <- unlist(sapply(tar_value$attributeName, FUN=function(x) cpt_col[cpt_col$temp_cpt==x,])[2,],use.names = F)
         # Label Setting
@@ -169,11 +163,18 @@ draw_func<-function(){
           } else {
             (x)
           })
+
+        if(is.null(tar_value$conceptId)){
+            tar_legend <- tar_value[order(tar_value$attributeName),]$attributeName
+        }
+        else{
+            tar_legend <- paste0(tar_value$conceptId,',',tar_value[order(tar_value$conceptId),]$attributeName)
+        }
         # Draw Pie
         pie3D(tar_slices,
-          labels = paste0(tar_value$ratio, "%"), explode = 0.03, main = "B CDM",
+          labels = paste0(tar_value$ratio, "%"), explode = 0.03, main = tar_schema_name,
           radius = 1.0, labelcex = 1.5, theta = 0.8, start = pi / 2, cex.main = 2.0, col = tar_cols)
-        legend(-1.5, -1.5, tar_value$attributeName, cex = 1.5, fill = tar_cols, xpd = T)
+        legend(-1.5, -1.5, tar_legend, cex = 1.3, fill = tar_cols, xpd = T)
       }, # If data isn't exist...
       error = function(error_message) {
         print(error_message)
@@ -201,7 +202,7 @@ draw_func<-function(){
           })
         # Draw pie
         pie3D(std_slices,
-          labels = c("", std_lbl), explode = 0.03, main = "A CDM",
+          labels = c("", std_lbl), explode = 0.03, main = std_schema_name,
           radius = 1.0, labelcex = 1.5, theta = 0.8, start = pi / 2, cex.main = 2.0, col = rainbow(nrow(std_value) + 1, s = 0.7)
         )
       }, # If data isn't exist...
@@ -226,7 +227,7 @@ draw_func<-function(){
           })
         # Draw pie
         pie3D(tar_slices,
-          labels = c("", tar_lbl), explode = 0.03, main = "B CDM",
+          labels = c("", tar_lbl), explode = 0.03, main = tar_schema_name,
           radius = 1.0, labelcex = 1.5, theta = 0.8, start = pi / 2, cex.main = 2.0, col = rainbow(nrow(tar_value) + 1, s = 0.7)
         )
       }, # If data isn't exist...
@@ -256,7 +257,7 @@ draw_func<-function(){
             (x)
           })
         pie3D(std_recordslices,
-          labels = c(std_recordlbl, ""), explode = 0.03, main = "A CDM",
+          labels = c(std_recordlbl, ""), explode = 0.03, main = std_schema_name,
           col = rainbow(nrow(std_value) + 1, s = 0.7), radius = 1.0, labelcex = 1.5, theta = 0.8, start = pi / 2, cex.main = 2.0
         )
       }, # If data isn't exist...
@@ -279,7 +280,7 @@ draw_func<-function(){
             (x)
           })
         pie3D(tar_recordslices,
-          labels = c(tar_recordlbl, ""), explode = 0.03, main = "B CDM",
+          labels = c(tar_recordlbl, ""), explode = 0.03, main = tar_schema_name,
           col = rainbow(nrow(tar_value) + 1, s = 0.7), radius = 1.0, labelcex = 1.5, theta = 0.8, start = pi / 2, cex.main = 2.0
         )
       }, # If data isn't exist...
@@ -291,7 +292,7 @@ draw_func<-function(){
     }
 
     # Draw line graph for start date
-    draw_line_start <<- function(std_value, tar_value, text = "", path) {
+    draw_line_start <<- function(std_value, tar_value, title = "", path) {
       jpeg(filename = paste0("images/", path), width = 720, height = 720, quality = 75, bg = "white")
       par(mfrow = c(1, 1))
       # Draw line Graph
@@ -301,14 +302,14 @@ draw_func<-function(){
         # drawing line
         plot(std_value,
           type = "o", col = 4, lwd = 2, xlab = "YEAR", ylab = "Person ratio(%)", axes = F, xlim = c(min(x_lbl), max(x_lbl)), ylim = c(0, y_axis),
-          main = paste0(text, " Start Date"), cex.main = 2.0, cex.lab = 1.4
+          main = paste0(title), cex.main = 2.0, cex.lab = 1.4
         )
         lines(tar_value, type = "o", col = 2, lwd = 2)
         axis(1, at = c(1:length(x_lbl)), labels = x_lbl)
         axis(2, at = c(0:y_axis), cex.axis = 2.0)
         box()
         gridline(std_value, tar_value)
-        legend("topleft", c("A", "B"), lwd = 2, lty = 1, cex = 1.5, col = c("blue", "red"))
+        legend("topleft", c(std_schema_name, tar_schema_name), lwd = 2, lty = 1, cex = 1.5, col = c("blue", "red"))
       }, # If data isn't exist...
       error = function(error_message) {
         print(error_message)
@@ -330,21 +331,21 @@ draw_func<-function(){
         # drawing line
         plot(std_value,
           type = "o", col = 4, xlab = "YEAR", ylab = "Person_ratio(%)", axes = T, xlim = c(min(x_lbl), max(x_lbl)), ylim = c(0, y_axis),
-          main = paste0(title, " End Date"), lwd = 2, cex.main = 2.0, cex.lab = 1.5
+          main = paste0(title), lwd = 2, cex.main = 2.0, cex.lab = 1.5
         )
         lines(tar_value, type = "o", col = 2, lwd = 2)
         axis(1, at = c(1:length(x_lbl)), labels = x_lbl)
         axis(2, at = c(0:y_axis), cex.axis = 2.0)
         box()
         gridline(std_value, tar_value)
-        legend("topleft", c("A", "B"), lwd = 2, lty = 1, cex = 1.5, col = c("blue", "red"))
+        legend("topleft", c(std_schema_name, tar_schema_name), lwd = 2, lty = 1, cex = 1.5, col = c("blue", "red"))
         # Need to append NA, 2999 person data.
         if (is.null(na_value) && is.null(over_value)) {}
         else {
           # as.numeric(min(c(std_value$visitYear,tar_value$visitYear)))+10,y=as.numeric(max(c(std_value$personRatio,tar_value$personRatio)))
           mtext(
             side = 3, line = -5, adj = 1, cex = 1.2, font = 2, outer = T,
-            text = paste0("A CDM NA : ", na_value[1], " / B CDM NA : ", na_value[2], "\nA CDM 2999 : ", over_value[1], " / B CDM 2999 : ", over_value[2])
+            text = paste0("std_schema_name NA : ", na_value[1], " / B CDM NA : ", na_value[2], "\nstd_schema_name 2999 : ", over_value[1], " / B CDM 2999 : ", over_value[2])
           )
         }
       }, # If data isn't exist...
@@ -356,14 +357,14 @@ draw_func<-function(){
     }
 
     # Draw bar chart with count and NULL
-    draw_null_bar <<- function(std_value, tar_value, text = "", path) {
+    draw_null_bar <<- function(std_value, tar_value, title = "", path) {
       jpeg(filename = paste0("images/", path), width = 720, height = 720, quality = 75, bg = "white")
       par(mfrow = c(1, 2))
       tryCatch({
         # count drawing
         bar_data <- barplot(c(std_value$attributeCount, tar_value$attributeCount),
           ylim = c(0, max(std_value$attributeCount, tar_value$attributeCount)), cex.names = 2.0,
-          beside = F, names = c("A", "B"), col = c("Green", "Yellow"), main = paste("Number of", text, "type"), cex.main = 2.0, cex.axis = 2.0,
+          beside = F, names = c(std_schema_name, tar_schema_name), col = c("Green", "Yellow"), main = paste(title), cex.main = 2.0, cex.axis = 2.0,
           ylab = "Counts (s)", cex.lab = 1.5
         )
         text(
@@ -374,7 +375,7 @@ draw_func<-function(){
         # NULL data drawing
         null_bar <- barplot(c(std_value$nullRatio, tar_value$nullRatio),
           ylim = c(0, max(std_value$nullRatio, tar_value$nullRatio)),
-          beside = F, names = c("A", "B"), col = c("Gray40", "Gray55"), main = "NULL Ratio", cex.main = 2.0, cex.axis = 2.0,
+          beside = F, names = c(std_schema_name, tar_schema_name), col = c("Gray40", "Gray55"), main = "NULL Ratio", cex.main = 2.0, cex.axis = 2.0,
           ylab = "Percentage (%)", cex.names = 2.0, cex.lab = 1.5
         )
         text(
@@ -397,7 +398,7 @@ draw_func<-function(){
       tryCatch({
         # count drawing
         bar_data <- barplot(c(std_value$ratio, tar_value$ratio),
-          beside = T, names = c("A", "B"), col = c("Green", "Yellow"), main = "Count",
+          beside = T, names = c(std_schema_name, tar_schema_name), col = c("Green", "Yellow"), main = "Count",
           xlab = "Institution", ylab = "Percentage (%)", cex.names = 2.5, cex.main = 2.0, cex.lab = 1.5, cex.axis = 2.0
         )
         text(
@@ -418,7 +419,7 @@ draw_func<-function(){
       tryCatch({
         # count drawing
         bar_data <- barplot(c(std_value$attributeCount, tar_value$attributeCount),
-          beside = F, names = c("A", "B"), col = c("Green", "Yellow"), main = text,
+          beside = F, names = c(std_schema_name, tar_schema_name), col = c("Green", "Yellow"), main = text,
           xlab = "Institution", ylab = "Counts (s)", cex.names = 1.5, cex.main = 2.0, cex.lab = 1.5, cex.axis = 2.0
         )
         text(
@@ -440,7 +441,7 @@ draw_func<-function(){
       tryCatch({
         # count drawing
         bar_data <- barplot(c(std_value$ratio, tar_value$ratio),
-          beside = F, names = c("A", "B"), col = c("Green", "Yellow"), main = text,
+          beside = F, names = c(std_schema_name, tar_schema_name), col = c("Green", "Yellow"), main = text,
           xlab = "Institution", ylab = "Percentage (%)", cex.names = 2.5, cex.main = 2.0, cex.lab = 1.5, cex.axis = 2.0
         )
         text(
@@ -454,4 +455,5 @@ draw_func<-function(){
       }
       )
     }
+
 }

@@ -68,7 +68,7 @@ Query_func<- function(){
 
         # Get regular type ratio
         get_ratio <<- function(tblName, attName) {
-            sql <<- "SELECT (SELECT CONCEPT_NAME FROM @cdm_database_schema.concept where concept_id = @att_name) as attribute_name,
+            sql <<- "SELECT @att_name as concept_id, (SELECT CONCEPT_NAME FROM @cdm_database_schema.concept where concept_id = @att_name) as attribute_name,
             round(count(@att_name)/convert(float,(SELECT count(*) FROM @cdm_database_schema.@tbl_name))*100,1) as ratio
             FROM @cdm_database_schema.@tbl_name
             GROUP BY @att_name"

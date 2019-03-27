@@ -108,9 +108,7 @@ tryCatch(visittbl_source_concept <<- get_ratio("visit_occurrence", "visit_source
 # Get data from admitting_source_concept_id
 # No data in NHIS, So it will be NULL
 ################################################################################
-tryCatch({
-  visittbl_admitting_source <<- get_ratio("visit_occurrence", "admitting_source_concept_id")
-}
+tryCatch(visittbl_admitting_source <<- get_ratio("visit_occurrence", "admitting_source_concept_id")
 ,
 error = function(e) {
   visittbl_admitting_source <<- NULL
@@ -134,6 +132,5 @@ tryCatch(visittbl_preceding <<- get_compared_ratio("visit_occurrence", "precedin
   ,
   error = function(e) {
     visittbl_preceding <<- NULL
-  }
-)
+})
 }

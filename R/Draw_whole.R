@@ -7,8 +7,10 @@
 ################################################################################
 # WHOLE TABLE info VISUALLIZATION
 ################################################################################
-draw_whole<-function(){
-    message("Summary data visualizing...")
+draw_whole<-function(std_schema_name,tar_schema_name){
+    cat("Summary data visualizing...\n")
+    whole_record_title <- "Comparison of records between institutions"
+    whole_person_title <- "Comparison of person between institutions"
 ################################################################################
 # WHOLE TABLE Record info
 ################################################################################
@@ -27,7 +29,7 @@ tryCatch({
         "Person", NA, "Visit", NA, "Condition", NA,
         "Drug exp", NA, "Drug era", NA
     ),
-    ylim = c(0, 100), col = c("Green", "Yellow"), main = "Comparison of records between institutions", xlab = "Table name", ylab = "Percentage (%)", cex.axis = 1.5, cex.names = 1.5,
+    ylim = c(0, 100), col = c("Green", "Yellow"), main = whole_record_title, xlab = "Table name", ylab = "Percentage (%)", cex.axis = 1.5, cex.names = 1.5,
     cex.main = 2.0, cex.lab = 1.5
     )
     text(
@@ -44,7 +46,7 @@ tryCatch({
             label_sort(std_drug_eratbl_record$ratio[1], tar_drug_eratbl_record$ratio[1])
         ), col = "black", cex = 2.0
     )
-    legend("topleft", c("A CDM", "B CDM"), pch = 15, cex = 1.5, col = c("green", "yellow"))
+    legend("topleft", c(std_schema_name, tar_schema_name), pch = 15, cex = 1.5, col = c("green", "yellow"))
 }, # If data isn't exist...
 error = function(error_message) {
     print(error_message)
@@ -73,7 +75,7 @@ tryCatch({
         "Person", NA, "Visit", NA, "Condition", NA,
         "Drug exp", NA, "Drug era", NA
     ),
-    ylim = c(0, 100), col = c("Green", "Yellow"), main = "Comparison of person between institutions", xlab = "Table name", ylab = "Percentage (%)", cex.axis = 1.5, cex.names = 1.5,
+    ylim = c(0, 100), col = c("Green", "Yellow"), main = whole_person_title, xlab = "Table name", ylab = "Percentage (%)", cex.axis = 1.5, cex.names = 1.5,
     cex.main = 2.0, cex.lab = 1.5
     )
     text(
@@ -90,7 +92,7 @@ tryCatch({
             label_sort(std_drug_eratbl_person_ratio$ratio, tar_drug_eratbl_person_ratio$ratio)
         ), col = "black", cex = 2.0
     )
-    legend("bottomleft", c("A CDM", "B CDM"), pch = 15, cex = 1.5, col = c("green", "yellow"))
+    legend("bottomleft", c(std_schema_name, tar_schema_name), pch = 15, cex = 1.5, col = c("green", "yellow"))
 }, # If data isn't exist...
 error = function(error_message) {
     print(error_message)

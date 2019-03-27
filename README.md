@@ -21,6 +21,10 @@ DRUG ERA
 
 # HOW TO USE
 
+0. Requirement
+
+* Install Java SDK (developed in 8 Update 181)
+
 1. Install GEMINI package using install_github().
 
 ```
@@ -33,7 +37,6 @@ library(gemini)
 2. After install, create_rds() to create RDS files.
 
 You can set your own work directory path and create server_info.cfg file to connect DB server.
-
 What you type down in Rstudio the server_info.cfg file in the following format.
 
 
