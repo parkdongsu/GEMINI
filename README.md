@@ -69,4 +69,4 @@ If data is NULL (or image file shows 'No Data'), check the CDM data really it NU
 > If R studio encoding is CP949 (Window default), don't open gemini_md.Rmd file until change R studio encoding to UTF-8. If not, it occurs encoding crashes.
 
 # Description
-![Poster]()
+![Poster](/OHDSI_GEMINI_poster.png)
