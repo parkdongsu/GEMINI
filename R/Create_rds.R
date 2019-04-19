@@ -33,6 +33,11 @@ create_rds<- function(){
         gemini::connect_DB()
         }
     }
+    else{
+        write(create_server_info(), "server_info.cfg")
+        cat("Try to connecting DB server...\n")
+        gemini::connect_DB()
+    }
     gemini::save_data()
     rm(list = ls())
 }

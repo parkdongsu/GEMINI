@@ -60,7 +60,7 @@ save_data <- function(){
     warning = function(w){
         message(w)
     })
-    if(length(list.files(paste0(getwd(), "/Standard RDS/"), pattern = "*.zip$"))>0){
+    if(length(list.files(paste0("./Standard RDS/"), pattern = ".zip$"))>0){
         file.remove(paste0("Standard RDS/",list.files(path = "Standard RDS/", pattern = ".rds$")))
     }
     # time check
