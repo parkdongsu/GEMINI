@@ -26,7 +26,6 @@ connect_DB <- function(previous = "server_info.cfg"){
         connection <<- DatabaseConnector::connect(connectionDetails)
         DatabaseConnector::dbIsValid(connection)
         },error = function(e){
-            file.rename(previous,"server_info_failed.cfg")
             print(e)
             stop("Connection failed. Check server_info_failed.cfg file or create new file.")
     })
