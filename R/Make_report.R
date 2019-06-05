@@ -8,7 +8,7 @@
 # Execute R markdown file
 make_report<-function(){
     tryCatch({
-        file.copy(from = paste0(.libPaths()[1],"/gemini/inst/Gemini_md.Rmd"), to = getwd(),overwrite = T)
+        file.copy(from = paste0(.libPaths()[1],"/gemini/extdata/Gemini_md.Rmd"), to = getwd(),overwrite = T)
         rmarkdown::render(paste0(getwd(),"/Gemini_md.Rmd"),encoding = "UTF-8")
         browseURL(url=paste0(getwd(),"/Gemini_md.html"))
     },error = function(x){

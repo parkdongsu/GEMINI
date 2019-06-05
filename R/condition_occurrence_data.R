@@ -5,11 +5,11 @@
 #' @export
 #'
 condition_occurrence_data <- function(){
-    condition_sql<- splitSql(readSql(paste0(.libPaths()[1],"/gemini/inst/extdata/Condition_occurrence_query.sql")))
+    condition_sql<- splitSql(readSql(paste0(.libPaths()[1],"/gemini/extdata/Condition_occurrence_query.sql")))
     if(connection@dbms == 'sql server'){
-        condition_record_sql <- splitSql(readSql(paste0(.libPaths()[1],"/gemini/inst/extdata/System_query.sql")))[1]
+        condition_record_sql <- splitSql(readSql(paste0(.libPaths()[1],"/gemini/extdata/System_query.sql")))[1]
     }else if(connection@dbms == 'postgresql'){
-        condition_record_sql <- splitSql(readSql(paste0(.libPaths()[1],"/gemini/inst/extdata/System_query.sql")))[2]
+        condition_record_sql <- splitSql(readSql(paste0(.libPaths()[1],"/gemini/extdata/System_query.sql")))[2]
     }
 ################################################################################
 # Get data from condition_occurrence_id
