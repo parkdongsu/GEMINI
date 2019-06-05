@@ -4,7 +4,7 @@
 \alias{person_data}
 \title{Person data}
 \usage{
-person_data()
+person_data(dbms = cdmDatabaseName)
 }
 \description{
 This function extract data from person table

@@ -13,9 +13,11 @@ connect_DB <- function(previous = "server_info.cfg"){
 
     #Set server information to connecting
     cdmDatabaseSchema <<- infoFromFile(serverInfoFile,"schemaName")
+    cdmDatabaseName <<- infoFromFile(serverInfoFile,"dbName")
     connectionDetails <- DatabaseConnector::createConnectionDetails(
-        dbms = infoFromFile(serverInfoFile,"dbName"),
+        dbms = cdmDatabaseName,
         server = infoFromFile(serverInfoFile,"server"),
+        port = infoFromFile(serverInfoFile,"port"),
         schema = cdmDatabaseSchema,
         user = infoFromFile(serverInfoFile,"user"),
         password = infoFromFile(serverInfoFile,"password")
