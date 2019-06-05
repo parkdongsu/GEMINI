@@ -4,7 +4,7 @@
 \alias{death_data}
 \title{Death data}
 \usage{
-death_data()
+death_data(dbms = cdmDatabaseName)
 }
 \description{
 This function for extract data from death table

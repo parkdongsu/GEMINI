@@ -4,7 +4,7 @@
 \alias{drug_era_data}
 \title{Drug era data}
 \usage{
-drug_era_data()
+drug_era_data(dbms = cdmDatabaseName)
 }
 \description{
 This function extract data from drug era table

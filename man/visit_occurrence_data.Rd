@@ -4,7 +4,7 @@
 \alias{visit_occurrence_data}
 \title{visit occurrence data}
 \usage{
-visit_occurrence_data()
+visit_occurrence_data(dbms = cdmDatabaseName)
 }
 \description{
 This function extract data from visit occurrence table

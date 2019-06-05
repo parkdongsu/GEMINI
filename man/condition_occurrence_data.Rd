@@ -4,7 +4,7 @@
 \alias{condition_occurrence_data}
 \title{Condition occurrence data}
 \usage{
-condition_occurrence_data()
+condition_occurrence_data(dbms = cdmDatabaseName)
 }
 \description{
 This function extract data from condition occurrence table

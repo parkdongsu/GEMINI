@@ -4,7 +4,7 @@
 \alias{drug_exposure_data}
 \title{Drug exposure data}
 \usage{
-drug_exposure_data()
+drug_exposure_data(dbms = cdmDatabaseName)
 }
 \description{
 This function extract data from drug exposure table
