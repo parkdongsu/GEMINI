@@ -5,11 +5,11 @@
 #' @export
 #'
 drug_era_data <- function(){
-    drug_era_sql<- splitSql(readSql(paste0(.libPaths()[1],"/gemini/data/sql/Drug_era_query.sql")))
+    drug_era_sql<- splitSql(readSql(paste0(.libPaths()[1],"/gemini/inst/extdata/Drug_era_query.sql")))
     if(connection@dbms == 'sql server'){
-        drug_era_record_sql <- splitSql(readSql(paste0(.libPaths()[1],"/gemini/data/sql/System_query.sql")))[1]
+        drug_era_record_sql <- splitSql(readSql(paste0(.libPaths()[1],"/gemini/inst/extdata/System_query.sql")))[1]
     }else if(connection@dbms == 'postgresql'){
-        drug_era_record_sql <- splitSql(readSql(paste0(.libPaths()[1],"/gemini/data/sql/System_query.sql")))[2]
+        drug_era_record_sql <- splitSql(readSql(paste0(.libPaths()[1],"/gemini/inst/extdata/System_query.sql")))[2]
     }
 ################################################################################
 # Get data from drug_era_id

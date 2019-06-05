@@ -7,9 +7,9 @@
 drug_exposure_data <- function(){
     drug_exp_sql<- splitSql(readSql(paste0(.libPaths()[1],"/gemini/data/sql/Drug_exposure_query.sql")))
     if(connection@dbms == 'sql server'){
-        drug_exp_record_sql <- splitSql(readSql(paste0(.libPaths()[1],"/gemini/data/sql/System_query.sql")))[1]
+        drug_exp_record_sql <- splitSql(readSql(paste0(.libPaths()[1],"/gemini/inst/extdata/System_query.sql")))[1]
     }else if(connection@dbms == 'postgresql'){
-        drug_exp_record_sql <- splitSql(readSql(paste0(.libPaths()[1],"/gemini/data/sql/System_query.sql")))[2]
+        drug_exp_record_sql <- splitSql(readSql(paste0(.libPaths()[1],"/gemini/inst/extdata/System_query.sql")))[2]
     }
 ################################################################################
 # Get data from drug_exposure_id
