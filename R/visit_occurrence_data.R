@@ -5,11 +5,11 @@
 #' @export
 #'
 visit_occurrence_data <- function(){
-    visit_sql<- splitSql(readSql(paste0(.libPaths()[1],"/gemini/inst/extdata/Visit_occurrence_query.sql")))
+    visit_sql<- splitSql(readSql(paste0(.libPaths()[1],"/gemini/extdata/Visit_occurrence_query.sql")))
     if(connection@dbms == 'sql server'){
-        visit_record_sql <- splitSql(readSql(paste0(.libPaths()[1],"/gemini/inst/extdata/System_query.sql")))[1]
+        visit_record_sql <- splitSql(readSql(paste0(.libPaths()[1],"/gemini/extdata/System_query.sql")))[1]
     }else if(connection@dbms == 'postgresql'){
-        visit_record_sql <- splitSql(readSql(paste0(.libPaths()[1],"/gemini/inst/extdata/System_query.sql")))[2]
+        visit_record_sql <- splitSql(readSql(paste0(.libPaths()[1],"/gemini/extdata/System_query.sql")))[2]
     }
 ################################################################################
 # Get data from visit_occurrence_id

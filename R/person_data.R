@@ -5,11 +5,11 @@
 #' @export
 #'
 person_data <- function(){
-    person_sql<- splitSql(readSql(paste0(.libPaths()[1],"/gemini/inst/extdata/Person_query.sql")))
+    person_sql<- splitSql(readSql(paste0(.libPaths()[1],"/gemini/extdata/Person_query.sql")))
     if(connection@dbms == 'sql server'){
-        person_record_sql <- splitSql(readSql(paste0(.libPaths()[1],"/gemini/inst/extdata/System_query.sql")))[1]
+        person_record_sql <- splitSql(readSql(paste0(.libPaths()[1],"/gemini/extdata/System_query.sql")))[1]
     }else if(connection@dbms == 'postgresql'){
-        person_record_sql <- splitSql(readSql(paste0(.libPaths()[1],"/gemini/inst/extdata/System_query.sql")))[2]
+        person_record_sql <- splitSql(readSql(paste0(.libPaths()[1],"/gemini/extdata/System_query.sql")))[2]
     }
 ################################################################################
 # Calculate records ratio
