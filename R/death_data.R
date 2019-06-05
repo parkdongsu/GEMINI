@@ -5,7 +5,7 @@
 #' @export
 #'
 death_data <- function(){
-    death_sql<- splitSql(readSql(paste0(.libPaths()[1],"/gemini/data/extdata/Death_query.sql")))
+    death_sql<- splitSql(readSql(paste0(.libPaths()[1],"/gemini/data/sql/Death_query.sql")))
 ################################################################################
 # Get data from death_date to check person who got 0 or many death_date
 # If not value = 1, It should be wrong data
