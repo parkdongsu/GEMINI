@@ -12,11 +12,10 @@
 save_data <- function(){
     dir.create(file.path(getwd(), "Standard RDS"), showWarnings = FALSE)
     dir.create(file.path(getwd(), "Target RDS"), showWarnings = FALSE)
-    gemini::Query_func()
-
+    Query_func()
 ################################################################################
 # PERSON DATA SAVING FUNCTION
-################################################################################
+################################################################################1
     cat("Person data extracting...\n")
     tm1 <- as.numeric(round(system.time(persontbl <- person_data())[3], digit = 1))
     rds_maker(persontbl,"person")

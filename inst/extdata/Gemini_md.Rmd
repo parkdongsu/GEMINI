@@ -22,70 +22,9 @@ This tool for data quality management by comparing and visualizing manifold data
 Compare CDM's PERSON, DEATH, VISIT OCCURRENCE, CONDITION OCCURRENCE, DRUG EXPOSURE, DRUG ERA tables.
 
 ```{r, echo=FALSE, comment= NULL} 
-selectInput("std_schema", label = "Select standard schema:",
-choices = c("test1", "test2", "test3"), selected = "test1")
-```
-
-```{r, echo=FALSE, comment= NULL} 
 paste0(params$std_schema, " : ", params$tar_schema)
 ```
 
-```{r, echo=FALSE, comment= NULL}
-person_record_title <- "Comparison of records between institutions"
-    person_gender_title <- "Comparison of gender between institutions"
-    person_min_title <- "First Visit Person per Year"
-    person_max_title <- "Last visit Person per Year"
-    person_race_title <- "Comparison of race between institutions"
-    person_ethnicity_title <- "Comparison of ethnicity between institutions"
-    person_location_title <- "Number of location type"
-    person_provider_title <- "Number of location type"
-    person_care_title <- "Number of location type"
-    
-    death_check_title <- "Check Multiple Death time between institutions"
-    death_type_title <- "Comparison of death type between institutions"
-    
-    visit_record_title <- "Comparison of records between institutions"
-    visit_person_title <-"Comparison of person ratio between institutions"
-    visit_concept_title <- "Comparison of visit concept between institutions"
-    visit_diff_title <- "Comparison of duration between institutions"
-    visit_start_title <- "Drug Exposure Start Date"
-    visit_end_title <- "Drug Exposure End Date"
-    visit_type_title <- "Comparison of visit type between institutions"
-    visit_care_title <- "Comparison of stop reason between institutions"
-    visit_source_title <- "Comparison of visit source between institutions"
-    visit_admit_title <- "Comparison of visit admitting between institutions"
-    visit_discharge_title <-"Comparison of visit discharge between institutions"
-    visit_preceding_title <-"Comparison of visit precending between institutions"
-    
-    condition_record_title <- "Comparison of records ratio between institutions"
-    condition_person_title <- "Comparison of person ratio between institutions"
-    condition_start_title <- "Condition Start Date"
-    condition_end_title <- "Condition End Date"
-    condition_diff_title <- "Comparison of duration between institutions"
-    condition_type_title <- "Comparison of condition type between institutions"
-    condition_stop_title <- "Comparison of stop reason between institutions"
-    condition_visit_occurrence_title <- "Comparison of condition/visit occurrence between institutions"
-    condition_visit_detail_title <- "Comparison of condition/visit detail between institutions"
-    
-    drug_exp_record_title <- "Comparison of records between institutions"
-    drug_exp_person_title <-"Comparison of person ratio between institutions"
-    drug_exp_start_title <- "Drug Exposure Start Date"
-    drug_exp_end_title <- "Drug Exposure End Date"
-    drug_exp_diff_title <- "Comparison of duration between institutions"
-    drug_exp_concept_title <- "Comparison of type concept between institutions"
-    drug_exp_stop_title <- "Comparison of stop reason between institutions"
-    drug_exp_route_title <- "Comparison of route concept between institutions"
-    drug_exp_visit_title <- "Comparison of drug exposure/visit occurrence\nbetween institutions"
-    
-    drug_era_record_title <- "Comparison of records between institutions"
-    drug_era_person_title <-"Comparison of person ratio between institutions"
-    drug_era_start_title <- "Drug Era Start Date"
-    drug_era_end_title <- "Drug Era End Date"
-    drug_era_diff_title <- "Comparison of duration between institutions"
-    drug_era_gap_title <- "Comparison of gap day between institutions"
-    
-    gemini::draw_func(std_schema,tar_schema)
-```
 <style>
   .col2{
     display: inline-block;
@@ -118,102 +57,24 @@ person_record_title <- "Comparison of records between institutions"
 <a name="Summary"></a>
 
 ### **Summary** {.flexbox .vcenter}
-
-<!--![All records](images/Whole/00.Record.jpg)-->
 <div class="row">
 <div class="pull_left">
 
+![All records](images/Whole/00.Record.jpg)
 
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-# WHOLE TABLE Record info
-    whole_record_title <- "Comparison of records between institutions"
-    par(mfrow = c(1, 2), xpd = T)
-
-tryCatch({
-    record_bar <<- barplot(c(
-        std_persontbl_record$ratio[1], tar_persontbl_record$ratio[1], std_visittbl_record$ratio[1], tar_visittbl_record$ratio[1],
-        std_conditiontbl_record$ratio[1], tar_conditiontbl_record$ratio[1], std_drug_exptbl_record$ratio[1], tar_drug_exptbl_record$ratio[1],
-        std_drug_eratbl_record$ratio[1], tar_drug_eratbl_record$ratio[1]
-    ),
-    beside = F, names = c(
-        "Person", NA, "Visit", NA, "Condition", NA,
-        "Drug exp", NA, "Drug era", NA
-    ),
-    ylim = c(0, 100), col = c("Green", "Yellow"), main = whole_record_title, xlab = "Table name", ylab = "Percentage (%)", cex.axis = 1.0, cex.names = 1.0,
-    cex.main = 1.0, cex.lab = 1.0    )
-    text(
-        x = record_bar, y = c(
-            std_persontbl_record$ratio[1], tar_persontbl_record$ratio[1], std_visittbl_record$ratio[1], tar_visittbl_record$ratio[1],
-            std_conditiontbl_record$ratio[1], tar_conditiontbl_record$ratio[1], std_drug_exptbl_record$ratio[1], tar_drug_exptbl_record$ratio[1],
-            std_drug_eratbl_record$ratio[1], tar_drug_eratbl_record$ratio[1]
-        ),
-        labels = c(
-            label_sort(std_persontbl_record$ratio[1], tar_persontbl_record$ratio[1]),
-            label_sort(std_visittbl_record$ratio[1], tar_visittbl_record$ratio[1]),
-            label_sort(std_conditiontbl_record$ratio[1], tar_conditiontbl_record$ratio[1]),
-            label_sort(std_drug_exptbl_record$ratio[1], tar_drug_exptbl_record$ratio[1]),
-            label_sort(std_drug_eratbl_record$ratio[1], tar_drug_eratbl_record$ratio[1])
-        ), col = "black", cex = 1.0
-    )
-    legend("topleft", c(std_schema, tar_schema), pch = 1.5, cex = 1.0, col = c("green", "yellow"))
-}, # If data isn't exist...
-error = function(error_message) {
-    print(error_message)
-    afterError()
-}
-)
-```
 The number of records in the table being compared Percentage of records per table based on the sum
 <!--비교 대상이 되는 테이블의 레코드 수 총합을 기준으로 한 테이블 별 레코드 백분율. -->
+
 </div>
 
 <div class="pull_right">
+![All patients](images/Whole/01.Person.jpg)
 
-<!-- ![All patients](images/Whole/01.Person.jpg) -->
-
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-whole_person_title <- "Comparison of person between institutions"
-par(mfrow = c(1, 2), xpd = T)
-tryCatch({
-    person_bar <<- barplot(c(
-        std_persontbl_person_ratio$ratio, tar_persontbl_person_ratio$ratio, std_visittbl_person_ratio$ratio, tar_visittbl_person_ratio$ratio,
-        std_conditiontbl_person_ratio$ratio, tar_conditiontbl_person_ratio$ratio, std_drug_exptbl_person_ratio$ratio, tar_drug_exptbl_person_ratio$ratio,
-        std_drug_eratbl_person_ratio$ratio, tar_drug_eratbl_person_ratio$ratio
-    ),
-    beside = F, names = c(
-        "Person", NA, "Visit", NA, "Condition", NA,
-        "Drug exp", NA, "Drug era", NA
-    ),
-    ylim = c(0, 100), col = c("Green", "Yellow"), main = whole_person_title, xlab = "Table name", ylab = "Percentage (%)", cex.axis = 1.0, cex.names = 1.0,
-    cex.main = 1.0, cex.lab = 1.0
-    )
-    text(
-        x = person_bar, y = c(
-            std_persontbl_person_ratio$ratio, tar_persontbl_person_ratio$ratio, std_visittbl_person_ratio$ratio, tar_visittbl_person_ratio$ratio,
-            std_conditiontbl_person_ratio$ratio, tar_conditiontbl_person_ratio$ratio, std_drug_exptbl_person_ratio$ratio, tar_drug_exptbl_person_ratio$ratio,
-            std_drug_eratbl_person_ratio$ratio, tar_drug_eratbl_person_ratio$ratio
-        ),
-        labels = c(
-            label_sort(std_persontbl_person_ratio$ratio, tar_persontbl_person_ratio$ratio),
-            label_sort(std_visittbl_person_ratio$ratio, tar_visittbl_person_ratio$ratio),
-            label_sort(std_conditiontbl_person_ratio$ratio, tar_conditiontbl_person_ratio$ratio),
-            label_sort(std_drug_exptbl_person_ratio$ratio, tar_drug_exptbl_person_ratio$ratio),
-            label_sort(std_drug_eratbl_person_ratio$ratio, tar_drug_eratbl_person_ratio$ratio)
-        ), col = "black", cex = 1.0
-    )
-    legend("bottomleft", c(std_schema, tar_schema), pch = 1.5, cex = 1.0, col = c("green", "yellow"))
-}, # If data isn't exist...
-error = function(error_message) {
-    print(error_message)
-    afterError()
-}
-)
-```
 The percentage of patients by table based on the total number of patients in the table being compared.
 <!--비교 대상이 되는 테이블의 전체 환자 수를 기준으로 한 테이블 별 환자 백분율.-->
-</div>
-</div>
 
+</div>
+</div>
 <a href="#Top">TOP</a>
 
 ***
@@ -221,16 +82,9 @@ The percentage of patients by table based on the total number of patients in the
 
 ### **PERSON Table** 
 
-
 <div class="row">
 <div class="pull_left">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_table_pie(std_persontbl_record, tar_persontbl_record, "PERSON TABLE", "Person/00.Person_record.jpg")
-mtext(person_record_title, side = 3, line = -5, outer = T, cex = 2.0, font = 2)
-mtext(paste0("count : ",std_persontbl_record$count), side = 1, line = -15, at=0.75, outer = T, cex = 1.5)
-mtext(paste0("count : ",tar_persontbl_record$count), side = 1, line = -15, at=0.25, outer = T, cex = 1.5)
-```
-<!-- ![Person record](images/Person/00.Person_record.jpg) -->
+![Person record](images/Person/00.Person_record.jpg)
 
 The Percentage of records in the Person table
 <!--Person 테이블의 레코드가 차지하는 백분율-->
@@ -238,34 +92,7 @@ The Percentage of records in the Person table
 </div>
 
 <div class="pull_right">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-par(mfrow = c(1, 1), xpd = T)
-# Draw graph in one bar chart
-tryCatch({
-    gender_bar <<- barplot(c(std_persontbl_gender$ratio[1], tar_persontbl_gender$ratio[1], std_persontbl_gender$ratio[2], tar_persontbl_gender$ratio[2]),
-                          beside = F, ylim = c(0, 100), names = c(
-                              std_persontbl_gender$attributeName[1], tar_persontbl_gender$attributeName[1],
-                              std_persontbl_gender$attributeName[2], tar_persontbl_gender$attributeName[2]
-                          ),
-                          col = c("Green", "Yellow"), main = person_gender_title, xlab = "Gender", ylab = "Percentage (%)", cex.main = 2.0, cex.lab = 1.5,
-                          cex.names = 1.5, cex.axis = 1.5
-    )
-    text(
-        x = gender_bar, y = c(std_persontbl_gender$ratio[1], tar_persontbl_gender$ratio[1], std_persontbl_gender$ratio[2], tar_persontbl_gender$ratio[2]),
-        labels = c(
-            label_sort(std_persontbl_gender$ratio[1], tar_persontbl_gender$ratio[1]),
-            label_sort(std_persontbl_gender$ratio[2], tar_persontbl_gender$ratio[2])
-        ), col = "black", cex = 2.0
-    )
-    legend("topleft", c(std_schema, tar_schema), pch = 15, cex = 2.0, col = c("green", "yellow"))
-}, # If data isn't exist...
-error = function(error_message) {
-    print(error_message)
-    afterError()
-}
-)
-```
-<!-- ![Person gender ratio](images/Person/01.Person_gender.jpg) -->
+![Person gender ratio](images/Person/01.Person_gender.jpg)
 
 Gender ratio of patients
 <!--환자들의 성비-->
@@ -273,109 +100,12 @@ Gender ratio of patients
 </div>
 </div>
 
-<div class="row">
-<div class="pull_left">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-par(mfrow = c(1, 1), xpd = F)
-# Divide ratio by Gender
-tryCatch({
-    male_min_ratio <<- std_persontbl_min_age$ratio[std_persontbl_min_age$genderConceptId == "8507"]
-    female_min_ratio <<- std_persontbl_min_age$ratio[std_persontbl_min_age$genderConceptId == "8532"]
+<div class="col2">
 
-    compared_male_min_ratio <<- tar_persontbl_min_age$ratio[tar_persontbl_min_age$genderConceptId == "8507"]
-    compared_female_min_ratio <<- tar_persontbl_min_age$ratio[tar_persontbl_min_age$genderConceptId == "8532"]
-    # Set label which got more long length
-    min_lbl <<- union(std_persontbl_min_age$ageRange,std_persontbl_max_age$ageRange)
-    # Draw line Graph
-    plot(male_min_ratio,
-         type = "p", pch = 19, col = 4, cex = 2, xlab = "AGE_RANGE", ylab = "GENDER_RATIO(%)", axes = F,
-         ylim = c(0, as.numeric(max(c(male_min_ratio, female_min_ratio, compared_male_min_ratio, compared_female_min_ratio)))),
-         xlim = c(0, length(min_lbl)), main = person_min_title, cex.main = 2.0, cex.lab = 1.5
-    )
-    axis(1, at = c(1:length(min_lbl)), labels = min_lbl, cex.axis = 1.5)
-    # Set y_axis which got more big value
-    if (max(std_persontbl_min_age$ratio) > max(tar_persontbl_min_age$ratio)) {
-        y_axis <<- as.numeric(max(std_persontbl_min_age$ratio))
-    } else {
-        y_axis <<- as.numeric(max(tar_persontbl_min_age$ratio))
-    }
-    axis(2, at = c(0:ceiling(y_axis)), cex.axis = 1.5)
+![Person first treat](images/Person/02.Person_min_year.jpg)
 
-    # add another line graph
-    lines(female_min_ratio, type = "p", pch = 19, col = 2, cex = 2) +
-        lines(compared_male_min_ratio, type = "p", pch = 18, cex = 2.5,col = "cyan4") +
-        lines(compared_female_min_ratio, type = "p", pch = 18, cex = 2.5, col = "brown")
-    box()
-    abline(
-        h = c(0:ceiling(as.numeric(max(std_persontbl_min_age$ratio, tar_persontbl_min_age$ratio)))),
-        v = c(1:(max(nrow(std_persontbl_min_age), nrow(tar_persontbl_min_age)) / 2)), lty = 3
-    )
-    legend("topright", c(
-        "A.Male", "A.Female",
-        "B.Male", "B.Female"
-    ), pch = c(19, 19, 18, 18), cex = 2.0, col = c("blue", "red", "cyan4", "brown"))
-}, # If data isn't exist...
-error = function(error_message) {
-    print(error_message)
-    afterError()
-}
-)
-```
-<!-- ![Person first treat](images/Person/02.Person_min_year.jpg) -->
-</div>
-<div class="pull_right">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-par(mfrow = c(1, 1), xpd = F)
-# Divide ratio by Gender
-tryCatch({
-    male_max_ratio <<- std_persontbl_max_age$ratio[std_persontbl_max_age$genderConceptId == "8507"]
-    female_max_ratio <<- std_persontbl_max_age$ratio[std_persontbl_max_age$genderConceptId == "8532"]
-    compared_male_max_ratio <<- tar_persontbl_max_age$ratio[tar_persontbl_max_age$genderConceptId == "8507"]
-    compared_female_max_ratio <<- tar_persontbl_max_age$ratio[tar_persontbl_max_age$genderConceptId == "8532"]
-    # Set label which got more long length
-    if (length(std_persontbl_max_age$ageRange[std_persontbl_max_age$genderConceptId == "8507"])
-        > length(tar_persontbl_max_age$ageRange[tar_persontbl_max_age$genderConceptId == "8507"])) {
-        x_max_lbl <- std_persontbl_max_age$ageRange[std_persontbl_max_age$genderConceptId == "8507"]
-    } else {
-        x_max_lbl <- tar_persontbl_max_age$ageRange[tar_persontbl_max_age$genderConceptId == "8507"]
-    }
-    # Draw line Graph
-    plot(male_max_ratio,
-         type = "p", pch = 19, cex = 2, col = 4, xlab = "AGE_RANGE", ylab = "GENDER_RATIO(%)", axes = F,
-         ylim = c(0, as.numeric(max(c(male_max_ratio, female_max_ratio, compared_male_max_ratio, compared_female_max_ratio)))),
-         xlim = c(0, length(x_max_lbl)), main = person_max_title, cex.main = 2.0, cex.lab = 1.5
-    )
-    axis(1, at = c(1:length(x_max_lbl)), labels = x_max_lbl, cex.axis = 1.5)
-    # Set y_axis which got more big value
-    if (max(std_persontbl_max_age$ratio) > max(tar_persontbl_max_age$ratio)) {
-        y_axis <<- as.numeric(max(std_persontbl_max_age$ratio))
-    } else {
-        y_axis <<- as.numeric(max(tar_persontbl_max_age$ratio))
-    }
-    axis(2, at = c(0:ceiling(y_axis)), cex.axis = 1.5)
+![Person last treat](images/Person/03.Person_max_year.jpg)
 
-    # add another line graph
-    lines(female_max_ratio, type = "p", pch = 19, cex = 2, col = 2) +
-        lines(compared_male_max_ratio, type = "p", pch = 18, cex = 2.5, col = "cyan4") +
-        lines(compared_female_max_ratio, type = "p", pch = 18, cex = 2.5, col = "brown")
-    box()
-    abline(
-        h = c(0:ceiling(as.numeric(max(std_persontbl_max_age$ratio, tar_persontbl_max_age$ratio)))),
-        v = c(1:(max(nrow(std_persontbl_max_age), nrow(tar_persontbl_max_age)) / 2)), lty = 3
-    )
-    legend("topright", c(
-        "A.Male", "A.Female",
-        "B.Male", "B.Female"
-    ), pch = c(19, 19, 18, 18), cex = 2.0, col = c("blue", "red", "cyan4", "brown"))
-}, # If data isn't exist...
-error = function(error_message) {
-    print(error_message)
-    afterError()
-}
-)
-```
-<!--  ![Person last treat](images/Person/03.Person_max_year.jpg) -->
-</div>
 </div>
 
 The percentage and sex ratio by age, based on the year the patients were first treated and the last year they were treated
@@ -384,22 +114,14 @@ The percentage and sex ratio by age, based on the year the patients were first t
 <div class="row">
 <div class="pull_left">
 
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_ratio_pie(std_persontbl_race, tar_persontbl_race, "Person/04.Person_race.jpg")
-mtext(person_race_title, font = 2, side = 3, line = -5, outer = T, cex = 2.5)
-```
-<!-- ![Person race](images/Person/04.Person_race.jpg) -->
+![Person race](images/Person/04.Person_race.jpg)
 
 The percentage of patient race
 <!-- 환자 인종별 백분율-->
 </div>
 
 <div class="pull_right">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_ratio_pie(std_persontbl_ethnicity, tar_persontbl_ethnicity, "Person/05.Person_ethnicity.jpg")
-mtext(person_ethnicity_title, font = 2, side = 3, line = -5, outer = T, cex = 2.5)
-```
-<!-- ![Person ethnicity](images/Person/05.Person_ethnicity.jpg) -->
+![Person ethnicity](images/Person/05.Person_ethnicity.jpg)
 
 The percentage of patient ethnicity
 <!-- 환자 민족별 백분율 -->
@@ -408,10 +130,8 @@ The percentage of patient ethnicity
 
 <div class="row">
 <div class="pull_left">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_null_bar(std_persontbl_location, tar_persontbl_location, person_location_title, "Person/06.Person_location.jpg")
-```
-<!-- ![Person address](images/Person/06.Person_location.jpg) -->
+
+![Person address](images/Person/06.Person_location.jpg)
 
 The number of patients' residential addresses and the percentage of null values
 
@@ -419,10 +139,7 @@ The number of patients' residential addresses and the percentage of null values
 </div>
 
 <div class="pull_right">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_null_bar(std_persontbl_provider, tar_persontbl_provider, person_provider_title, "Person/07.Person_provider.jpg")
-```
-<!-- ![Person provider](images/Person/07.Person_provider.jpg) -->
+![Person provider](images/Person/07.Person_provider.jpg)
 
 The number of people managing patients and the percentage of null values
 <!-- 환자를 관리하는 인원 수와 Null 값의 백분율.-->
@@ -430,10 +147,7 @@ The number of people managing patients and the percentage of null values
 </div>
 
 <SPAN class="col2">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_null_bar(std_persontbl_care_site, tar_persontbl_care_site, person_care_title, "Person/08.Person_care_site.jpg")
-```
-<!-- ![Person care site](images/Person/08.Person_care_site.jpg) -->
+![Person care site](images/Person/08.Person_care_site.jpg)
 
 The number of places that provide medical care to the patient and the percentage of null values
 <!-- 환자에게 의료 서비스를 제공하는 장소의 수 및 Null 값의 백분율.-->
@@ -447,34 +161,14 @@ The number of places that provide medical care to the patient and the percentage
 ### **DEATH Table**
 <div class="row">
 <div class="pull_left">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-check.death <- function(temporary){
-        if(nrow(temporary)!=1){
-            main <- temporary[1,]
-            main$attributeName[1] <- "Integrity data"
-            main <- rbind(main, data.frame(attributeName = "Duplicate data", ratio = round(100 - temporary[1,]$ratio,1)))
-        }else{
-            main <- temporary
-            main$attributeName <- "Integrity data"
-        }
-
-        return(main)
-    }
-draw_ratio_pie(check.death(std_deathtbl_check), check.death(tar_deathtbl_check), "Death/00.Death_deathcheck.jpg")
-mtext(death_check_title, font = 2, side = 3, line = -5, outer = T, cex = 2.0)
-```
-<!-- ![Death ETL check](images/Death/00.Death_deathcheck.jpg) -->
+![Death ETL check](images/Death/00.Death_deathcheck.jpg)
 
 The percentage of deaths recorded by the number of deaths recorded
 <!-- 사망자의 사망 날짜가 기록된 개수에 따른 백분율.-->
 </div>
 
 <div class="pull_right">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_ratio_pie(std_deathtbl_type, tar_deathtbl_type, "Death/01.Death_type.jpg")
-mtext(death_type_title, font = 2, side = 3, line = -5, outer = T, cex = 2.0)
-```
-<!-- ![Death type](images/Death/01.Death_type.jpg) -->
+![Death type](images/Death/01.Death_type.jpg)
 
 The percentage of deaths by type of death
 <!-- 사망자의 사망 유형 별 백분율-->
@@ -490,12 +184,6 @@ The percentage of deaths by type of death
 ### **VISIT OCCURRENCE Table**
 <div class="row">
 <div class="pull_left">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_table_pie(std_visittbl_record, tar_visittbl_record, "VISIT TABLE", "Visit/00.Visit_record.jpg")
-mtext(visit_record_title, font = 2, side = 3, line = -5, outer = T, cex = 2.0)
-mtext(paste0("count : ",std_visittbl_record$count), side = 1, line = -15, at=0.75, outer = T, cex = 1.5)
-mtext(paste0("count : ",tar_visittbl_record$count), side = 1, line = -15, at=0.25, outer = T, cex = 1.5)
-```
 ![Visit record](images/Visit/00.Visit_record.jpg)
 
 The percentage of records in the Visit Occurrence table
@@ -503,11 +191,7 @@ The percentage of records in the Visit Occurrence table
 </div>
 
 <div class="pull_right">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_table_pie(std_visittbl_person_ratio, tar_visittbl_person_ratio, "VISIT PERSON", "Visit/01.Visit_person.jpg")
-mtext(visit_person_title, font = 2, side = 3, line = -5, outer = T, cex = 2.0)
-```
-<!-- ![Visit person](images/Visit/01.Visit_person.jpg)-->
+![Visit person](images/Visit/01.Visit_person.jpg)
 
 The percentage of patients in the Visit Occurrence table
 <!-- Visit Occurrence 테이블의 환자가 차지하는 백분율.-->
@@ -516,37 +200,14 @@ The percentage of patients in the Visit Occurrence table
 
 <div class="row">
 <div class="pull_left">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_ratio_pie(std_visittbl_visit_concept, tar_visittbl_visit_concept, "Visit/02.Visit_concept.jpg")
-mtext(visit_concept_title, font = 2, side = 3, line = -5, outer = T, cex = 2.0)
-```
-<!-- ![Visit concept](images/Visit/02.Visit_concept.jpg)-->
+![Visit concept](images/Visit/02.Visit_concept.jpg)
 
 The percentage by hospital visit concept
 <!-- 병원 방문 유형별 백분율.-->
 </div>
 
 <div class="pull_right">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-par(mfrow = c(1, 2), oma = c(0, 0, 2, 0))
-tryCatch(
-    hist(std_visittbl_diff_date$dayDiff, breaks = 25, xlab = "Visit Duration", main = std_schema, cex.main = 1.5, cex.axis = 1.5, cex.lab = 2.0)
-    , # If data isn't exist...
-    error = function(error_message) {
-        print(error_message)
-        afterError()
-    }
-)
-tryCatch(
-    hist(tar_visittbl_diff_date$dayDiff, breaks = 25, xlab = "Visit Duration", main = tar_schema, cex.main = 1.5, cex.axis = 1.5, cex.lab = 2.0)
-    , # If data isn't exist...
-    error = function(error_message) {
-        print(error_message)
-        afterError()
-    }
-)
-```
-<!-- ![Visit duration](images/Visit/03.Visit_duration.jpg)-->
+![Visit duration](images/Visit/03.Visit_duration.jpg)
 
 Patient visit duration histogram
 <!-- 환자의 방문 기간 히스토그램.-->
@@ -554,45 +215,9 @@ Patient visit duration histogram
 </div>
 
 <div class="col2">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_line_start(std_visittbl_start, tar_visittbl_start, visit_start_title, "Visit/04.Visit_start.jpg")
-```
-<!-- ![Visit start year](images/Visit/04.Visit_start.jpg)-->
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-if (length(std_visittbl_end[is.na(std_visittbl_end$visitYear)]) != 0) {
-    std_visittbl_na_end <<- std_visittbl_end[is.na(std_visittbl_end$visitYear), 2]
-    temp_std_s <<- 2
-} else {
-    std_visittbl_na_end <<- NA
-    temp_std_s <<- 1
-}
-if (length(std_visittbl_end[std_visittbl_end$visitYear == 2999, ]$visitYear) != 0) {
-    std_visittbl_over_end <<- std_visittbl_end[na.omit(std_visittbl_end$visitYear == 2999), 2]
-    temp_std_e <<- nrow(std_visittbl_end) - 1
-} else {
-    std_visittbl_over_end <<- NA
-    temp_std_e <<- nrow(std_visittbl_end)
-}
-if (length(tar_visittbl_end[is.na(tar_visittbl_end$visitYear)]) != 0) {
-    tar_visittbl_na_end <<- tar_visittbl_end[is.na(tar_visittbl_end$visitYear), 2]
-    temp_tar_s <<- 2
-} else {
-    tar_visittbl_na_end <<- NA
-    temp_tar_s <<- 1
-}
-if (length(tar_visittbl_end[tar_visittbl_end$visitYear == 2999, ]$visitYear) != 0) {
-    tar_visittbl_over_end <<- tar_visittbl_end[na.omit(tar_visittbl_end$visitYear == 2999), 2]
-    temp_tar_e <<- nrow(tar_visittbl_end) - 1
-} else {
-    tar_visittbl_over_end <<- NA
-    temp_tar_e <<- nrow(tar_visittbl_end)
-}
-visit_na_end <<- c(std_visittbl_na_end, tar_visittbl_na_end)
-visit_over_end <<- c(std_visittbl_over_end, tar_visittbl_over_end)
-# Grid line sketch
-draw_line_end(std_visittbl_end[temp_std_s:temp_std_e, ], tar_visittbl_end[temp_tar_s:temp_tar_e, ], visit_na_end, visit_over_end,visit_end_title, "Visit/05.Visit_end.jpg")
-```
-<!-- ![Visit end year](images/Visit/05.Visit_end.jpg) -->
+![Visit start year](images/Visit/04.Visit_start.jpg)
+
+![Visit end year](images/Visit/05.Visit_end.jpg)
 </div>
 
 The percentage of first visit and last visit to hospital by year
@@ -600,11 +225,7 @@ The percentage of first visit and last visit to hospital by year
 
 <div class="row">
 <div class="pull_left">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_ratio_pie(std_visittbl_type_concept, tar_visittbl_type_concept, "Visit/06.Visit_type.jpg")
-mtext(visit_concept_title, font = 2, side = 3, line = -5, outer = T, cex = 2.0)
-```
-
+![Visit type](images/Visit/06.Visit_type.jpg)
 
 
 The percentage of visit type
@@ -612,10 +233,7 @@ The percentage of visit type
 </div>
 
 <div class="pull_right">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_null_bar(std_visittbl_care_site, tar_visittbl_care_site, visit_care_title, "Visit/07.Visit_care_site.jpg")
-```
-
+![Visit care site](images/Visit/07.Visit_care_site.jpg)
 
 The number of types of places where visitors receive medical care and the percentage of null values
 
@@ -625,11 +243,7 @@ The number of types of places where visitors receive medical care and the percen
 
 <div class="row">
 <div class="pull_left">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_ratio_pie(std_visittbl_source_concept, tar_visittbl_source_concept, "Visit/08.Visit_source.jpg")
-mtext(visit_source_title, font = 2, side = 3, line = -5, outer = T, cex = 2.0)
-```
-
+![Visit source](images/Visit/08.Visit_source.jpg)
 
 The percentage of visit source
 
@@ -637,11 +251,7 @@ The percentage of visit source
 </div>
 
 <div class="pull_right">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_ratio_pie(std_visittbl_admitting_source, tar_visittbl_admitting_source, "Visit/09.Visit_admitting.jpg")
-mtext(visit_admit_title, font = 2, side = 3, line = -5, outer = T, cex = 2.0)
-```
-
+![Visit admitting](images/Visit/09.Visit_admitting.jpg)
 
 The percentage of visit admitting source
 
@@ -651,22 +261,14 @@ The percentage of visit admitting source
 
 <div class="row">
 <div class="pull_left">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_ratio_pie(std_visittbl_discharge, tar_visittbl_discharge, "Visit/10.Visit_discharge.jpg")
-mtext(visit_discharge_title, font = 2, side = 3, line = -5, outer = T, cex = 2.0)
-```
-
+![Visit discharge](images/Visit/10.Visit_discharge.jpg)
 
 The percentage of visit dischage
 <!-- 방문 종료 사유별 백분율.-->
 </div>
 
 <div class="pull_right">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_compare_pie(std_visittbl_preceding, tar_visittbl_preceding, "Visit/11.Visit_preceding.jpg")
-mtext(visit_preceding_title, font = 2, side = 3, line = -5, outer = T, cex = 2.0)
-```
-
+![Visit preceding](images/Visit/11.Visit_preceding.jpg)
 
 The percentage of visits returned per previous visit
 <!-- 이전의 방문과 재방문 연관에 따른 비율.-->
@@ -681,13 +283,7 @@ The percentage of visits returned per previous visit
 ### **CONDITION OCCURRENCE Table**
 <div class="row">
 <div class="pull_left">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_table_pie(std_conditiontbl_record, tar_conditiontbl_record, "CONDITION\nTABLE", "Condition/00.Condition_record.jpg")
-mtext(condition_record_title, font = 2, side = 3, line = -5, outer = T, cex = 2.0)
-mtext(paste0("count : ",std_conditiontbl_record$count), side = 1, line = -15, at=0.75, outer = T, cex = 1.5)
-mtext(paste0("count : ",tar_conditiontbl_record$count), side = 1, line = -15, at=0.25, outer = T, cex = 1.5)
-```
-
+![Condition record](images/Condition/00.Condition_record.jpg)
 
 The percentage of records in the Condition Occurrence table
 
@@ -695,11 +291,7 @@ The percentage of records in the Condition Occurrence table
 </div>
 
 <div class="pull_right">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_table_pie(std_conditiontbl_person_ratio, tar_conditiontbl_person_ratio, "CONDITION\nPERSON", "Condition/01.Condition_person.jpg")
-mtext(condition_person_title, font = 2, side = 3, line = -5, outer = T, cex = 2.0)
-```
-
+![Condition person](images/Condition/01.Condition_person.jpg)
 
 The percentage of patients in the Condition Occurrence table
 
@@ -708,49 +300,9 @@ The percentage of patients in the Condition Occurrence table
 </div>
 
 <div class="col2">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_line_start(std_conditiontbl_start, tar_conditiontbl_start, condition_start_title, "Condition/02.Condition_start.jpg")
-```
+![Condition start year](images/Condition/02.Condition_start.jpg)
 
-
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-if (length(std_conditiontbl_end[is.na(std_conditiontbl_end$visitYear)]) != 0) {
-    std_conditiontbl_na_end <<- std_conditiontbl_end[is.na(std_conditiontbl_end$visitYear), 2]
-    temp_std_s <<- 2
-} else {
-    std_conditiontbl_na_end <<- NA
-    temp_std_s <<- 1
-}
-if (length(std_conditiontbl_end[std_conditiontbl_end$visitYear == 2999, ]$visitYear) != 0) {
-    std_conditiontbl_over_end <<- std_conditiontbl_end[na.omit(std_conditiontbl_end$visitYear == 2999), 2]
-    temp_std_e <<- nrow(std_conditiontbl_end) - 1
-} else {
-    std_conditiontbl_over_end <<- NA
-    temp_std_e <<- nrow(std_conditiontbl_end)
-}
-if (length(tar_conditiontbl_end[is.na(tar_conditiontbl_end$visitYear)]) != 0) {
-    tar_conditiontbl_na_end <<- tar_conditiontbl_end[is.na(tar_conditiontbl_end$visitYear), 2]
-    temp_tar_s <<- 2
-} else {
-    tar_conditiontbl_na_end <<- NA
-    temp_tar_s <<- 1
-}
-if (length(tar_conditiontbl_end[tar_conditiontbl_end$visitYear == 2999, ]$visitYear) != 0) {
-    tar_conditiontbl_over_end <<- tar_conditiontbl_end[tar_conditiontbl_end$visitYear == 2999, 2]
-    temp_tar_e <<- nrow(tar_conditiontbl_end) - 1
-} else {
-    tar_conditiontbl_over_end <<- NA
-    temp_tar_e <<- nrow(tar_conditiontbl_end) - 1
-}
-
-condition_na_end <<- c(std_conditiontbl_na_end, tar_conditiontbl_na_end)
-condition_over_end <<- c(std_conditiontbl_over_end, tar_conditiontbl_over_end)
-draw_line_end(
-    std_conditiontbl_end[temp_std_s:temp_std_e, ], tar_conditiontbl_end[temp_tar_s:temp_tar_e, ], condition_na_end, condition_over_end,
-    condition_end_title, "Condition/03.Condition_end.jpg"
-)
-```
-
+![Condition end year](images/Condition/03.Condition_end.jpg)
 </div>
 
 The percentage by year based on condition identification and termination
@@ -758,38 +310,14 @@ The percentage by year based on condition identification and termination
 
 <div class="row">
 <div class="pull_left">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-par(mfrow = c(1, 2), oma = c(0, 0, 2, 0))
-tryCatch(
-    hist(std_conditiontbl_diff_date$dayDiff, breaks = 25, xlab = "Condition Duration", main = std_schema, cex.main = 2.0, cex.axis = 1.5, cex.lab = 1.5)
-    , # If data isn't exist...
-    error = function(error_message) {
-        print(error_message)
-        afterError()
-    }
-)
-tryCatch(
-    hist(tar_conditiontbl_diff_date$dayDiff, breaks = 25, xlab = "Condition Duration", main = tar_schema, cex.main = 2.0, cex.axis = 1.5, cex.lab = 1.5)
-    , # If data isn't exist...
-    error = function(error_message) {
-        print(error_message)
-        afterError()
-    }
-)
-title(condition_diff_title, outer = T, cex.main = 2.0)
-```
-
+![Condition duration](images/Condition/04.Condition_duration.jpg)
 
 Patient condition duration histogram
 <!-- 질병 기간별 히스토그램.-->
 </div>
 
 <div class="pull_right">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_ratio_pie(std_conditiontbl_type_concept, tar_conditiontbl_type_concept, "Condition/05.Condition_type.jpg")
-mtext(condition_type_title, font = 2, side = 3, line = -5, outer = T, cex = 2.0)
-```
-
+![Condition type](images/Condition/05.Condition_type.jpg)
 
 The percentage of condition type
 <!-- 질병 발생 유형별 백분율.-->
@@ -798,20 +326,14 @@ The percentage of condition type
 
 <div class="row">
 <div class="pull_left">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_count_bar(std_conditiontbl_stop, tar_conditiontbl_stop, condition_stop_title, "Condition/06.Condition_stop.jpg")
-```
-
+![Condition stop reason](images/Condition/06.Condition_stop.jpg)
 
 The number of reasons for stopping condition
 <!-- 증상이 나타나지 않게 된 이유의 종류 수. -->
 </div>
 
 <div class="pull_right">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_compare_pie(std_conditiontbl_visit_occurrence, tar_conditiontbl_visit_occurrence, "Condition/07.Condition_visit_occurrence.jpg")
-mtext(condition_visit_occurrence_title, font = 2, side = 3, line = -5, outer = T, cex = 2.0)
-```
+![Condition / visit occurrence](images/Condition/07.Condition_visit_occurrence.jpg)
 
 The percentage of correlation between condition check and visits
 <!-- 증상 확인과 방문 간 상관 관계의 비율.-->
@@ -820,10 +342,7 @@ The percentage of correlation between condition check and visits
 
 <div class="row">
 <SPAN class="col2">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_compare_pie(std_conditiontbl_visit_detail, tar_conditiontbl_visit_detail, "Condition/08.Condition_visit_detail.jpg")
-mtext(condition_visit_detail_title, font = 2, side = 3, line = -5, outer = T, cex = 2.0)
-```
+![Condition / visit detail](images/Condition/08.Condition_visit_detail.jpg)
 
 The percentageof correlation between conition and visit
 <!-- 증상과 방문 내용과의 상관 관계 비율.-->
@@ -838,13 +357,7 @@ The percentageof correlation between conition and visit
 ### **DRUG EXPOSURE Table**
 <div class="row">
 <div class="pull_left">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_table_pie(std_drug_exptbl_record, tar_drug_exptbl_record, "DRUG EXP\nTABLE", "Drug exposure/00.Drug_exp_record.jpg")
-mtext(drug_exp_record_title, font = 2, side = 3, line = -5, outer = T, cex = 2.0)
-mtext(paste0("count : ",std_drug_exptbl_record$count), side = 1, line = -15, at=0.75, outer = T, cex = 1.5)
-mtext(paste0("count : ",tar_drug_exptbl_record$count), side = 1, line = -15, at=0.25, outer = T, cex = 1.5)
-```
-
+![DrugExp record](images/Drug exposure/00.Drug_exp_record.jpg)
 
 The percentage of records in the Drug Exposure table
 </div>
@@ -852,11 +365,7 @@ The percentage of records in the Drug Exposure table
 <div class="pull_right">
 <!-- Drug Exposue 테이블의 레코드가 차지하는 백분율.-->
 
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_table_pie(std_drug_exptbl_person_ratio, tar_drug_exptbl_person_ratio, "DRUG EXP\nPERSON", "Drug exposure/01.Drug_exp_person.jpg")
-mtext(drug_exp_person_title, font = 2, side = 3, line = -5, outer = T, cex = 2.0)
-```
-
+![DrugExp person](images/Drug exposure/01.Drug_exp_person.jpg)
 
 
 The percentage of patients in the Drug Exposue table
@@ -865,87 +374,23 @@ The percentage of patients in the Drug Exposue table
 </div>
 
 <div class="col2">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_line_start(std_drug_exptbl_start, tar_drug_exptbl_start, drug_exp_start_title, "Drug exposure/02.Drug_exp_start.jpg")
-```
+![DrugExp start year](images/Drug exposure/02.Drug_exp_start.jpg)
 
-
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-
-if (length(std_drug_exptbl_end[is.na(std_drug_exptbl_end$visitYear)]) != 0) {
-    std_drug_exptbl_na_end <<- std_drug_exptbl_end[is.na(std_drug_exptbl_end$visitYear), 2]
-    temp_std_s <<- 2
-} else {
-    std_drug_exptbl_na_end <<- NA
-    temp_std_s <<- 1
-}
-if (length(std_drug_exptbl_end[std_drug_exptbl_end$visitYear == 2999, ]$visitYear) != 0) {
-    std_drug_exptbl_over_end <<- std_drug_exptbl_end[std_drug_exptbl_end$visitYear == 2999, 2]
-    temp_std_e <<- nrow(std_drug_exptbl_end) - 1
-} else {
-    std_drug_exptbl_over_end <<- NA
-    temp_std_e <<- nrow(std_drug_exptbl_end)
-}
-if (length(tar_drug_exptbl_end[is.na(tar_drug_exptbl_end$visitYear)]) != 0) {
-    tar_drug_exptbl_na_end <<- tar_drug_exptbl_end[is.na(tar_drug_exptbl_end$visitYear), 2]
-    temp_tar_s <<- 2
-} else {
-    tar_drug_exptbl_na_end <<- NA
-    temp_tar_s <<- 1
-}
-if (length(tar_drug_exptbl_end[tar_drug_exptbl_end$visitYear == 2999, ]$visitYear) != 0) {
-    tar_drug_exptbl_over_end <<- tar_drug_exptbl_end[tar_drug_exptbl_end$visitYear == 2999, 2]
-    temp_tar_e <<- nrow(tar_drug_exptbl_end) - 1
-} else {
-    tar_drug_exptbl_over_end <<- NA
-    temp_tar_e <<- nrow(tar_drug_exptbl_end)
-}
-drug_exp_na_end <<- c(std_drug_exptbl_na_end, tar_drug_exptbl_na_end)
-drug_exp_over_end <<- c(std_drug_exptbl_over_end, tar_drug_exptbl_over_end)
-draw_line_end(
-    std_drug_exptbl_end[temp_std_s:temp_std_e, ], tar_drug_exptbl_end[temp_tar_s:temp_tar_e, ], drug_exp_na_end, drug_exp_over_end,
-    drug_exp_end_title, "Drug exposure/03.Drug_exp_end.jpg"
-)
-```
-
+![DrugExp end year](images/Drug exposure/03.Drug_exp_end.jpg)
 </div>
 
 <!-- 약물을 제공하기 시작한 연도 및 종료 연도별 백분율.-->
 The percentage by year and ending year in which the drug was offered
 <div class="row">
 <div class="pull_left">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-par(mfrow = c(1, 2), oma = c(0, 0, 2, 0))
-tryCatch(
-    hist(std_drug_exptbl_diff_date$dayDiff, breaks = 25, xlab = "Drug exp Duration", main = std_schema, cex.main = 2.0, cex.axis = 1.5, cex.lab = 1.5)
-    , # If data isn't exist...
-    error = function(error_message) {
-        print(error_message)
-        afterError()
-    }
-)
-tryCatch(
-    hist(tar_drug_exptbl_diff_date$dayDiff, breaks = 25, xlab = "Drug exp Duration", main = tar_schema, cex.main = 2.0, cex.axis = 1.5, cex.lab = 1.5)
-    , # If data isn't exist...
-    error = function(error_message) {
-        print(error_message)
-        afterError()
-    }
-)
-title(drug_exp_diff_title, outer = T, cex.main = 2.0)
-```
-
+![DrugExp duration](images/Drug exposure/04.Drug_exp_duration.jpg)
 
 Drug exposure duration histogram
 <!-- 약물 제공 기간에 대한 히스토그램.-->
 </div>
 
 <div class="pull_right">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_ratio_pie(std_drug_exptbl_type_concept, tar_drug_exptbl_type_concept, "Drug exposure/05.Drug_exp_type.jpg")
-mtext(drug_exp_concept_title, font = 2, side = 3, line = -5, outer = T, cex = 2.0)
-```
-
+![DrugExp type](images/Drug exposure/05.Drug_exp_type.jpg)
 
 The percentage of drug exposure type
 <!-- 약물 제공 유형별 백분율.-->
@@ -954,21 +399,14 @@ The percentage of drug exposure type
 
 <div class="row">
 <div class="pull_left">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_count_bar(std_drug_exptbl_stop, tar_drug_exptbl_stop, drug_exp_stop_title, "Drug exposure/06.Drug_stop.jpg")
-```
-
+![DrugExp stop reason](images/Drug exposure/06.Drug_stop.jpg)
 
 The number of reasons for stopping drug exposure
 <!-- 약물 제공을 중지한 사유의 종류 수. -->
 </div>
 
 <div class="pull_right">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_ratio_pie(std_drug_exptbl_route, tar_drug_exptbl_route, "Drug exposure/07.Drug_exp_route.jpg")
-mtext(drug_exp_route_title, font = 2, side = 3, line = -5, outer = T, cex = 2.0)
-```
-
+![DrugExp route](images/Drug exposure/07.Drug_exp_route.jpg)
 
 The percentage of drug exposure route
 <!-- 약물 제공을 한 경로별 백분율.-->
@@ -977,11 +415,7 @@ The percentage of drug exposure route
 
 <div class="row">
 <SPAN class="col2">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_compare_pie(std_drug_exptbl_visit_occurrence, tar_drug_exptbl_visit_occurrence, "Drug exposure/08.Drug_exp_visit_occurrence.jpg")
-mtext(drug_exp_visit_title, font = 2, side = 3, line = -5, outer = T, cex = 2.0)
-```
-
+![DrugExp / visit occurrence](images/Drug exposure/08.Drug_exp_visit_occurrence.jpg)
 
 The percentage of correlation of drug exposure and visit
 <!-- 약물 제공과 방문 간 연관 관계의 비율.-->
@@ -997,24 +431,14 @@ The percentage of correlation of drug exposure and visit
 ### **DRUG ERA Table**
 <div class="row">
 <div class="pull_left">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_table_pie(std_drug_eratbl_record, tar_drug_eratbl_record, "DRUG ERA\nTABLE", "Drug era/00.Drug_era_record.jpg")
-mtext(drug_era_record_title, font = 2, side = 3, line = -5, outer = T, cex = 2.0)
-mtext(paste0("count : ",std_drug_eratbl_record$count), side = 1, line = -15, at=0.75, outer = T, cex = 1.5)
-mtext(paste0("count : ",tar_drug_eratbl_record$count), side = 1, line = -15, at=0.25, outer = T, cex = 1.5)
-```
-
+![DrugEra record](images/Drug era/00.Drug_era_record.jpg)
 
 The percentage of records in the Drug Era table
 <!-- Drug Era 테이블의 레코드가 차지하는 백분율.-->
 </div>
 
 <div class="pull_right">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_table_pie(std_drug_eratbl_person_ratio, tar_drug_eratbl_person_ratio, "DRUG ERA\nPERSON", "Drug era/01.Drug_era_person.jpg")
-mtext(drug_era_person_title, font = 2, side = 3, line = -5, outer = T, cex = 2.0)
-```
-
+![DrugEra person](images/Drug era/01.Drug_era_person.jpg)
 
 The percentage of patients in the Drug Era table
 <!-- Drug Era 테이블의 환자가 차지하는 백분율.-->
@@ -1022,101 +446,23 @@ The percentage of patients in the Drug Era table
 </div>
 
 <div class="col2">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-draw_line_start(std_drug_eratbl_start, tar_drug_eratbl_start, drug_era_start_title, "Drug era/02.Drug_era_start.jpg")
-```
+![DrugEra start year](images/Drug era/02.Drug_era_start.jpg)
 
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-if (length(std_drug_eratbl_end[is.na(std_drug_eratbl_end$visitYear)]) != 0) {
-    std_drug_eratbl_na_end <<- std_drug_eratbl_end[is.na(std_drug_eratbl_end$visitYear), 2]
-    temp_std_s <<- 2
-} else {
-    std_drug_eratbl_na_end <<- NA
-    temp_std_s <<- 1
-}
-if (length(std_drug_eratbl_end[std_drug_eratbl_end$visitYear == 2999, ]$visitYear) != 0) {
-    std_drug_eratbl_over_end <<- std_drug_eratbl_end[na.omit(std_drug_eratbl_end$visitYear == 2999), 2]
-    temp_std_e <<- nrow(std_drug_eratbl_end) - 1
-} else {
-    std_drug_eratbl_over_end <<- NA
-    temp_std_e <<- nrow(std_drug_eratbl_end)
-}
-if (length(tar_drug_eratbl_end[is.na(tar_drug_eratbl_end$visitYear)]) != 0) {
-    tar_drug_eratbl_na_end <<- tar_drug_eratbl_end[is.na(tar_drug_eratbl_end$visitYear), 2]
-    temp_tar_s <<- 2
-} else {
-    tar_drug_eratbl_na_end <<- NA
-    temp_tar_s <<- 1
-}
-if (length(tar_drug_eratbl_end[tar_drug_eratbl_end$visitYear == 2999, ]$visitYear) != 0) {
-    tar_drug_eratbl_over_end <<- tar_drug_eratbl_end[tar_drug_eratbl_end$visitYear == 2999, 2]
-    temp_tar_e <<- nrow(tar_drug_eratbl_end) - 1
-} else {
-    tar_drug_eratbl_over_end <<- NA
-    temp_tar_e <<- nrow(tar_drug_eratbl_end)
-} # Sometimes there sjlt
-
-drug_era_na_end <<- c(std_drug_eratbl_na_end, tar_drug_eratbl_na_end)
-drug_era_over_end <<- c(std_drug_eratbl_over_end, tar_drug_eratbl_over_end)
-
-draw_line_end(
-    std_drug_eratbl_end[temp_std_s:temp_std_e, ], tar_drug_eratbl_end[temp_tar_s:temp_tar_e, ], drug_era_na_end, drug_era_over_end,
-    drug_era_end_title, "Drug era/03.Drug_era_end.jpg"
-)
-```
-
+![DrugEra end year](images/Drug era/03.Drug_era_end.jpg)
 </div>
 
 <!-- This figure shows that the Drug Era start and end.-->
 
 <div class="row">
 <div class="pull_left">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-par(mfrow = c(1, 2), oma = c(0, 0, 2, 0))
-tryCatch(
-    hist(std_drug_eratbl_diff_date$dayDiff, breaks = 25, xlab = "Drug Era Duration", main = std_schema, cex.main = 2.0, cex.axis = 1.5, cex.lab = 1.5)
-    , # If data isn't exist...
-    error = function(error_message) {
-        print(error_message)
-        afterError()
-    }
-)
-tryCatch(
-    hist(tar_drug_eratbl_diff_date$dayDiff, breaks = 25, xlab = "Drug Era Duration", main = tar_schema, cex.main = 2.0, cex.axis = 1.5, cex.lab = 1.5)
-    , # If data isn't exist...
-    error = function(error_message) {
-        print(error_message)
-        afterError()
-    }
-)
-title(drug_era_diff_title, outer = T, cex.main = 2.0)
-```
+![DrugEra duration](images/Drug era/04.Drug_era_duration.jpg)
 
 Drug era duration histogram
 <!--Drug - 약물 복용 기간에 대한 히스토그램-->
 </div>
 
 <div class="pull_right">
-```{r,echo=FALSE, comment=NULL, warning = FALSE, message = FALSE, fig.width = 12, fig.height=7}
-par(mfrow = c(1, 2), oma = c(0, 0, 2, 0))
-tryCatch(
-    hist(std_drug_eratbl_gap_days$personRatio, breaks = 25, xlab = "Gap Days Duration", main = std_schema, cex.main = 2.0, cex.axis = 1.5, cex.lab = 1.5)
-    , # If data isn't exist...
-    error = function(error_message) {
-        print(error_message)
-        afterError()
-    }
-)
-tryCatch(
-    hist(tar_drug_eratbl_gap_days$personRatio, breaks = 25, xlab = "Gap Days Duration", main = tar_schema, cex.main = 2.0, cex.axis = 1.5, cex.lab = 1.5)
-    , # If data isn't exist...
-    error = function(error_message) {
-        print(error_message)
-        afterError()
-    }
-)
-title(drug_era_gap_title, outer = T, cex.main = 2.0)
-```
+![DrugEra gap day](images/Drug era/05.Drug_era_gap.jpg)
 
 Histogram of drug delivery day and drug day difference
 <!-- 약물 제공일과 약물 복용일 차이에 대한 히스토그램. -->

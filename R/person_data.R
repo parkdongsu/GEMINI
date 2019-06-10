@@ -11,6 +11,13 @@ person_data <- function(){
     }else if(connection@dbms == 'postgresql'){
         person_record_sql <- splitSql(readSql(paste0(.libPaths()[1],"/gemini/extdata/System_query.sql")))[2]
     }
+    progressBar <- utils::txtProgressBar(max=length(person_sql)+1,style=3)
+    progress = 0
+    prg_plus <- function(prgBar,prg){
+        prg = prg + 1
+        utils::setTxtProgressBar(prgBar, prg)
+        return(prg)
+    }
 ################################################################################
 # Calculate records ratio
 # Query to find all table records count info, target table record and calculate with it
@@ -22,6 +29,8 @@ tryCatch(persontbl_record <- queryRender(person_record_sql,"PERSON")
     persontbl_record <- NULL
   }
 )
+progress <- prg_plus(progressBar,progress)
+
 ################################################################################
 # Calculate person ratio
 # In person Table, It will be 100%. Unless it should be error
@@ -32,6 +41,7 @@ tryCatch(persontbl_person_ratio <- queryRender(person_sql[1],"PERSON")
     persontbl_person_ratio <- NULL
   }
 )
+progress <- prg_plus(progressBar,progress)
 ################################################################################
 # Using gender_concept_id, make plot
 # In bar chart, focus on Male, Female to easy compare
@@ -43,6 +53,7 @@ error = function(e) {
   persontbl_gender <- NULL
 }
 )
+progress <- prg_plus(progressBar,progress)
 ################################################################################
 # Extract data from person, observation_period to calculate ratio
 # In query, Get person_ratio, age_range, gender_concept_id
@@ -59,6 +70,7 @@ persontbl_min_age <- queryRender(person_sql[3])
 }, error = function(e) {
   persontbl_min_age <- NULL
 })
+progress <- prg_plus(progressBar,progress)
 ################################################################################
 # OBSERVATION_PERIOD end_date
 # Same work
@@ -75,6 +87,7 @@ persontbl_max_age <- queryRender(person_sql[4])
 }, error = function(e) {
   persontbl_max_age <- NULL
 })
+progress <- prg_plus(progressBar,progress)
 ################################################################################
 # Get data from race_concept_id
 ################################################################################
@@ -84,6 +97,7 @@ tryCatch(persontbl_race <- queryRender(person_sql[5],"person", "race_concept_id"
     persontbl_race <- NULL
   }
 )
+progress <- prg_plus(progressBar,progress)
 ################################################################################
 # Get data from ethnicity_concept_id
 ################################################################################
@@ -93,6 +107,7 @@ tryCatch(persontbl_ethnicity <- queryRender(person_sql[6],"person", "ethnicity_c
     persontbl_ethnicity <- NULL
   }
 )
+progress <- prg_plus(progressBar,progress)
 ################################################################################
 # Get data from location_id
 # NULL ratio
@@ -103,6 +118,7 @@ tryCatch(persontbl_location <- queryRender(person_sql[7],"person", "location_id"
     persontbl_location <- NULL
   }
 )
+progress <- prg_plus(progressBar,progress)
 ################################################################################
 # Get data from provider_id
 ################################################################################
@@ -112,6 +128,7 @@ tryCatch(persontbl_provider <- queryRender(person_sql[8],"person", "provider_id"
     persontbl_provider <- NULL
   }
 )
+progress <- prg_plus(progressBar,progress)
 ################################################################################
 # Get data from care_site_id
 ################################################################################
@@ -120,7 +137,11 @@ tryCatch(
 , error = function(e) {
   persontbl_care_site <- NULL
 })
+
+progress <- prg_plus(progressBar,progress)
+
     person_tbl <- list(persontbl_record, persontbl_person_ratio, persontbl_gender, persontbl_min_age, persontbl_max_age, persontbl_race, persontbl_ethnicity,
                        persontbl_location, persontbl_location, persontbl_provider)
     return(person_tbl)
+    close(progress_bar)
 }

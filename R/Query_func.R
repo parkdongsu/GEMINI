@@ -6,7 +6,6 @@
 #'
 
 # Function about data extraction
-# Sys.setlocale('LC_ALL','C')
 Query_func<- function(){
     # sql query Render
         queryRender <<- function(sqlquery, tblName = "", AttName = "", comparedAttName = "", startName = "", endName = "") {

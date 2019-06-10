@@ -11,6 +11,13 @@ drug_exposure_data <- function(){
     }else if(connection@dbms == 'postgresql'){
         drug_exp_record_sql <- splitSql(readSql(paste0(.libPaths()[1],"/gemini/extdata/System_query.sql")))[2]
     }
+    progressBar <- utils::txtProgressBar(max=length(drug_exp_sql)+1,style=3)
+    progress = 0
+    prg_plus <- function(prgBar,prg){
+        prg = prg + 1
+        utils::setTxtProgressBar(prgBar, prg)
+        return(prg)
+    }
 ################################################################################
 # Get data from drug_exposure_id
 ################################################################################
@@ -20,6 +27,7 @@ tryCatch(drug_exptbl_record <- queryRender(drug_exp_record_sql,"drug_exposure")
     drug_exptbl_record <- NULL
   }
 )
+    progress <- prg_plus(progressBar,progress)
 ################################################################################
 # Get data from person_id
 ################################################################################
@@ -29,6 +37,7 @@ tryCatch(drug_exptbl_person_ratio <- queryRender(drug_exp_sql[1],"drug_exposure"
     drug_exptbl_person_ratio <- NULL
   }
 )
+    progress <- prg_plus(progressBar,progress)
 ################################################################################
 # Extract drug_exposure_start_date
 ################################################################################
@@ -38,6 +47,7 @@ tryCatch(drug_exptbl_start <- queryRender(drug_exp_sql[2],"drug_exposure", "drug
     drug_exptbl_start <- NULL
   }
 )
+    progress <- prg_plus(progressBar,progress)
 ################################################################################
 # Extract drug_exposure_end_date
 ################################################################################
@@ -47,6 +57,7 @@ tryCatch(drug_exptbl_end <- queryRender(drug_exp_sql[3],"drug_exposure", "drug_e
     drug_exptbl_end <- NULL
   }
 )
+    progress <- prg_plus(progressBar,progress)
 ################################################################################
 # Get data from drug_exposure_diff_date
 ################################################################################
@@ -55,6 +66,7 @@ tryCatch({
 }, error = function(e) {
   drug_exptbl_diff_date <- NULL
 })
+    progress <- prg_plus(progressBar,progress)
 ################################################################################
 # Get data from drug_type_concept_id
 ################################################################################
@@ -63,6 +75,7 @@ tryCatch({
 }, error = function(e) {
   drug_exptbl_type_concept <- NULL
 })
+    progress <- prg_plus(progressBar,progress)
 ################################################################################
 # Get data from stop_reason
 ################################################################################
@@ -71,6 +84,7 @@ tryCatch({
 }, error = function(e) {
   drug_exptbl_stop <- NULL
 })
+    progress <- prg_plus(progressBar,progress)
 ################################################################################
 # Get data from route_concept_id
 ################################################################################
@@ -79,6 +93,7 @@ tryCatch({
 }, error = function(e) {
   drug_exptbl_route <- NULL
 })
+    progress <- prg_plus(progressBar,progress)
 ################################################################################
 # Get data from visit_occurrence_id
 ################################################################################
@@ -87,6 +102,7 @@ tryCatch({
 }, error = function(e) {
   drug_exptbl_visit_occurrence <- NULL
 })
+    progress <- prg_plus(progressBar,progress)
 ################################################################################
 # Get data from visit_detail_id
 # No 'visit_detail_id' data in drug_exposure table
@@ -97,8 +113,10 @@ tryCatch({
 }, error = function(e) {
   drug_exptbl_visit_detail <- NULL
 })
+    progress <- prg_plus(progressBar,progress)
     drug_exptbl <- list(drug_exptbl_record, drug_exptbl_person_ratio, drug_exptbl_diff_date, drug_exptbl_start, drug_exptbl_end, drug_exptbl_type_concept,
                         drug_exptbl_stop, drug_exptbl_route, drug_exptbl_visit_occurrence)
+    close(progressBar)
     return(drug_exptbl)
 }
-message("Drug exposure data extracting done.")
+

@@ -45,7 +45,7 @@ dev.off() # It protect previous jpg file to not change current jpg image.
 ################################################################################
 # 2999, NA Problem issue
 # 2999, NA Problem issue
-if (length(std_drug_exptbl_end[is.na(std_drug_exptbl_end$visitYear)]) != 0) {
+if (length(std_drug_exptbl_end[is.na(std_drug_exptbl_end$visitYear),]) != 0) {
     std_drug_exptbl_na_end <<- std_drug_exptbl_end[is.na(std_drug_exptbl_end$visitYear), 2]
     temp_std_s <<- 2
 } else {
@@ -59,7 +59,7 @@ if (length(std_drug_exptbl_end[std_drug_exptbl_end$visitYear == 2999, ]$visitYea
     std_drug_exptbl_over_end <<- NA
     temp_std_e <<- nrow(std_drug_exptbl_end)
 }
-if (length(tar_drug_exptbl_end[is.na(tar_drug_exptbl_end$visitYear)]) != 0) {
+if (length(tar_drug_exptbl_end[is.na(tar_drug_exptbl_end$visitYear),]) != 0) {
     tar_drug_exptbl_na_end <<- tar_drug_exptbl_end[is.na(tar_drug_exptbl_end$visitYear), 2]
     temp_tar_s <<- 2
 } else {
