@@ -6,11 +6,22 @@
 #'
 #' @import DatabaseConnector
 #' @import SqlRender
-create_rds<- function(dbms,ip=NULL,port=NULL,schema=NULL,id=NULL,pw=NULL){
+create_rds<- function(connectionDetails){
     cat("Set directory to create rds files.\n")
     # Change working directory for confirming user to create where the files
-    path_set()
-    connectionDetails <- createConnectionDetails(dbms = dbms,server = ip,schema = schema,user = id,password = pw,port = port)
+    work_dir <- path_set()
     connect_DB(connectionDetails)
     save_data()
+}
+
+connect_DB <- function(connectionDetails){
+    #Set server information to connecting
+    cdmDatabaseSchema <- connectionDetails$schema
+    #Server connect
+    tryCatch({
+        connection <- DatabaseConnector::connect(connectionDetails)
+    },error = function(e){
+        print(e)
+        stop("Connection failed.")
+    })
 }

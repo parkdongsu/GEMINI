@@ -5,8 +5,7 @@
 #' @export
 #'
 create_folder<-function(){
-    dir.create(file.path(getwd(), "Standard RDS"), showWarnings = FALSE)
-    dir.create(file.path(getwd(), "Target RDS"), showWarnings = FALSE)
+    dir.create(file.path(getwd(), "Gemini RDS"), showWarnings = FALSE)
 
     dir.create(file.path(getwd(), "images"), showWarnings = FALSE)
     dir.create(file.path(getwd(), "images/Whole"), showWarnings = FALSE)

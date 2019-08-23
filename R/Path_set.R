@@ -9,7 +9,7 @@ path_set <- function(){
     tryCatch(
     my_wd <- choose.dir(),
     error = function(e){
-        my_wd <<- readline("Set work directory path : ")
+        my_wd <- readline("Set work directory path : ")
     })
     setwd(my_wd)
 }

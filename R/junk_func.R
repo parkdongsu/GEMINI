@@ -1,167 +1,397 @@
-conceptPieColor <- function(dbList, findValue, count){
-    if()
-
-    temp_cpt <- as.character(sort(union(concept1$attributeName,concept2$attributeName)))
-    temp_col <- rainbow(length(temp_cpt), s=0.7)
-    if(sum(is.na(concept1))>0||sum(is.na(concept2))>0){
-        temp_cpt <- append(temp_cpt,"NA")
-        temp_col <- append(temp_col,"#A0A0A0FF")
+##All table people count
+draw_total_person <- function(dbName, rds){
+    Total <- c("Person","Visit Occurrence", "Condition Occurrence", "Drug Exposure", "Drug Era")
+    plot <- plotly::plot_ly(x = ~Total,
+                         y = c(rds[[1]]$persontbl_person_ratio$ratio,
+                               rds[[1]]$visittbl_person_ratio$ratio,
+                               rds[[1]]$conditiontbl_person_ratio$ratio,
+                               rds[[1]]$drug_exptbl_person_ratio$ratio,
+                               rds[[1]]$drug_eratbl_person_ratio$ratio),
+                         hoverinfo = "y",
+                         type = 'bar',
+                         name = dbName[1])
+    for(i in 2:length(dbName)){
+        plot <- add_trace(p=plot, y=c(rds[[i]]$persontbl_person_ratio$ratio,
+                                rds[[i]]$visittbl_person_ratio$ratio,
+                                rds[[i]]$conditiontbl_person_ratio$ratio,
+                                rds[[i]]$drug_exptbl_person_ratio$ratio,
+                                rds[[i]]$drug_eratbl_person_ratio$ratio),
+                          hoverinfo = "y",
+                          name = dbName[i])
     }
-    temp <- data.frame(temp_cpt,temp_col,stringsAsFactors = F)
-    return(temp)
+    plot <- plotly::layout(p=plot,title = "Total table Person", yaxis = list(title='Ratio(%)'), barmode='group')
+    return(plot)
+}
+draw_total_person(dbName, rds)
+
+##All table records count
+draw_total_record <- function(dbName, rds){
+    Total <- c("Person","Visit Occurrence", "Condition Occurrence", "Drug Exposure", "Drug Era")
+    plot <- plotly::plot_ly(x = ~Total,
+                         y = c(rds[[1]]$persontbl_record$ratio,
+                               rds[[1]]$visittbl_record$ratio,
+                               rds[[1]]$conditiontbl_record$ratio,
+                               rds[[1]]$drug_exptbl_record$ratio,
+                               rds[[1]]$drug_eratbl_record$ratio),
+                         type = 'bar',
+                         name = dbName[1])
+    for(i in 2:length(dbName)){
+        plot <- add_trace(p=plot, y=c(rds[[i]]$persontbl_record$ratio,
+                                rds[[i]]$visittbl_record$ratio,
+                                rds[[i]]$conditiontbl_record$ratio,
+                                rds[[i]]$drug_exptbl_record$ratio,
+                                rds[[i]]$drug_eratbl_record$ratio),
+                       name = dbName[i])
+    }
+    plot <- plotly::layout(p=plot,title = "Total Table Records", yaxis = list(title='Ratio(%)'), barmode='group')
+    return(plot)
+}
+draw_total_record(dbName, rds)
+
+##Each table people, records count by tableName and type
+draw_meta_pie <- function(dbName, rds, tableName, type){
+    plot <- plot_ly()
+    switch(tolower(tableName),
+           person = {
+               if(tolower(type) == "person"){
+               for(i in 1:length(dbName)){
+                   val <- rds[[i]]$persontbl_person_ratio$ratio
+                   plot <- add_pie(p=plot,
+                                   values = c(val,100 -val),
+                                   textposition='inside',
+                                   textinfo='label+percent',
+                                   opacity= 0.9,
+                                   labels = c(paste0(dbName[i],"\nPerson"),"Others"),
+                                   domain=list(row=floor((i-1)/5), column=floor((i-1)%%5)))
+               }
+               plot <- layout(p=plot, title = "Person Table person ratio", showlegend = T,
+                              grid=list(rows=floor(length(dbName)/6)+1,
+                                        columns =floor(length(dbName)/5)*5
+                                        -(floor(length(dbName)/5)*(length(dbName)%%5))
+                                        +length(dbName)%%5),
+                              xaxis = list(showgrid = F, zeroline = FALSE, showticklabels = F),
+                              yaxis = list(showgrid = F, zeroline = FALSE, showticklabels = F))
+               }
+           else if(tolower(type) == "record"){
+           for(i in 1:length(dbName)){
+               val <- rds[[i]]$persontbl_record$ratio
+               plot <- add_pie(p=plot,
+                               values = c(val, 100-val),
+                               textposition='inside',
+                               textinfo='label+percent',
+                               opacity= 0.9,
+                               labels = c(paste0(dbName[i],"\nPerson"),"Others"),
+                               domain=list(row=floor((i-1)/5), column=floor((i-1)%%5)))
+           }
+           plot <- layout(p=plot, title = "Person Table Record", showlegend = T,
+                          grid=list(rows=floor(length(dbName)/6)+1,
+                                    columns =floor(length(dbName)/5)*5
+                                    -(floor(length(dbName)/5)*(length(dbName)%%5))
+                                    +length(dbName)%%5),
+                          xaxis = list(showgrid = F, zeroline = FALSE, showticklabels = F),
+                          yaxis = list(showgrid = F, zeroline = FALSE, showticklabels = F))
+       }},
+       visit = {
+           if(tolower(type) == "person"){
+               for(i in 1:length(dbName)){
+                   val <- rds[[i]]$visittbl_person_ratio$ratio
+                   plot <- add_pie(p=plot,
+                                   values = c(val, 100-val),
+                                   textposition='inside',
+                                   textinfo='label+percent',
+                                   opacity= 0.9,
+                                   labels = c(paste0(dbName[i],"\nVisit Occurrence"),"Others"),
+                                   domain=list(row=floor((i-1)/5), column=floor((i-1)%%5)))
+               }
+               plot <- layout(p=plot, title = "Visit Occurrence Table person ratio", showlegend = T,
+                              grid=list(rows=floor(length(dbName)/6)+1,
+                                        columns =floor(length(dbName)/5)*5
+                                        -(floor(length(dbName)/5)*(length(dbName)%%5))
+                                        +length(dbName)%%5),
+                              xaxis = list(showgrid = F, zeroline = FALSE, showticklabels = F),
+                              yaxis = list(showgrid = F, zeroline = FALSE, showticklabels = F))
+           }
+       else if(tolower(type) == "record"){
+           for(i in 1:length(dbName)){
+               val <- rds[[i]]$visittbl_record$ratio
+               plot <- add_pie(p=plot,
+                               values = c(val, 100-val),
+                               textposition='inside',
+                               textinfo='label+percent',
+                               opacity= 0.9,
+                               labels = c(paste0(dbName[i],"\nVisit Occurrence"),"Others"),
+                               domain=list(row=floor((i-1)/5), column=floor((i-1)%%5)))
+           }
+           plot <- layout(p=plot, title = "Visit Occurrence Table record", showlegend = T,
+                          grid=list(rows=floor(length(dbName)/6)+1,
+                                    columns =floor(length(dbName)/5)*5
+                                    -(floor(length(dbName)/5)*(length(dbName)%%5))
+                                    +length(dbName)%%5),
+                          xaxis = list(showgrid = F, zeroline = FALSE, showticklabels = F),
+                          yaxis = list(showgrid = F, zeroline = FALSE, showticklabels = F))
+       }},
+       condition = {
+           if(tolower(type) == "person"){
+               val <- rds[[i]]$conditiontbl_person_ratio$ratio
+               for(i in 1:length(dbName)){
+                   plot <- add_pie(p=plot,
+                                   values = c(val, 100-val),
+                                   textposition='inside',
+                                   textinfo='label+percent',
+                                   opacity= 0.9,
+                                   labels = c(paste0(dbName[i],"\nCondition Occurrence"),"Others"),
+                                   domain=list(row=floor((i-1)/5), column=floor((i-1)%%5)))
+               }
+               plot <- layout(p=plot, title = "Condition Occurrence Table person ratio", showlegend = T,
+                              grid=list(rows=floor(length(dbName)/6)+1,
+                                        columns =floor(length(dbName)/5)*5
+                                        -(floor(length(dbName)/5)*(length(dbName)%%5))
+                                        +length(dbName)%%5),
+                              xaxis = list(showgrid = F, zeroline = FALSE, showticklabels = F),
+                              yaxis = list(showgrid = F, zeroline = FALSE, showticklabels = F))
+           }
+           else if(tolower(type) == "record"){
+               for(i in 1:length(dbName)){
+                   val <- rds[[i]]$conditiontbl_record$ratio
+                   plot <- add_pie(p=plot,
+                                   values = c(val, 100-val),
+                                   textposition='inside',
+                                   textinfo='label+percent',
+                                   opacity= 0.9,
+                                   labels = c(paste0(dbName[i],"\nCondition Occurrence"),"Others"),
+                                   domain=list(row=floor((i-1)/5), column=floor((i-1)%%5)))
+               }
+               plot <- layout(p=plot, title = "Condition Occurrence Table record", showlegend = T,
+                              grid=list(rows=floor(length(dbName)/6)+1,
+                                        columns =floor(length(dbName)/5)*5
+                                        -(floor(length(dbName)/5)*(length(dbName)%%5))
+                                        +length(dbName)%%5),
+                              xaxis = list(showgrid = F, zeroline = FALSE, showticklabels = F),
+                              yaxis = list(showgrid = F, zeroline = FALSE, showticklabels = F))
+           }
+       },
+       drug_exp = {
+           if(tolower(type) == "person"){
+               for(i in 1:length(dbName)){
+                   val <- rds[[i]]$drug_exptbl_person_ratio$ratio
+                   plot <- add_pie(p=plot,
+                                   values = c(val, 100-val),
+                                   textposition='inside',
+                                   textinfo='label+percent',
+                                   opacity= 0.9,
+                                   labels = c(paste0(dbName[i],"\nDrug Exposure"),"Others"),
+                                   domain=list(row=floor((i-1)/5), column=floor((i-1)%%5)))
+               }
+               plot <- layout(p=plot, title = "Drug Exposure Table person ratio", showlegend = T,
+                              grid=list(rows=floor(length(dbName)/6)+1,
+                                        columns =floor(length(dbName)/5)*5
+                                        -(floor(length(dbName)/5)*(length(dbName)%%5))
+                                        +length(dbName)%%5),
+                              xaxis = list(showgrid = F, zeroline = FALSE, showticklabels = F),
+                              yaxis = list(showgrid = F, zeroline = FALSE, showticklabels = F))
+           }
+           else if(tolower(type) == "record"){
+               for(i in 1:length(dbName)){
+                   val <- rds[[i]]$drug_exptbl_record$ratio
+                   plot <- add_pie(p=plot,
+                                   values = c(val, 100-val),
+                                   textposition='inside',
+                                   textinfo='label+percent',
+                                   opacity= 0.9,
+                                   labels = c(paste0(dbName[i],"\nDrug Exposure"),"Others"),
+                                   domain=list(row=floor((i-1)/5), column=floor((i-1)%%5)))
+               }
+               plot <- layout(p=plot, title = "Drug Exposure Table record", showlegend = T,
+                              grid=list(rows=floor(length(dbName)/6)+1,
+                                        columns =floor(length(dbName)/5)*5
+                                        -(floor(length(dbName)/5)*(length(dbName)%%5))
+                                        +length(dbName)%%5),
+                              xaxis = list(showgrid = F, zeroline = FALSE, showticklabels = F),
+                              yaxis = list(showgrid = F, zeroline = FALSE, showticklabels = F))
+           }
+       },
+       drug_era = {
+           if(tolower(type) == "person"){
+               for(i in 1:length(dbName)){
+                   val <- rds[[i]]$drug_eratbl_person_ratio$ratio
+                   plot <- add_pie(p=plot,
+                                   values = c(val, 100-val),
+                                   textposition='inside',
+                                   textinfo='label+percent',
+                                   opacity= 0.9,
+                                   labels = c(paste0(dbName[i],"\nDrug Era"),"Others"),
+                                   domain=list(row=floor((i-1)/5), column=floor((i-1)%%5)))
+               }
+               plot <- layout(p=plot, title = "Drug Era Table person ratio", showlegend = T,
+                              grid=list(rows=floor(length(dbName)/6)+1,
+                                        columns =floor(length(dbName)/5)*5
+                                        -(floor(length(dbName)/5)*(length(dbName)%%5))
+                                        +length(dbName)%%5),
+                              xaxis = list(showgrid = F, zeroline = FALSE, showticklabels = F),
+                              yaxis = list(showgrid = F, zeroline = FALSE, showticklabels = F))
+           }
+           else if(tolower(type) == "record"){
+               for(i in 1:length(dbName)){
+                   val <- rds[[i]]$drug_eratbl_record$ratio
+                   plot <- add_pie(p=plot,
+                                   values = c(val, 100-val),
+                                   textposition='inside',
+                                   textinfo='label+percent',
+                                   opacity= 0.9,
+                                   labels = c(paste0(dbName[i],"\nDrug Era"),"Others"),
+                                   domain=list(row=floor((i-1)/5), column=floor((i-1)%%5)))
+               }
+               plot <- layout(p=plot, title = "Drug Era Table record", showlegend = T,
+                              grid=list(rows=floor(length(dbName)/6)+1,
+                                        columns =floor(length(dbName)/5)*5
+                                        -(floor(length(dbName)/5)*(length(dbName)%%5))
+                                        +length(dbName)%%5),
+                              xaxis = list(showgrid = F, zeroline = FALSE, showticklabels = F),
+                              yaxis = list(showgrid = F, zeroline = FALSE, showticklabels = F))
+           }
+       }
+       )
+    return(plot)
+}
+#draw_meta_pie(dbName , rds, tableName = "drug_exp", type = "person")
+#draw_meta_pie(dbName , rds, tableName = "drug_exp", type = "record")
+
+##Gender bar
+draw_gender_bar <- function(dbName, rds){
+    domain <- c(rds[[1]]$persontbl_gender$attributeName[1],
+                rds[[1]]$persontbl_gender$attributeName[2])
+    val <- c(rds[[1]]$persontbl_gender$ratio[1],
+             rds[[1]]$persontbl_gender$ratio[2])
+    plot <- plot_ly(rds[[1]]$persontbl_gender,
+                    x = domain, y = val, text = val, textposition = 'auto',type = 'bar', name = dbName[1])
+    for(i in 2:length(dbName)){
+        val <- c(rds[[i]]$persontbl_gender$ratio[1],
+                 rds[[i]]$persontbl_gender$ratio[2])
+        plot <- add_trace(p=plot, y = val, name = dbName[i], text = val, textposition = 'auto')
+    }
+    plot <- layout(p=plot, yaxis = list(title='Count'), barmode = 'group')
+    return(plot)
+}
+draw_gender_bar(dbName, rds)
+#Person visit graph
+
+##People visit
+##Ask opinion
+draw_visit_freq_graph <- function(dbName, rds, type){
+    standard <- which(sapply(rds, function(x){length(x$persontbl_min_age$ageRange)}) ==
+                          max(sapply(rds, function(x){length(x$persontbl_min_age$ageRange)})))[1]
+    xax <- rds[[standard]]$persontbl_min_age[rds[[standard]]$persontbl_min_age$genderConceptId == '8507',]$ageRange
+    x_len <- length(xax)
+    y_male <- rds[[1]]$persontbl_min_age[rds[[1]]$persontbl_min_age$genderConceptId == '8507',]$ratio
+    y_female <- rds[[1]]$persontbl_min_age[rds[[1]]$persontbl_min_age$genderConceptId == '8532',]$ratio
+    xform <- list(categoryorder = "array",
+                  categoryarray = xax)
+    plot <- plot_ly(data = data.frame(xax, y_male,y_female),
+                    x=xax,
+                    y=y_male,
+                    type = 'bar',
+                    name = paste(dbName[1], "Male"))
+    plot <- add_trace(p=plot, y=y_female, name = paste(dbName[1], "Female"))
+    plot <- layout(p=plot,
+                   title = 'Min Graph',
+                   xaxis = xform,
+                   yaxis = list("Ratio(%)"))
+    for(i in 2:length(dbName)){
+        y_male <- rds[[i]]$persontbl_min_age[rds[[i]]$persontbl_min_age$genderConceptId == '8507',]$ratio
+        y_male <- append(y_male,vector(length = x_len-length(y_male)))
+        y_female <- rds[[i]]$persontbl_min_age[rds[[i]]$persontbl_min_age$genderConceptId == '8532',]$ratio
+        y_female <- append(y_female,vector(length = x_len-length(y_female)))
+        plot <- add_trace(p=plot, y=y_male, name = paste(dbName[i], "Male"))
+        plot <- add_trace(p=plot, y=y_female, name = paste(dbName[i], "Female"))
+    }
+}
+draw_visit_freq_graph_div_male <- function(dbName, rds, type){
+    standard <- which(sapply(rds, function(x){length(x$persontbl_min_age$ageRange)}) ==
+                          max(sapply(rds, function(x){length(x$persontbl_min_age$ageRange)})))[1]
+    xax <- rds[[standard]]$persontbl_min_age[rds[[standard]]$persontbl_min_age$genderConceptId == '8507',]$ageRange
+    x_len <- length(xax)
+    y_male <- rds[[1]]$persontbl_min_age[rds[[1]]$persontbl_min_age$genderConceptId == '8507',]$ratio
+    xform <- list(categoryorder = "array",
+                  categoryarray = xax)
+    plot <- plot_ly(data = data.frame(xax, y_male),
+                    x=xax,
+                    y=y_male,
+                    type = 'bar',
+                    name = paste(dbName[1], "Male"))
+    plot <- layout(p=plot,
+                   title = 'Male Min Graph',
+                   xaxis = xform,
+                   yaxis = list("Ratio(%)"))
+    for(i in 2:length(dbName)){
+        y_male <- rds[[i]]$persontbl_min_age[rds[[i]]$persontbl_min_age$genderConceptId == '8507',]$ratio
+        y_male <- append(y_male,vector(length = x_len-length(y_male)))
+        plot <- add_trace(p=plot, y=y_male, name = paste(dbName[i], "Male"))
+    }
+    return(plot)
+}
+draw_visit_freq_graph_div_female <- function(dbName, rds, type){
+    standard <- which(sapply(rds, function(x){length(x$persontbl_min_age$ageRange)}) ==
+                          max(sapply(rds, function(x){length(x$persontbl_min_age$ageRange)})))[1]
+    xax <- rds[[standard]]$persontbl_min_age[rds[[standard]]$persontbl_min_age$genderConceptId == '8532',]$ageRange
+    x_len <- length(xax)
+    y_female <- rds[[1]]$persontbl_min_age[rds[[1]]$persontbl_min_age$genderConceptId == '8532',]$ratio
+    xform <- list(categoryorder = "array",
+                  categoryarray = xax)
+    plot <- plot_ly(data = data.frame(xax,y_female),
+                    x=xax,
+                    y=y_female,
+                    type = 'bar',
+                    name = paste(dbName[1], "Female"))
+    plot <- layout(p=plot,
+                   title = 'Female Min Graph',
+                   xaxis = xform,
+                   yaxis = list("Ratio(%)"))
+    for(i in 2:length(dbName)){
+        y_female <- rds[[i]]$persontbl_min_age[rds[[i]]$persontbl_min_age$genderConceptId == '8532',]$ratio
+        y_female <- append(y_female,vector(length = x_len-length(y_female)))
+        plot <- add_trace(p=plot, y=y_female, name = paste(dbName[i], "Female"))
+    }
+    return(plot)
 }
 
-# Create Pie chart which use attribute_name
-drawRatioPie <- function(dbList, findValue) {
-    count <- length(dbList)
-    jpeg(filename = paste0("images/", gsub(x=findValue,pattern = "tbl_.*$", replacement = "")),
-         width = 1024, height = 1024, quality = 75, bg = "white")
-    par(mfrow = c(1, count), xpd = T)
-    conceptPieColor(dbList, findValue, count)
-    i<- 1
-    while(i-1 < count){
-        tryCatch({
-            if(!is.null(value$conceptId)){
-                value <- value[order(value$conceptId),]
-            }
-            # If NA, value must get 0. So this NA value get error range 0.1
-            cpt_col <- concept_piecolor(value,tar_value)
-            value <- naTostring(value)
-            std_cols <- unlist(sapply(value$attributeName, FUN=function(x) cpt_col[cpt_col$temp_cpt==x,])[2,],use.names = F)
-            # Label Setting
-            # Label name set , append ratio num, percentage mark
-            std_lbl <- labeling(value)
-            std_slices <- as.numeric(value$ratio)
-            # pie3d doesn't work that some value is 0.0
-            std_slices <- sapply(std_slices, function(x) if (x == 0.0) {
-                x <- 0.01
-            } else {
-                (x)
-            })
-            if(is.null(value$conceptId)){
-                std_legend <- value[order(value$attributeName),]$attributeName
-            }
-            else{
-                std_legend <- paste0(value$conceptId,',',value[order(value$conceptId),]$attributeName)
-            }
+##Draw pie general
+draw_pie <- function(dbName, rds, rdsConcept){
+    plot <- plot_ly()
+    # if(length(dbName)<6){
+    #     for(i in 1:length(dbName)){
+    #         txt_w[i] = i/(length(dbName)+1)
+    #         txt_h[i] = 0
+    #     }
+    # }else{
+    #     for(i in 1:length(dbName)){
+    #         txt_w[i] = (i-1)%%5 * 0.2 + 0.1
+    #         txt_h[i] = (1-floor(i/6))*0.5
+    #     }
+    # }
 
-            # Draw Pie
-            pie3D(std_slices,
-                  labels = paste0(value$ratio, "%"), explode = 0.1, main = std_schema_name,
-                  radius = 1.0, labelcex = 1.5, theta = 0.8, start = pi / 2, cex.main = 2.0, col = std_cols)
-            legend(-1.5, -1.5,std_legend, cex = 1.3, fill = std_cols, xpd = T)
-        },error = function(error_message) {
-            print(error_message)
-            afterError()
-        })
-        i <- i+1
+    for(i in 1:length(dbName)){
+        plot <- add_pie(p = plot,
+                        values = rds[[i]][names(rds[[i]])==rdsConcept][[1]]$ratio,
+                        labels = rds[[i]][names(rds[[i]])==rdsConcept][[1]]$attributeName,
+                        text = dbName[i],
+                        textposition='inside',
+                        textinfo='text+percent',
+                        opacity= 0.9,
+                        domain=list(row=floor((i-1)/5), column=floor((i-1)%%5)))
+        # plot <- add_annotations(p = plot, x=txt_w[i], y=txt_h[i], text = dbName[i], showarrow =F,inherit = F)
     }
+
+    plot <- layout(p=plot, title = "Pie Plot", showlegend = T,
+                   grid=list(rows=floor(length(dbName)/6)+1,
+                             columns =floor(length(dbName)/5)*5
+                             -(floor(length(dbName)/5)*(length(dbName)%%5))
+                             +length(dbName)%%5),
+                   xaxis = list(showgrid = F, zeroline = FALSE, showticklabels = F),
+                   yaxis = list(showgrid = F, zeroline = FALSE, showticklabels = F))
+
+    return(plot)
 }
+#draw_pie(dbName, rds, "persontbl_race")
+#draw_pie(dbName, rds, "persontbl_ethnicity")
+draw_pie(dbName, rds, "visittbl_visit_concept")
 
-draw_compare_pie <<- function(std_value, tar_value, path) {
-    jpeg(filename = paste0("images/", path), width = 720, height = 720, quality = 75, bg = "white")
-    par(mfrow = c(1, 2))
-    # standard CDM
-    tryCatch({
-        # If NA, value must get 0. And this NA value get error range 0.1
-        std_value <- naTostring(std_value)
-        # Label Setting
-        # Label name set , append ratio num, percentage mark
-        std_lbl <- labeling(std_value)
-        std_slices <- c(as.numeric(std_value$ratio), as.numeric(100 - std_value$ratio))
-        # pie3d doesn't work that some value is 0.0
-        std_slices <- sapply(std_slices, function(x) if (x == 0.0 || x == 0) {
-            x <- 0.01
-        } else {
-            (x)
-        })
-        # Draw pie
-        pie3D(std_slices,
-              labels = c("", std_lbl), explode = 0.03, main = std_schema_name,
-              radius = 1.0, labelcex = 1.5, theta = 0.8, start = pi / 2, cex.main = 2.0, col = rainbow(nrow(std_value) + 1, s = 0.7)
-        )
-    }, # If data isn't exist...
-    error = function(error_message) {
-        print(error_message)
-        afterError()
-    }
-    )
-    # target CDM
-
-    tryCatch({
-        # If NA, value must get 0. And this NA value get error range 0.1
-        tar_value <- naTostring(tar_value)
-        # Label Setting
-        tar_lbl <- labeling(tar_value)
-        tar_slices <- c(as.numeric(tar_value$ratio), as.numeric(100 - tar_value$ratio))
-        # pie3d doesn't work that some value is 0.0
-        tar_slices <- sapply(tar_slices, function(x) if (x == 0.0) {
-            x <- 0.01
-        } else {
-            (x)
-        })
-        # Draw pie
-        pie3D(tar_slices,
-              labels = c("", tar_lbl), explode = 0.03, main = tar_schema_name,
-              radius = 1.0, labelcex = 1.5, theta = 0.8, start = pi / 2, cex.main = 2.0, col = rainbow(nrow(tar_value) + 1, s = 0.7)
-        )
-    }, # If data isn't exist...
-    error = function(error_message) {
-        print(error_message)
-        afterError()
-    }
-    )
-}
-
-draw_table_pie <<- function(std_value, tar_value, tblname, path) {
-    jpeg(filename = paste0("images/", path), width = 720, height = 720, quality = 75, bg = "white")
-    par(mfrow = c(1, 2))
-    # standard CDM
-    tryCatch({
-        # Label Setting
-        # Label name set , append ratio num, percentage mark
-        std_recordlbl <- paste(tblname, "\n", std_value$ratio)
-        std_recordlbl <- paste(std_recordlbl, "%", seq = "")
-        # Set pie slice
-        # just 1 kind of attribute
-        std_recordslices <- c(as.numeric(std_value$ratio), as.numeric(100 - std_value$ratio))
-        # pie3d doesn't work which value is 0.0
-        std_recordslices <- sapply(std_recordslices, function(x) if (x == 0.0) {
-            x <- 0.01
-        } else {
-            (x)
-        })
-        pie3D(std_recordslices,
-              labels = c(std_recordlbl, ""), explode = 0.03, main = std_schema_name,
-              col = rainbow(nrow(std_value) + 1, s = 0.7), radius = 1.0, labelcex = 1.5, theta = 0.8, start = pi / 2, cex.main = 2.0
-        )
-    }, # If data isn't exist...
-    error = function(error_message) {
-        print(error_message)
-        afterError()
-    }
-    )
-    # target CDM
-    tryCatch({
-        # Label Setting
-        tar_recordlbl <- paste(tblname, "\n", tar_value$ratio)
-        tar_recordlbl <- paste(tar_recordlbl, "%", seq = "")
-        # Set pie slice
-        tar_recordslices <- c(as.numeric(tar_value$ratio), as.numeric(100 - tar_value$ratio))
-        # pie3d doesn't work which value is 0.0
-        tar_recordslices <- sapply(tar_recordslices, function(x) if (x == 0.0) {
-            x <- 0.01
-        } else {
-            (x)
-        })
-        pie3D(tar_recordslices,
-              labels = c(tar_recordlbl, ""), explode = 0.03, main = tar_schema_name,
-              col = rainbow(nrow(tar_value) + 1, s = 0.7), radius = 1.0, labelcex = 1.5, theta = 0.8, start = pi / 2, cex.main = 2.0
-        )
-    }, # If data isn't exist...
-    error = function(error_message) {
-        print(error_message)
-        afterError()
-    }
-    )
-}

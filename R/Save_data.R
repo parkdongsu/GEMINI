@@ -10,8 +10,7 @@
 ################################################################################
 
 save_data <- function(){
-    dir.create(file.path(getwd(), "Standard RDS"), showWarnings = FALSE)
-    dir.create(file.path(getwd(), "Target RDS"), showWarnings = FALSE)
+    dir.create(file.path(getwd(), "Gemini RDS"), showWarnings = FALSE)
     Query_func()
 ################################################################################
 # PERSON DATA SAVING FUNCTION
@@ -54,8 +53,8 @@ save_data <- function(){
 # File Saving
 ################################################################################
     tryCatch({
-        zip(zipfile = paste0("Standard RDS/",cdmDatabaseSchema,".zip"),
-            files = paste0("Standard RDS/",list.files("~/Standard RDS",pattern = "\\w*.rds$")), flag= c("-j", "-r"))
+        zip(zipfile = paste0("Gemini RDS/",cdmDatabaseSchema,".zip"),
+            files = paste0("Gemini RDS/",list.files("~/Gemini RDS",pattern = "\\w*.rds$")), flag= c("-j", "-r"))
     },
     error = function(e){
         cat("Files zip is failed. \n")
@@ -63,8 +62,8 @@ save_data <- function(){
     warning = function(w){
         message(w)
     })
-    if(length(list.files(paste0("./Standard RDS/"), pattern = "\\w.zip$"))>0){
-        file.remove(paste0("Standard RDS/",list.files(path = "Standard RDS/", pattern = "\\w.rds$")))
+    if(length(list.files(paste0("./Gemini RDS/"), pattern = "\\w.zip$"))>0){
+        file.remove(paste0("Gemini RDS/",list.files(path = "Gemini RDS/", pattern = "\\w.rds$")))
     }
     # time check
     cat(paste0("RDS files created.\nThis process takes ", sum(tm1, tm2, tm3, tm4, tm5, tm6), "s.\n"))
@@ -82,13 +81,13 @@ rds_maker <- function(tbl,table_name){
                 )
 
                 data_list <- tbl
-                rds_path <- sapply(FUN = paste0, "Standard RDS/", persontbl_name_list, ".rds")
+                rds_path <- sapply(FUN = paste0, "Gemini RDS/", persontbl_name_list, ".rds")
             },
             "death" = {
                 deathtbl_name_list <- c("deathtbl_check", "deathtbl_type")
 
                 data_list <- tbl
-                rds_path <- sapply(FUN = paste0, "Standard RDS/", deathtbl_name_list, ".rds")
+                rds_path <- sapply(FUN = paste0, "Gemini RDS/", deathtbl_name_list, ".rds")
             },
             "visit" = {
                 visittbl_name_list <- list(
@@ -98,7 +97,7 @@ rds_maker <- function(tbl,table_name){
                 )
 
                 data_list <- tbl
-                rds_path <- sapply(FUN = paste0, "Standard RDS/", visittbl_name_list, ".rds")
+                rds_path <- sapply(FUN = paste0, "Gemini RDS/", visittbl_name_list, ".rds")
             },
             "condition" = {
                 conditiontbl_name_list <- list(
@@ -108,7 +107,7 @@ rds_maker <- function(tbl,table_name){
                 )
 
                 data_list <- tbl
-                rds_path <- sapply(FUN = paste0, "Standard RDS/", conditiontbl_name_list, ".rds")
+                rds_path <- sapply(FUN = paste0, "Gemini RDS/", conditiontbl_name_list, ".rds")
             },
             "drug_exposure" = {
                 drug_exptbl_name_list <- list(
@@ -117,7 +116,7 @@ rds_maker <- function(tbl,table_name){
                 )
 
                 data_list <- tbl
-                rds_path <- sapply(FUN = paste0, "Standard RDS/", drug_exptbl_name_list, ".rds")
+                rds_path <- sapply(FUN = paste0, "Gemini RDS/", drug_exptbl_name_list, ".rds")
             },
             "drug_era" = {
                 drug_eratbl_name_list <- list(
@@ -126,7 +125,7 @@ rds_maker <- function(tbl,table_name){
                 )
 
                 data_list <- tbl
-                rds_path <- sapply(FUN = paste0, "Standard RDS/", drug_eratbl_name_list, ".rds")
+                rds_path <- sapply(FUN = paste0, "Gemini RDS/", drug_eratbl_name_list, ".rds")
             }
     )
 
