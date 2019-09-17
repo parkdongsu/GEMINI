@@ -13,11 +13,21 @@
 #' @import rmarkdown
 #' @import plot_ly
 # Read rds data
-gemini <- function(dbCount = 2,
-                   testRunning = F){
+gemini <- function(dbCount = 6){
     cat("Choose where 'Gemini RDS' folder exist.\n")
-    gemini::path_set()
-    gemini::create_folder() #Create folder for avoid error "No directory"
+    if(Sys.info()[[1]]=='Windows'){
+        work_dir <- choose.dir()
+    }
+    else{
+        work_dir <- readline("Set work directory path : ")
+    }
+    connection <- DatabaseConnector::connect(connectionDetails)
+
+    dir.create(file.path(getwd(), "Gemini RDS"), showWarnings = FALSE)
+    dir.create(file.path(getwd(), "images"), showWarnings = FALSE)
+    table <- c('Whole','Person','Death','Visit','Condition','Drug exposure','Drug era')
+    sapply(X= file.path(getwd(),'images',table), FUN = function(x){dir.create(x,showWarnings = F)})
+
     dbName <- vector(length = dbCount)
     rds <- list()
     for(i in 1:dbCount){
@@ -39,3 +49,4 @@ gemini <- function(dbCount = 2,
         }
     }
 }
+
