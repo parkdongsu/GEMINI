@@ -21,7 +21,67 @@ create_rds<- function(connectionDetails){
              error = function(e){
                  print(e)
                  disconnect(connection)
-    })
+             })
+<<<<<<< HEAD
+<<<<<<< HEAD
+}
+
+save_data <- function(connection, workDir, schemaName){
+    dir.create(file.path(workDir, "Gemini RDS"), showWarnings = FALSE)
+    workDir <- file.path(workDir, "Gemini RDS","/")
+    table_name <- c('person','death','visit_occurrence','condition_occurrence','drug_exposure','drug_era')
+    process_time <- sapply(table_name, function(x){extract_cdm(connection,workDir,x)})
+
+    ################################################################################
+    # File Saving
+    ################################################################################
+
+    zip(zipfile = paste0(workDir,schemaName,".zip"),
+        files = paste0(workDir,list.files(path = workDir,pattern = "\\w*.rds$")), flag= c("-j", "-r"))
+
+    if(length(list.files(path = workDir, pattern = "\\w.zip$"))>0){
+        file.remove(paste0(workDir,list.files(path = workDir, pattern = "\\w.rds$")))
+    }
+    # time check
+    cat(paste0("RDS files created.\nThis process takes ", sum(process_time), "s.\n"))
+    ################################################################################
+    # Disconnect DB
+    ################################################################################
+    DatabaseConnector::disconnect(connection)
+}
+
+
+extract_cdm <- function(connection, workDir, tableName){
+    cat(paste("\n",tableName,"data extracting...\n"))
+    switch(tableName,
+           'person' = {
+               tm <- as.numeric(round(system.time(persontbl <- person_data(connection))[3], digit = 1))
+               rds_maker(workDir,persontbl,tableName)
+           },
+           'death' = {
+               tm <- as.numeric(round(system.time(deathtbl <- death_data(connection))[3], digit = 1))
+               rds_maker(workDir,deathtbl,tableName)
+           },
+           'visit_occurrence' = {
+               tm <- as.numeric(round(system.time(visittbl <- visit_occurrence_data(connection))[3], digit = 1))
+               rds_maker(workDir,visittbl,tableName)
+           },
+           'condition_occurrence' = {
+               tm <- as.numeric(round(system.time(conditiontbl <- condition_occurrence_data(connection))[3], digit = 1))
+               rds_maker(workDir,conditiontbl,tableName)
+           },
+           'drug_exposure' = {
+               tm <- as.numeric(round(system.time(exptbl <- drug_exposure_data(connection))[3], digit = 1))
+               rds_maker(workDir,exptbl,tableName)
+           },
+           'drug_era' = {
+               tm <- as.numeric(round(system.time(eratbl <- drug_era_data(connection))[3], digit = 1))
+               rds_maker(workDir,eratbl,tableName)
+           }
+    )
+    return(tm)
+}
+=======
 
 }
 
@@ -80,6 +140,67 @@ extract_cdm <- function(connection, workDir, tableName){
     return(tm)
 }
 
+>>>>>>> 83ebedfbe0074ce0f0c06ae6bbcd05f4b363c307
+=======
+
+}
+
+save_data <- function(connection, workDir, schemaName){
+    dir.create(file.path(workDir, "Gemini RDS"), showWarnings = FALSE)
+    workDir <- file.path(workDir, "Gemini RDS","/")
+    table_name <- c('person','death','visit_occurrence','condition_occurrence','drug_exposure','drug_era')
+    process_time <- sapply(table_name, function(x){extract_cdm(connection,workDir,x)})
+
+    ################################################################################
+    # File Saving
+    ################################################################################
+
+    zip(zipfile = paste0(workDir,schemaName,".zip"),
+        files = paste0(workDir,list.files(path = workDir,pattern = "\\w*.rds$")), flag= c("-j", "-r"))
+
+    if(length(list.files(path = workDir, pattern = "\\w.zip$"))>0){
+        file.remove(paste0(workDir,list.files(path = workDir, pattern = "\\w.rds$")))
+    }
+    # time check
+    cat(paste0("RDS files created.\nThis process takes ", sum(process_time), "s.\n"))
+    ################################################################################
+    # Disconnect DB
+    ################################################################################
+    DatabaseConnector::disconnect(connection)
+}
+
+extract_cdm <- function(connection, workDir, tableName){
+    cat(paste("\n",tableName,"data extracting...\n"))
+    switch(tableName,
+           'person' = {
+               tm <- as.numeric(round(system.time(persontbl <- person_data(connection))[3], digit = 1))
+               rds_maker(workDir,persontbl,tableName)
+           },
+           'death' = {
+               tm <- as.numeric(round(system.time(deathtbl <- death_data(connection))[3], digit = 1))
+               rds_maker(workDir,deathtbl,tableName)
+           },
+           'visit_occurrence' = {
+               tm <- as.numeric(round(system.time(visittbl <- visit_occurrence_data(connection))[3], digit = 1))
+               rds_maker(workDir,visittbl,tableName)
+           },
+           'condition_occurrence' = {
+               tm <- as.numeric(round(system.time(conditiontbl <- condition_occurrence_data(connection))[3], digit = 1))
+               rds_maker(workDir,conditiontbl,tableName)
+           },
+           'drug_exposure' = {
+               tm <- as.numeric(round(system.time(exptbl <- drug_exposure_data(connection))[3], digit = 1))
+               rds_maker(workDir,exptbl,tableName)
+           },
+           'drug_era' = {
+               tm <- as.numeric(round(system.time(eratbl <- drug_era_data(connection))[3], digit = 1))
+               rds_maker(workDir,eratbl,tableName)
+           }
+    )
+    return(tm)
+}
+
+>>>>>>> 83ebedf... Refactoring create rds files code.
 rds_maker <- function(workDir,tbl,tableName){
     switch (tableName,
             "person" =  {

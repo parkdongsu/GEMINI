@@ -1,474 +1,339 @@
 ---
 title: "GEMINI Report"
 params:
-    std_schema: !r std_schema
-    tar_schema: !r tar_schema
+    rds: !r rds
+    dbName: !r dbName
+    
 output: 
   html_document:
-    self_contained: yes
+    self_contained: TRUE
+    keep_md: TRUE
+    df_print: paged
     theme: paper
     highlight: zenburn
-    toc: true
-    toc_float:
-      collapsed: false
-      smooth_scroll: TRUE
 
 ---
-<a name="Top"></a>
+##   {.tabset}
 
-### **GEMINI info** 
-This tool for data quality management by comparing and visualizing manifold data characteristics based on data converted to CDM.
-
-Compare CDM's PERSON, DEATH, VISIT OCCURRENCE, CONDITION OCCURRENCE, DRUG EXPOSURE, DRUG ERA tables.
-
-```{r, echo=FALSE, comment= NULL} 
-paste0(params$std_schema, " : ", params$tar_schema)
+### **Summary**
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_total_person(params$dbName, params$rds)
 ```
-
-<style>
-  .col2{
-    display: inline-block;
-    -webkit-columns: 100px 2;
-    -moz-columns: 100px 2;
-    columns: 100px 2;
-    -webkit-column-rule:
-    1px dotted #e0e0e0;
-    -moz-column-rule: 1px dotted #e0e0e0;
-    column-rule: 1px dotted #e0e0e0;
-    column-span:all;
-  }
-    .pull_left{
-    float:left;
-    width:49.5%;
-    }
-    .pull_right{
-    float:right;
-    width:49.5%;
-    }
-    .row:after{
-    content: "";
-    display:table;
-    clear:both;
-    }
-</style>
-
-
-***
-<a name="Summary"></a>
-
-### **Summary** {.flexbox .vcenter}
-<div class="row">
-<div class="pull_left">
-
-![All records](images/Whole/00.Record.jpg)
-
 The number of records in the table being compared Percentage of records per table based on the sum
 <!--비교 대상이 되는 테이블의 레코드 수 총합을 기준으로 한 테이블 별 레코드 백분율. -->
 
-</div>
-
-<div class="pull_right">
-![All patients](images/Whole/01.Person.jpg)
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_total_record(params$dbName, params$rds)
+```
 The percentage of patients by table based on the total number of patients in the table being compared.
 <!--비교 대상이 되는 테이블의 전체 환자 수를 기준으로 한 테이블 별 환자 백분율.-->
 
-</div>
-</div>
 <a href="#Top">TOP</a>
 
 ***
-<a name="PERSON"></a>
 
-### **PERSON Table** 
-
-<div class="row">
-<div class="pull_left">
-![Person record](images/Person/00.Person_record.jpg)
-
+### **Person**
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_meta_pie(params$dbName , params$rds, tableName = "person", type = "record")
+```
 The Percentage of records in the Person table
 <!--Person 테이블의 레코드가 차지하는 백분율-->
 
-</div>
-
-<div class="pull_right">
-![Person gender ratio](images/Person/01.Person_gender.jpg)
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_gender_bar(params$dbName, params$rds)
+```
 Gender ratio of patients
 <!--환자들의 성비-->
 
-</div>
-</div>
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_visit_freq_graph(params$dbName,params$rds,'min')
+```
 
-<div class="col2">
-
-![Person first treat](images/Person/02.Person_min_year.jpg)
-
-![Person last treat](images/Person/03.Person_max_year.jpg)
-
-</div>
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_visit_freq_graph(params$dbName,params$rds,'max')
+```
 The percentage and sex ratio by age, based on the year the patients were first treated and the last year they were treated
 <!--환자들이 처음으로 진료받은 연도와 마지막으로 진료받은 연도를 기준으로 한 연령별 백분율 및 성비-->
 
-<div class="row">
-<div class="pull_left">
-
-![Person race](images/Person/04.Person_race.jpg)
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_pie(params$dbName, params$rds, "persontbl_race")
+```
 The percentage of patient race
 <!-- 환자 인종별 백분율-->
-</div>
 
-<div class="pull_right">
-![Person ethnicity](images/Person/05.Person_ethnicity.jpg)
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_pie(params$dbName, params$rds, "persontbl_ethnicity")
+```
 The percentage of patient ethnicity
 <!-- 환자 민족별 백분율 -->
-</div>
-</div>
 
-<div class="row">
-<div class="pull_left">
-
-![Person address](images/Person/06.Person_location.jpg)
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_null_bar(params$dbName, params$rds, "persontbl_location")
+```
 The number of patients' residential addresses and the percentage of null values
-
 <!-- 환자의 거주 주소의 수 및 Null 값의 백분율.-->
-</div>
 
-<div class="pull_right">
-![Person provider](images/Person/07.Person_provider.jpg)
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_null_bar(params$dbName, params$rds, "persontbl_provider")
+```
 The number of people managing patients and the percentage of null values
 <!-- 환자를 관리하는 인원 수와 Null 값의 백분율.-->
-</div>
-</div>
 
-<SPAN class="col2">
-![Person care site](images/Person/08.Person_care_site.jpg)
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_null_bar(params$dbName, params$rds, "persontbl_care_site")
+```
 The number of places that provide medical care to the patient and the percentage of null values
 <!-- 환자에게 의료 서비스를 제공하는 장소의 수 및 Null 값의 백분율.-->
-</SPAN>
 
 <a href="#Top">TOP</a>
 
 ***
-<a name="DEATH"></a>
 
-### **DEATH Table**
-<div class="row">
-<div class="pull_left">
-![Death ETL check](images/Death/00.Death_deathcheck.jpg)
+### **Death**
 
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_pie(params$dbName, params$rds, "deathtbl_check")
+```
 The percentage of deaths recorded by the number of deaths recorded
 <!-- 사망자의 사망 날짜가 기록된 개수에 따른 백분율.-->
-</div>
 
-<div class="pull_right">
-![Death type](images/Death/01.Death_type.jpg)
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_pie(params$dbName, params$rds, "deathtbl_type")
+```
 The percentage of deaths by type of death
 <!-- 사망자의 사망 유형 별 백분율-->
 
-</div>
-
-</div>
 <a href="#Top">TOP</a>
 
 ***
-<a name="VISIT OCCURRENCE"></a>
 
-### **VISIT OCCURRENCE Table**
-<div class="row">
-<div class="pull_left">
-![Visit record](images/Visit/00.Visit_record.jpg)
+### **Visit Occurrence** {.flexbox .vcenter}
 
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_meta_pie(params$dbName, params$rds,  tableName = "visit", type = "person")
+```
 The percentage of records in the Visit Occurrence table
 <!-- Visit Occurrence 테이블의 레코드가 차지하는 백분율.-->
-</div>
 
-<div class="pull_right">
-![Visit person](images/Visit/01.Visit_person.jpg)
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_meta_pie(params$dbName, params$rds, tableName = "visit", type = "record")
+```
 The percentage of patients in the Visit Occurrence table
 <!-- Visit Occurrence 테이블의 환자가 차지하는 백분율.-->
-</div>
-</div>
 
-<div class="row">
-<div class="pull_left">
-![Visit concept](images/Visit/02.Visit_concept.jpg)
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_pie(params$dbName, params$rds, "visittbl_visit_concept")
+```
 The percentage by hospital visit concept
 <!-- 병원 방문 유형별 백분율.-->
-</div>
 
-<div class="pull_right">
-![Visit duration](images/Visit/03.Visit_duration.jpg)
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_histogram(params$dbName, params$rds, rdsConcept = "visittbl_diff_date")
+```
 Patient visit duration histogram
 <!-- 환자의 방문 기간 히스토그램.-->
-</div>
-</div>
 
-<div class="col2">
-![Visit start year](images/Visit/04.Visit_start.jpg)
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_line_graph(params$dbName, params$rds, rdsConcept = "visittbl_start")
+```
 
-![Visit end year](images/Visit/05.Visit_end.jpg)
-</div>
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_line_graph(params$dbName, params$rds, rdsConcept = "visittbl_end")
+```
 The percentage of first visit and last visit to hospital by year
 <!-- 연도별 병원 최초 방문 및 마지막 방문 백분율.-->
 
-<div class="row">
-<div class="pull_left">
-![Visit type](images/Visit/06.Visit_type.jpg)
-
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_pie(params$dbName, params$rds, "visittbl_type_concept")
+```
 The percentage of visit type
 <!-- 방문 기록 유형 구분별 백분율.-->
-</div>
 
-<div class="pull_right">
-![Visit care site](images/Visit/07.Visit_care_site.jpg)
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_null_bar(params$dbName, params$rds, "visittbl_care_site")
+```
 The number of types of places where visitors receive medical care and the percentage of null values
-
 <!-- 방문자가 의료 서비스를 받는 장소의 종류 수 및 Null 값의 백분율.-->
-</div>
-</div>
 
-<div class="row">
-<div class="pull_left">
-![Visit source](images/Visit/08.Visit_source.jpg)
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_pie(params$dbName, params$rds, "visittbl_source_concept")
+```
 The percentage of visit source
-
 <!-- 방문 구분 코드 별 백분율.-->
-</div>
 
-<div class="pull_right">
-![Visit admitting](images/Visit/09.Visit_admitting.jpg)
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_pie(params$dbName, params$rds, "visittbl_admitting_source")
+```
 The percentage of visit admitting source
-
 <!-- 방문 허용 코드 별 백분율.-->
-</div>
-</div>
 
-<div class="row">
-<div class="pull_left">
-![Visit discharge](images/Visit/10.Visit_discharge.jpg)
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_pie(params$dbName, params$rds, "visittbl_discharge")
+```
 The percentage of visit dischage
 <!-- 방문 종료 사유별 백분율.-->
-</div>
 
-<div class="pull_right">
-![Visit preceding](images/Visit/11.Visit_preceding.jpg)
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_pie(params$dbName, params$rds, "visittbl_preceding")
+```
 The percentage of visits returned per previous visit
 <!-- 이전의 방문과 재방문 연관에 따른 비율.-->
 
-</div>
-</div>
 <a href="#Top">TOP</a>
 
 ***
-<a name="CONDITION OCCURRENCE"></a>
 
-### **CONDITION OCCURRENCE Table**
-<div class="row">
-<div class="pull_left">
-![Condition record](images/Condition/00.Condition_record.jpg)
+### **Condition Occurrence** {.flexbox .vcenter}
 
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_meta_pie(params$dbName, params$rds, tableName = "condition", type = "person")
+```
 The percentage of records in the Condition Occurrence table
-
 <!-- Condition Occurrence 테이블의 레코드가 차지하는 백분율.-->
-</div>
 
-<div class="pull_right">
-![Condition person](images/Condition/01.Condition_person.jpg)
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_meta_pie(params$dbName, params$rds, tableName = "condition", type = "record")
+```
 The percentage of patients in the Condition Occurrence table
-
 <!-- Condition Occurrence 테이블의 환자가 차지하는 백분율.-->
-</div>
-</div>
 
-<div class="col2">
-![Condition start year](images/Condition/02.Condition_start.jpg)
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_histogram(params$dbName, params$rds, rdsConcept = "conditiontbl_diff_date")
+```
+Patient condition duration histogram
+<!-- 질병 기간별 히스토그램.-->
 
-![Condition end year](images/Condition/03.Condition_end.jpg)
-</div>
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_line_graph(params$dbName, params$rds, rdsConcept = "conditiontbl_start")
+```
 
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_line_graph(params$dbName, params$rds, rdsConcept = "conditiontbl_end")
+```
 The percentage by year based on condition identification and termination
 <!-- 질병 확인 및 종료에 따른 연도별 백분율.-->
 
-<div class="row">
-<div class="pull_left">
-![Condition duration](images/Condition/04.Condition_duration.jpg)
-
-Patient condition duration histogram
-<!-- 질병 기간별 히스토그램.-->
-</div>
-
-<div class="pull_right">
-![Condition type](images/Condition/05.Condition_type.jpg)
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_pie(params$dbName, params$rds, "conditiontbl_type_concept")
+```
 The percentage of condition type
 <!-- 질병 발생 유형별 백분율.-->
-</div>
-</div>
 
-<div class="row">
-<div class="pull_left">
-![Condition stop reason](images/Condition/06.Condition_stop.jpg)
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_stop_bar(params$dbName, params$rds, "conditiontbl_stop")
+```
 The number of reasons for stopping condition
 <!-- 증상이 나타나지 않게 된 이유의 종류 수. -->
-</div>
 
-<div class="pull_right">
-![Condition / visit occurrence](images/Condition/07.Condition_visit_occurrence.jpg)
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_pie(params$dbName, params$rds, "conditiontbl_visit_occurrence")
+```
 The percentage of correlation between condition check and visits
 <!-- 증상 확인과 방문 간 상관 관계의 비율.-->
-</div>
-</div>
 
-<div class="row">
-<SPAN class="col2">
-![Condition / visit detail](images/Condition/08.Condition_visit_detail.jpg)
-
+```{r,echo=FALSE, comment= NULL}
+draw_pie(params$dbName, params$rds, "conditiontbl_visit_detail")
+```
 The percentageof correlation between conition and visit
 <!-- 증상과 방문 내용과의 상관 관계 비율.-->
-</SPAN>
-</div>
 
 <a href="#Top">TOP</a>
 
 ***
-<a name="DRUG EXPOSURE"></a>
 
-### **DRUG EXPOSURE Table**
-<div class="row">
-<div class="pull_left">
-![DrugExp record](images/Drug exposure/00.Drug_exp_record.jpg)
+### **Drug Exposure** {.flexbox .vcenter}
 
-The percentage of records in the Drug Exposure table
-</div>
-
-<div class="pull_right">
-<!-- Drug Exposue 테이블의 레코드가 차지하는 백분율.-->
-
-![DrugExp person](images/Drug exposure/01.Drug_exp_person.jpg)
-
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_meta_pie(params$dbName, params$rds, tableName = "drug_exp", type = "person")
+```
 The percentage of patients in the Drug Exposue table
 <!-- Drug Exposue 테이블의 환자가 차지하는 백분율.-->
-</div>
-</div>
 
-<div class="col2">
-![DrugExp start year](images/Drug exposure/02.Drug_exp_start.jpg)
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_meta_pie(params$dbName, params$rds, tableName = "drug_exp", type = "record")
+```
+The percentage of records in the Drug Exposure table
+<!-- Drug Exposue 테이블의 레코드가 차지하는 백분율.-->
 
-![DrugExp end year](images/Drug exposure/03.Drug_exp_end.jpg)
-</div>
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_histogram(params$dbName, params$rds, rdsConcept = "drug_exptbl_diff_date")
+```
+Patient condition duration histogram
+<!-- 질병 기간별 히스토그램.-->
 
-<!-- 약물을 제공하기 시작한 연도 및 종료 연도별 백분율.-->
-The percentage by year and ending year in which the drug was offered
-<div class="row">
-<div class="pull_left">
-![DrugExp duration](images/Drug exposure/04.Drug_exp_duration.jpg)
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_line_graph(params$dbName, params$rds, rdsConcept = "drug_exptbl_start")
+```
 
-Drug exposure duration histogram
-<!-- 약물 제공 기간에 대한 히스토그램.-->
-</div>
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_line_graph(params$dbName, params$rds, rdsConcept = "drug_exptbl_end")
+```
+The percentage by year based on condition identification and termination
+<!-- 질병 확인 및 종료에 따른 연도별 백분율.-->
 
-<div class="pull_right">
-![DrugExp type](images/Drug exposure/05.Drug_exp_type.jpg)
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_pie(params$dbName, params$rds, rdsConcept = "drug_exptbl_type_concept")
+```
 The percentage of drug exposure type
 <!-- 약물 제공 유형별 백분율.-->
-</div>
-</div>
 
-<div class="row">
-<div class="pull_left">
-![DrugExp stop reason](images/Drug exposure/06.Drug_stop.jpg)
-
+<!-- NULL -->
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_stop_bar(params$dbName, params$rds, "drug_exptbl_stop")
+```
 The number of reasons for stopping drug exposure
 <!-- 약물 제공을 중지한 사유의 종류 수. -->
-</div>
 
-<div class="pull_right">
-![DrugExp route](images/Drug exposure/07.Drug_exp_route.jpg)
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_pie(params$dbName, params$rds, rdsConcept = "drug_exptbl_route")
+```
 The percentage of drug exposure route
 <!-- 약물 제공을 한 경로별 백분율.-->
-</div>
-</div>
 
-<div class="row">
-<SPAN class="col2">
-![DrugExp / visit occurrence](images/Drug exposure/08.Drug_exp_visit_occurrence.jpg)
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_pie(params$dbName, params$rds, rdsConcept = "drug_exptbl_visit_occurrence")
+```
 The percentage of correlation of drug exposure and visit
 <!-- 약물 제공과 방문 간 연관 관계의 비율.-->
 
-</SPAN>
-</div>
-
 <a href="#Top">TOP</a>
 
 ***
-<a name="DRUG ERA"></a>
 
-### **DRUG ERA Table**
-<div class="row">
-<div class="pull_left">
-![DrugEra record](images/Drug era/00.Drug_era_record.jpg)
+### **Drug Era** {.flexbox .vcenter}
 
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_meta_pie(params$dbName, params$rds, tableName = "drug_era", type = "person")
+```
 The percentage of records in the Drug Era table
 <!-- Drug Era 테이블의 레코드가 차지하는 백분율.-->
-</div>
 
-<div class="pull_right">
-![DrugEra person](images/Drug era/01.Drug_era_person.jpg)
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_meta_pie(params$dbName, params$rds, tableName = "drug_era", type = "record")
+```
 The percentage of patients in the Drug Era table
 <!-- Drug Era 테이블의 환자가 차지하는 백분율.-->
-</div>
-</div>
 
-<div class="col2">
-![DrugEra start year](images/Drug era/02.Drug_era_start.jpg)
-
-![DrugEra end year](images/Drug era/03.Drug_era_end.jpg)
-</div>
-
-<!-- This figure shows that the Drug Era start and end.-->
-
-<div class="row">
-<div class="pull_left">
-![DrugEra duration](images/Drug era/04.Drug_era_duration.jpg)
-
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_histogram(params$dbName, params$rds, rdsConcept = "drug_eratbl_diff_date")
+```
 Drug era duration histogram
 <!--Drug - 약물 복용 기간에 대한 히스토그램-->
-</div>
 
-<div class="pull_right">
-![DrugEra gap day](images/Drug era/05.Drug_era_gap.jpg)
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_line_graph(params$dbName, params$rds, rdsConcept = "drug_eratbl_start")
+```
 
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_line_graph(params$dbName, params$rds, rdsConcept = "drug_eratbl_end")
+```
+<!-- This figure shows that the Drug Era start and end.-->
+
+```{r,echo=FALSE, comment= NULL, warning = FALSE}
+draw_gap_histogram(params$dbName, params$rds, rdsConcept = "drug_eratbl_gap_days")
+```
 Histogram of drug delivery day and drug day difference
 <!-- 약물 제공일과 약물 복용일 차이에 대한 히스토그램. -->
-</div>
-</div>
-
-<a href="#Top">TOP</a>
 
 ***
+
