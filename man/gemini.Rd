@@ -4,7 +4,7 @@
 \alias{gemini}
 \title{Get data}
 \usage{
-gemini()
+gemini(dbCount = 2)
 }
 \description{
 Run GEMINI

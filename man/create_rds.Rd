@@ -4,7 +4,7 @@
 \alias{create_rds}
 \title{Create rds file}
 \usage{
-create_rds()
+create_rds(connectionDetails)
 }
 \description{
 This function for creating server info files and trigger of create rds files
