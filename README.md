@@ -27,10 +27,10 @@ DRUG ERA
 
 1. Install GEMINI package using install_github().
 
-```
+```R
 install.packages("devtools")
 library(devtools)
-install_github("https://github.com/ABMI/GEMINI.git")
+install_github("https://github.com/ABMI/GEMINI.git", ref="g_temp")
 library(gemini)
 ```
 
