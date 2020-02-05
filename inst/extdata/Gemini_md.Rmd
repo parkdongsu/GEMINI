@@ -13,6 +13,13 @@ output:
     highlight: zenburn
 
 ---
+```{css, echo=FALSE}
+.main-container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+```
 ##   {.tabset}
 
 ### **Summary**
@@ -54,13 +61,13 @@ The percentage and sex ratio by age, based on the year the patients were first t
 <!--환자들이 처음으로 진료받은 연도와 마지막으로 진료받은 연도를 기준으로 한 연령별 백분율 및 성비-->
 
 ```{r,echo=FALSE, comment= NULL, warning = FALSE}
-draw_pie(params$dbName, params$rds, "persontbl_race")
+draw_pie(params$dbName, params$rds, "persontbl_race","race concept id")
 ```
 The percentage of patient race
 <!-- 환자 인종별 백분율-->
 
 ```{r,echo=FALSE, comment= NULL, warning = FALSE}
-draw_pie(params$dbName, params$rds, "persontbl_ethnicity")
+draw_pie(params$dbName, params$rds, "persontbl_ethnicity", "ethnicity concept id")
 ```
 The percentage of patient ethnicity
 <!-- 환자 민족별 백분율 -->
@@ -90,13 +97,13 @@ The number of places that provide medical care to the patient and the percentage
 ### **Death**
 
 ```{r,echo=FALSE, comment= NULL, warning = FALSE}
-draw_pie(params$dbName, params$rds, "deathtbl_check")
+draw_pie(params$dbName, params$rds, "deathtbl_check", "person id")
 ```
 The percentage of deaths recorded by the number of deaths recorded
 <!-- 사망자의 사망 날짜가 기록된 개수에 따른 백분율.-->
 
 ```{r,echo=FALSE, comment= NULL, warning = FALSE}
-draw_pie(params$dbName, params$rds, "deathtbl_type")
+draw_pie(params$dbName, params$rds, "deathtbl_type", "death type concept id")
 ```
 The percentage of deaths by type of death
 <!-- 사망자의 사망 유형 별 백분율-->
@@ -120,7 +127,7 @@ The percentage of patients in the Visit Occurrence table
 <!-- Visit Occurrence 테이블의 환자가 차지하는 백분율.-->
 
 ```{r,echo=FALSE, comment= NULL, warning = FALSE}
-draw_pie(params$dbName, params$rds, "visittbl_visit_concept")
+draw_pie(params$dbName, params$rds, "visittbl_visit_concept", "visit concept id")
 ```
 The percentage by hospital visit concept
 <!-- 병원 방문 유형별 백분율.-->
@@ -142,7 +149,7 @@ The percentage of first visit and last visit to hospital by year
 <!-- 연도별 병원 최초 방문 및 마지막 방문 백분율.-->
 
 ```{r,echo=FALSE, comment= NULL, warning = FALSE}
-draw_pie(params$dbName, params$rds, "visittbl_type_concept")
+draw_pie(params$dbName, params$rds, "visittbl_type_concept", "visit type concept id")
 ```
 The percentage of visit type
 <!-- 방문 기록 유형 구분별 백분율.-->
@@ -154,25 +161,25 @@ The number of types of places where visitors receive medical care and the percen
 <!-- 방문자가 의료 서비스를 받는 장소의 종류 수 및 Null 값의 백분율.-->
 
 ```{r,echo=FALSE, comment= NULL, warning = FALSE}
-draw_pie(params$dbName, params$rds, "visittbl_source_concept")
+draw_pie(params$dbName, params$rds, "visittbl_source_concept", "visit source concept id")
 ```
 The percentage of visit source
 <!-- 방문 구분 코드 별 백분율.-->
 
 ```{r,echo=FALSE, comment= NULL, warning = FALSE}
-draw_pie(params$dbName, params$rds, "visittbl_admitting_source")
+draw_pie(params$dbName, params$rds, "visittbl_admitting_source","admitting source concept id")
 ```
 The percentage of visit admitting source
 <!-- 방문 허용 코드 별 백분율.-->
 
 ```{r,echo=FALSE, comment= NULL, warning = FALSE}
-draw_pie(params$dbName, params$rds, "visittbl_discharge")
+draw_pie(params$dbName, params$rds, "visittbl_discharge", "discharge to concept id")
 ```
 The percentage of visit dischage
 <!-- 방문 종료 사유별 백분율.-->
 
 ```{r,echo=FALSE, comment= NULL, warning = FALSE}
-draw_pie(params$dbName, params$rds, "visittbl_preceding")
+draw_pie(params$dbName, params$rds, "visittbl_preceding", "preceding visit occurrence id")
 ```
 The percentage of visits returned per previous visit
 <!-- 이전의 방문과 재방문 연관에 따른 비율.-->
@@ -212,7 +219,7 @@ The percentage by year based on condition identification and termination
 <!-- 질병 확인 및 종료에 따른 연도별 백분율.-->
 
 ```{r,echo=FALSE, comment= NULL, warning = FALSE}
-draw_pie(params$dbName, params$rds, "conditiontbl_type_concept")
+draw_pie(params$dbName, params$rds, "conditiontbl_type_concept", "condition type concept id")
 ```
 The percentage of condition type
 <!-- 질병 발생 유형별 백분율.-->
@@ -224,13 +231,13 @@ The number of reasons for stopping condition
 <!-- 증상이 나타나지 않게 된 이유의 종류 수. -->
 
 ```{r,echo=FALSE, comment= NULL, warning = FALSE}
-draw_pie(params$dbName, params$rds, "conditiontbl_visit_occurrence")
+draw_pie(params$dbName, params$rds, "conditiontbl_visit_occurrence", "visit detail")
 ```
 The percentage of correlation between condition check and visits
 <!-- 증상 확인과 방문 간 상관 관계의 비율.-->
 
 ```{r,echo=FALSE, comment= NULL}
-draw_pie(params$dbName, params$rds, "conditiontbl_visit_detail")
+draw_pie(params$dbName, params$rds, "conditiontbl_visit_detail", "visit detail")
 ```
 The percentageof correlation between conition and visit
 <!-- 증상과 방문 내용과의 상관 관계 비율.-->
@@ -271,7 +278,7 @@ The percentage by year based on condition identification and termination
 <!-- 질병 확인 및 종료에 따른 연도별 백분율.-->
 
 ```{r,echo=FALSE, comment= NULL, warning = FALSE}
-draw_pie(params$dbName, params$rds, rdsConcept = "drug_exptbl_type_concept")
+draw_pie(params$dbName, params$rds, rdsConcept = "drug_exptbl_type_concept", "drug type concept id")
 ```
 The percentage of drug exposure type
 <!-- 약물 제공 유형별 백분율.-->
@@ -284,13 +291,13 @@ The number of reasons for stopping drug exposure
 <!-- 약물 제공을 중지한 사유의 종류 수. -->
 
 ```{r,echo=FALSE, comment= NULL, warning = FALSE}
-draw_pie(params$dbName, params$rds, rdsConcept = "drug_exptbl_route")
+draw_pie(params$dbName, params$rds, rdsConcept = "drug_exptbl_route", "route concept id")
 ```
 The percentage of drug exposure route
 <!-- 약물 제공을 한 경로별 백분율.-->
 
 ```{r,echo=FALSE, comment= NULL, warning = FALSE}
-draw_pie(params$dbName, params$rds, rdsConcept = "drug_exptbl_visit_occurrence")
+draw_pie(params$dbName, params$rds, rdsConcept = "drug_exptbl_visit_occurrence", "visit occurrence id")
 ```
 The percentage of correlation of drug exposure and visit
 <!-- 약물 제공과 방문 간 연관 관계의 비율.-->
