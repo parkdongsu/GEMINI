@@ -1,0 +1,68 @@
+#rds_button {
+	
+  margin-top: 8rem;
+  margin-bottom: 8rem;
+  padding-top: 16rem;
+  padding-right: 4rem;
+  padding-bottom: 24rem;
+  padding-left: 4rem;
+  font-size: 200%;
+  color : #FFFFFF;
+  background-color: #EC7063;
+}
+
+#gemini_button {
+  margin-top: 8rem;
+  margin-bottom: 8rem;
+  padding-top: 16rem;
+  padding-right: 4rem;
+  padding-bottom: 24rem;
+  padding-left: 4rem;
+  font-size: 200%;
+  color : #FFFFFF;
+  background-color: #5DADE2;
+	
+}
+
+#back_button {
+  padding-top: 1rem;
+  padding-right: 2rem;
+  padding-bottom: 1rem;
+  padding-left: 2rem;
+  color : #FFFFFF;
+  background-color: #000000;
+}
+
+#back_button2 {
+  padding-top: 1rem;
+  padding-right: 2rem;
+  padding-bottom: 1rem;
+  padding-left: 2rem;
+  color : #FFFFFF;
+  background-color: #000000;
+}
+
+#settingDir {
+  color : #000000;
+  background-color: #FFFFFF;
+}
+
+#setwd_button {
+  padding-top: 1rem;
+  padding-right: 2rem;
+  padding-bottom: 1rem;
+  padding-left: 2rem;
+  color : #000000;
+  background-color: #FFFFFF;
+}
+
+#geminiAnalysis_button {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  color : #000000;
+  background-color: #FFFFFF;
+}
+
