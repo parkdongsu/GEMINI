@@ -6,15 +6,8 @@
 #'
 #' @import DatabaseConnector
 #' @import SqlRender
-create_rds<- function(connectionDetails){
+create_rds<- function(connectionDetails, work_dir){
     cat("Set directory to create rds files.\n")
-    # Change working directory for confirming user to create where the files
-    if(Sys.info()[[1]]=='Windows'){
-        work_dir <- choose.dir()
-    }
-    else{
-        work_dir <- readline("Set work directory path : ")
-    }
     connection <- DatabaseConnector::connect(connectionDetails)
     schema_name <- connectionDetails$schema
     tryCatch(save_data(connection, work_dir, schema_name),
