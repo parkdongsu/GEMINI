@@ -202,6 +202,9 @@ shinyApp(
     
     observeEvent(input$geminiSet_button1,{
       targetFile <- choose.files()
+      if(identical(targetFile, character(0))){
+        targetFile <- ''
+      }
       output$geminiSet_text1 <- renderText({
         targetFile
       })
@@ -210,6 +213,9 @@ shinyApp(
     
     observeEvent(input$geminiSet_button2,{
       targetFile <- choose.files()
+      if(identical(targetFile, character(0))){
+        targetFile <- ''
+      }
       output$geminiSet_text2 <- renderText({
         targetFile
       })
