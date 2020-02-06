@@ -19,13 +19,13 @@ gemini <- function(dbCount = 2,work_dir = getwd(),analysisFilePath){
     dir.create(file.path(work_dir, "Gemini RDS"), showWarnings = FALSE)
     table <- c('Whole','Person','Death','Visit','Condition','Drug exposure','Drug era')
     sapply(X= file.path(work_dir,'images',table), FUN = function(x){dir.create(x,showWarnings = F)})
-
-    dbName <- c()
+    
+    dbName <<- vector(length = dbCount)
     rds <<- list()
     for(i in 1:length(analysisFilePath)){
         tmpPathIndex <- gregexpr('\\\\',analysisFilePath[i])[[1]]
         pickDb <- substr(analysisFilePath[i],tmpPathIndex[length(tmpPathIndex)]+1,nchar(analysisFilePath[i]))
-        dbName[i] <- substr(pickDb, start = "1", stop=tail(unlist(gregexpr("\\.",pickDb)))[1]-1)
+        dbName[i] <<- substr(pickDb, start = "1", stop=tail(unlist(gregexpr("\\.",pickDb)))[1]-1)
         unzip(zipfile = file.path(work_dir,'Gemini RDS',pickDb),
               exdir = file.path(work_dir,dbName[i]),
               overwrite = T)
@@ -41,6 +41,11 @@ gemini <- function(dbCount = 2,work_dir = getwd(),analysisFilePath){
     
     make_report(work_dir)
 }
+
+
+
+
+
 
 make_report<-function(workDir){
     rmarkdown::render(paste0(.libPaths()[1],"/gemini/extdata/Gemini_md.Rmd"),encoding = "UTF-8",output_dir = workDir)
