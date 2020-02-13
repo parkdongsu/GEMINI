@@ -5,13 +5,12 @@
 *.swp
 *.html
 *.cfg
-*.md
+#*.md
 *.rds
 *.gz
 
 ############
 # 제외 폴더#
-images/
 Standard RDS/
 Target RDS/
 data/Gemini_md_files

@@ -20,24 +20,23 @@ DRUG ERA
 (OBSERVATION_PERIOD)
 
 # HOW TO USE
+Here are some of the [details](how_to_use.md).
 
 0. Requirement
 
 * Install Java SDK (developed in 8 Update 181)
+* Install R packages "devtools", "shinyjs"
+* Install Rtools and [set Rtools PATH](https://www.biostat.wisc.edu/~kbroman/Rintro/Rwinpack.html)
 
-1. Install GEMINI package using install_github().
+1. Install GEMINI
+- Download [GEMINI R project](https://github.com/ABMI/GEMINI/archive/g_temp.zip)
+- Run "GEMINI.Rproj"
+- go to "Build" tap - click "Install and Restart"
 
-```R
-install.packages("devtools")
-library(devtools)
-install_github("https://github.com/ABMI/GEMINI.git", ref="g_temp")
-library(gemini)
-```
-
-2. After install, Run Gemini
+2. Run Gemini
 
 ````R
-gemini::gemini_run()
+gemini_run()
 ````
 
 3. description

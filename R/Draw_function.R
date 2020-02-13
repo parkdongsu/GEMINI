@@ -719,13 +719,13 @@ draw_line_graph <- function(dbName,rds,rdsConcept){
     for(i in 2:length(dbName)){
         temp <- rds[[i]][names(rds[[i]])==rdsConcept][[1]]
         if(nrow(subset(temp,is.na(visitYear)))>0){
-            val_NA <- subset(temp,is.na(visitYear))
+            val_NA <- subset(temp,is.na(visitYear))$personRatio
             temp <- temp[-c(which(is.na(temp))),]
         }else{
             val_NA <- 0
         }
         if(nrow(subset(temp,visitYear =='2999'))>0){
-            val_2999 <- subset(temp,visitYear =='2999')
+            val_2999 <- subset(temp,visitYear =='2999')$personRatio
             temp <- temp[-c(which(temp$visitYear =='2999')),]
         }else{
             val_2999 <- 0
