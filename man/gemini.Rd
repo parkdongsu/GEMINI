@@ -4,7 +4,7 @@
 \alias{gemini}
 \title{Get data}
 \usage{
-gemini(dbCount = 2)
+gemini(dbCount = 2, work_dir = getwd(), analysisFilePath)
 }
 \description{
 Run GEMINI

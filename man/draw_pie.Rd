@@ -4,7 +4,7 @@
 \alias{draw_pie}
 \title{Draw pie plot about CDM data with plotly}
 \usage{
-draw_pie(dbName, rds, rdsConcept)
+draw_pie(dbName, rds, rdsConcept, title)
 }
 \arguments{
 \item{dbName}{CDM database name}

@@ -15,10 +15,10 @@ draw_total_person(dbName, rds)
 Return bar plot.
 }
 \description{
-\code(draw_total_person) Draw bar plot about person count
+\code{draw_total_person} Draw bar plot about person count
 }
 \details{
-\code(draw_total_person) Draw bar plot about person count
+\code{draw_total_person} Draw bar plot about person count
 }
 \examples{
 \dontrun{
