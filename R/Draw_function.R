@@ -1,10 +1,10 @@
 #' Draw bar plot about CDM people count with plotly library
 #'
 #' @description
-#' \code(draw_total_person) Draw bar plot about person count
+#' \code{(draw_total_person) Draw bar plot about person count}
 #'
 #' @details
-#' \code(draw_total_person) Draw bar plot about person count
+#' \code{(draw_total_person) Draw bar plot about person count}
 #'
 #' @param dbName CDM database name
 #' @param rds loaded CDM data
@@ -672,7 +672,7 @@ draw_gap_histogram <- function (dbName, rds, rdsConcept){
     }
     plot <- layout(p = plot, xaxis = xform)
     # plot <- layout(p = plot, xaxis = axe)
-    return(plot)#ê·¸ëŒ€ë¡œ ì‚¬ìš©í•˜ê¸° ì–´ë ¤ì›€.
+    return(plot)#ê·¸ë?€ë¡? ?‚¬?š©?•˜ê¸? ?–´? ¤??€.
 }
 # draw_gap_histogram(dbName, rds, rdsConcept = "drug_eratbl_gap_days")
 
