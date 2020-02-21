@@ -1,10 +1,10 @@
 #' Draw bar plot about CDM people count with plotly library
 #'
 #' @description
-#' \code{(draw_total_person) Draw bar plot about person count}
+#' \code{draw_total_person} Draw bar plot about person count
 #'
 #' @details
-#' \code{(draw_total_person) Draw bar plot about person count}
+#' \code{draw_total_person} Draw bar plot about person count
 #'
 #' @param dbName CDM database name
 #' @param rds loaded CDM data
