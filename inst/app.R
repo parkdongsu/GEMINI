@@ -2,34 +2,17 @@ library(shiny)
 library(shinyjs)
 library(dplyr)
 library(DatabaseConnector)
+library(gemini)
+library(stringi)
 
 shinyApp(
   ui <- (navbarPage(
     id='tabs',
     title = 'GEMINI',
+
     tabPanel('gemini'
              ,useShinyjs()
-             ,includeCSS(file.path(.libPaths()[1],'GEMINI','www/gemini.css'))
-             
-             ,fluidRow(
-               column(4
-                      ,offset = 2
-                      ,align='left'
-                      ,h3(textOutput("workingDir"))
-               )
-             )
-             
-             ,fluidRow(
-               column(4
-                      ,offset = 2
-                      ,align='left'
-                      ,verbatimTextOutput(outputId = 'settingDir',placeholder = T)
-               )
-               ,column(2
-                       ,align='left'
-                       ,actionButton('setwd_button','click')
-               )
-             )
+             #,includeCSS(file.path(.libPaths()[1],'GEMINI','www/gemini.css'))
              
              ,fluidRow(
                column(5,offset = 1
@@ -51,11 +34,12 @@ shinyApp(
                          ,offset = 2
                          ,align='center'
                          ,uiOutput("sqltype")
-                         ,textInput("server_ip","Server IP",'',placeholder = '127.0.0.1')
+                         ,textInput("server_ip","Server IP",placeholder = '127.0.0.1')
                          ,textInput("dw_db","DW database",'',placeholder = 'cdmName.schema')
                          ,textInput("usr","USER ID",'',placeholder = 'db id')
                          ,passwordInput("pw","PASSWORD",'',placeholder = 'db password')
-                         ,actionButton('dbConnection_btn','Connetion')
+                         ,actionButton('actionBtn','Create Rds')
+                         ,downloadButton("dbConnection_btn", "Download")
                        )
                        ,column(
                          id='databaseConnect_log_ui'
@@ -100,6 +84,32 @@ shinyApp(
                                ,actionButton('geminiSet_button2','click')
                        )
                      )
+                     
+                     ,fluidRow(
+                       column(12
+                              ,align='left'
+                              ,offset = 1
+                              ,fileInput('defaultFile1'
+                                         ,label = NULL
+                                         ,multiple = F
+                                         ,accept = c('.zip')
+                                         )
+                              )
+                     )
+                     
+                     ,fluidRow(
+                       column(12
+                              ,align='left'
+                              ,offset = 1
+                              ,fileInput('defaultFile2'
+                                         ,label = NULL
+                                         ,multiple = F
+                                         ,accept = c('.zip')
+                              )
+                       )
+                     )
+                     
+                     
                      ,fluidRow(
                        column(6
                               ,offset = 1
@@ -123,44 +133,29 @@ shinyApp(
     
   )),
   
-  server <- (function(input, output) {
+  server <- (function(input, output,session) {
+    observe({
+      query <<- parseQueryString(session$clientData$url_search)
+      updateTextInput(session = session
+                      ,inputId = 'server_ip'
+                      ,value = query$server_ip
+                      )
+      updateTextInput(session = session
+                      ,inputId = 'dw_db'
+                      ,value = query$dw_db
+      )
+    })
     
     ##Main Page UI###########################################################################################
-    output$workingDir <- renderText({
-      "Working Directory : "
-    })
-    
-    observeEvent(input$setwd_button,{
-      tempWd <<- choose.dir()
-      if(is.na(tempWd)){
-        workDir <- 'C:'
-      }
-      else{
-        workDir <- tempWd
-      }
-      setwd(workDir)
-      output$settingDir <- renderText({ workDir })
-      
-    })
-    
-    output$workingDir <- renderText({
-      "Working Directory : "
-    })
     
     ## hide, show UI###########################################################################################
     observeEvent(input$rds_button,{
       shinyjs::hide('rds_button')
       shinyjs::hide('gemini_button')
-      shinyjs::hide('workingDir')
-      hide('settingDir')
-      hide('setwd_button')
     })
     observeEvent(input$gemini_button,{
       hide('rds_button')
       hide('gemini_button')
-      hide('workingDir')
-      hide('settingDir')
-      hide('setwd_button')
     })
     shinyjs::onclick("rds_button",
                      shinyjs::toggle(id = "rdsPage", anim = F))
@@ -169,16 +164,10 @@ shinyApp(
     observeEvent(input$back_button,{
       shinyjs::show('rds_button')
       shinyjs::show('gemini_button')
-      shinyjs::show('workingDir')
-      shinyjs::show('settingDir')
-      shinyjs::show('setwd_button')
     })
     observeEvent(input$back_button2,{
       shinyjs::show('rds_button')
       shinyjs::show('gemini_button')
-      shinyjs::show('workingDir')
-      shinyjs::show('settingDir')
-      shinyjs::show('setwd_button')
     })
     shinyjs::onclick("back_button",
                      shinyjs::toggle(id = "rdsPage", anim = F)
@@ -190,39 +179,6 @@ shinyApp(
     
     ##Gemini Page UI###########################################################################################
     
-    defalutFilePathValue <<- c()
-    
-    output$geminiSet_text1 <- renderText({
-      defalutFilePathValue[1] <<- 'C:/gemini/gemini_RDS/cdm1'
-    })
-    output$geminiSet_text2 <- renderText({
-      defalutFilePathValue[2] <<- 'C:/gemini/gemini_RDS/cdm2'
-    })
-    
-    
-    observeEvent(input$geminiSet_button1,{
-      targetFile <- choose.files()
-      if(identical(targetFile, character(0))){
-        targetFile <- ''
-      }
-      output$geminiSet_text1 <- renderText({
-        targetFile
-      })
-      defalutFilePathValue[1] <<- targetFile
-    })
-    
-    observeEvent(input$geminiSet_button2,{
-      targetFile <- choose.files()
-      if(identical(targetFile, character(0))){
-        targetFile <- ''
-      }
-      output$geminiSet_text2 <- renderText({
-        targetFile
-      })
-      defalutFilePathValue[2] <<- targetFile
-    })
-    
-    
     observeEvent(input$geminiSetAdd_button1, {
       insertUI(
         selector = "#geminiSetAdd_button1",
@@ -230,11 +186,11 @@ shinyApp(
         ui = tags$div(
           fluidRow(class=paste0('filePathClass',input$geminiSetAdd_button1),
                    column(8,align='left'
-                          ,verbatimTextOutput(paste0("txt", input$geminiSetAdd_button1),placeholder = T)
-                   )
-                   ,column(2
-                           ,align='left'
-                           ,actionButton(paste0('fileAddButton',input$geminiSetAdd_button1),'click')
+                          ,fileInput(paste0("file",input$geminiSetAdd_button1)
+                                     ,label = NULL
+                                     ,multiple = F
+                                     ,accept = c('.zip')
+                          )
                    )
                    ,column(2
                            ,align='left'
@@ -246,16 +202,6 @@ shinyApp(
       
     })
     filePathValue <<- data.frame(stringsAsFactors = F)
-    lapply(1:100, function(i) {
-      observeEvent(input[[paste0('fileAddButton', i)]],{
-        targetFile <- choose.files()
-        output[[paste0('txt', i)]] <- renderText({ targetFile })
-        
-        pathTempDataFrame <- data.frame("num" = i,"path" = targetFile,stringsAsFactors = F)
-        filePathValue <<- rbind(filePathValue,pathTempDataFrame)
-      })
-    }
-    )
     
     lapply(1:100, function(i) {
       observeEvent(input[[paste0('removeButton', i)]],{
@@ -268,10 +214,12 @@ shinyApp(
     )
     
     observeEvent(input$geminiAnalysis_button,{
+      defalutFilePathValue <- c(input$defaultFile1$datapath,input$defaultFile2$datapath)
+      name <<- c(input$defaultFile1$name,input$defaultFile2$name)
       analysisFilePath <<- c(defalutFilePathValue,filePathValue$path)
     })
     
-    
+
     ##Gemini Logic
     
     
@@ -300,30 +248,53 @@ shinyApp(
                                                                        ,user = input$usr
                                                                        ,password = input$pw
                                                                        ,schema = input$dw_db)
-      
       connection <<- DatabaseConnector::connect(connectionDetails = connectionDetails)
     })
     
-    
-    observeEvent(input$dbConnection_btn,{
+    observeEvent(input$actionBtn,{
       DBcon <<- DBconnection()
       if(exists("connection")==TRUE){
-        showModal(modalDialog(
-          title = "Messeage", "Database connection success!!", easyClose = T, footer=modalButton("cancel"), size = "l"
-        ))
+        tmpdir <<- tempdir()
+        setwd(tmpdir)
+        withProgress(value = 0
+                     ,message = 'creating Rds ...'
+                     ,{
+                       schema_name <<- stri_rand_strings(1, 10)
+                       gemini::create_rds(connectionDetails,getwd(),schema_name)
+                       incProgress(1,message = 'create Rds')
+                     })
       }
-      
-      gemini::create_rds(connectionDetails,getwd())
-      
+
     })
+    
+    observe({
+      flag <- input$actionBtn[[1]]
+      if(flag == 0){
+        disable('dbConnection_btn')
+      }
+      else{
+        enable('dbConnection_btn')
+      }
+    })
+    
+    output$dbConnection_btn <- downloadHandler(
+      filename = function() {
+        paste(input$dw_db, "zip", sep=".")
+      },
+      content = function(fname) {
+        setwd(file.path(tmpdir,'Gemini RDS',schema_name))
+        fs <- './'
+        zip(zipfile= fname, files=fs)
+      },
+      contentType = "application/zip"
+    )
     
     observeEvent(input$geminiAnalysis_button,{
-      
-      gemini::gemini(dbCount = length(analysisFilePath),work_dir = getwd(),analysisFilePath = analysisFilePath)
+      tmpdir <<- tempdir()
+      setwd(tmpdir)
+      gemini::gemini(dbCount = length(analysisFilePath),name = name,analysisFilePath = analysisFilePath)
       
     })
-    
     
   })
 )
-

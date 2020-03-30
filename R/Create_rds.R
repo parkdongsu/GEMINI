@@ -6,10 +6,9 @@
 #'
 #' @import DatabaseConnector
 #' @import SqlRender
-create_rds<- function(connectionDetails, work_dir){
+create_rds<- function(connectionDetails, work_dir,schema_name){
     cat("Set directory to create rds files.\n")
     connection <- DatabaseConnector::connect(connectionDetails)
-    schema_name <- connectionDetails$schema
     tryCatch(save_data(connection, work_dir, schema_name),
              error = function(e){
                  print(e)
@@ -19,20 +18,21 @@ create_rds<- function(connectionDetails, work_dir){
 
 save_data <- function(connection, workDir, schemaName){
     dir.create(file.path(workDir, "Gemini RDS"), showWarnings = FALSE)
-    workDir <- file.path(workDir, "Gemini RDS","/")
+    dir.create(file.path(workDir, "Gemini RDS",schemaName), showWarnings = FALSE)
+    workDir <- file.path(workDir, "Gemini RDS",schemaName,'/')
     table_name <- c('person','death','visit_occurrence','condition_occurrence','drug_exposure','drug_era')
     process_time <- sapply(table_name, function(x){extract_cdm(connection,workDir,x)})
 
     ################################################################################
     # File Saving
     ################################################################################
+    
+    # zip(zipfile = paste0(workDir,schemaName,".zip"),
+    #     files = paste0(workDir,list.files(path = workDir,pattern = "\\w*.rds$")), flag= c("-j", "-r"))
 
-    zip(zipfile = paste0(workDir,schemaName,".zip"),
-        files = paste0(workDir,list.files(path = workDir,pattern = "\\w*.rds$")), flag= c("-j", "-r"))
-
-    if(length(list.files(path = workDir, pattern = "\\w.zip$"))>0){
-        file.remove(paste0(workDir,list.files(path = workDir, pattern = "\\w.rds$")))
-    }
+    # if(length(list.files(path = file.path(workDir,schemaName), pattern = "\\w.zip$"))>0){
+    #     file.remove(paste0(workDir,list.files(path = workDir, pattern = "\\w.rds$")))
+    # }
     # time check
     cat(paste0("RDS files created.\nThis process takes ", sum(process_time), "s.\n"))
     ################################################################################
