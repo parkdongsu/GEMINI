@@ -25,7 +25,7 @@ gemini <- function(dbCount = 2,name = name,analysisFilePath,work_dir=getwd()){
         tmpPathIndex <- gregexpr('\\\\',analysisFilePath[i])[[1]]
         pickDb <- substr(analysisFilePath[i],tmpPathIndex[length(tmpPathIndex)]+1,nchar(analysisFilePath[i]))
         # dbName[i] <<- substr(pickDb, start = "1", stop=tail(unlist(gregexpr("\\.",pickDb)))[1]-1)
-        dbName[i] <<- name[i]
+        dbName[i] <<- gsub(pattern = '.zip','',name[i])
         unzip(zipfile = analysisFilePath[i],
               exdir = file.path(getwd(),dbName[i]),
               overwrite = T)
