@@ -9,7 +9,7 @@ shinyApp(
   ui <- (navbarPage(
     id='tabs',
     title = 'GEMINI',
-
+    
     tabPanel('gemini'
              ,useShinyjs()
              #,includeCSS(file.path(.libPaths()[1],'GEMINI','www/gemini.css'))
@@ -35,6 +35,7 @@ shinyApp(
                          ,align='center'
                          ,uiOutput("sqltype")
                          ,textInput("server_ip","Server IP",placeholder = '127.0.0.1')
+                         ,textInput("port","port",'',placeholder = '1433')
                          ,textInput("dw_db","DW database",'',placeholder = 'cdmName.schema')
                          ,textInput("usr","USER ID",'',placeholder = 'db id')
                          ,passwordInput("pw","PASSWORD",'',placeholder = 'db password')
@@ -93,8 +94,8 @@ shinyApp(
                                          ,label = NULL
                                          ,multiple = F
                                          ,accept = c('.zip')
-                                         )
                               )
+                       )
                      )
                      
                      ,fluidRow(
@@ -139,7 +140,7 @@ shinyApp(
       updateTextInput(session = session
                       ,inputId = 'server_ip'
                       ,value = query$server_ip
-                      )
+      )
       updateTextInput(session = session
                       ,inputId = 'dw_db'
                       ,value = query$dw_db
@@ -219,7 +220,7 @@ shinyApp(
       analysisFilePath <<- c(defalutFilePathValue,filePathValue$path)
     })
     
-
+    
     ##Gemini Logic
     
     
@@ -235,19 +236,34 @@ shinyApp(
     output$sqltype <- renderUI({
       selectInput("sqltype", "Select DBMS",
                   choices = c(
-                    "sql server" = "sql server"
+                    "sql server" = "sql server",
+                    "postgresql" = "postgresql"
                   )
       )
     })
     
-    
     # connecting to the Database
     DBconnection <- reactive({
-      connectionDetails <<- DatabaseConnector::createConnectionDetails(server = input$server_ip
-                                                                       ,dbms = input$sqltype
-                                                                       ,user = input$usr
-                                                                       ,password = input$pw
-                                                                       ,schema = input$dw_db)
+      if(input$sqltype == 'postgresql'){
+        
+        cdmDbName <- substr(input$dw_db,1,gregexpr(pattern = '\\.',input$dw_db)[[1]]-1)
+        cdmDbSchema <- substr(input$dw_db,gregexpr(pattern = '\\.',input$dw_db)[[1]]+1,nchar(input$dw_db))
+        
+        connectionDetails <<- DatabaseConnector::createConnectionDetails(server = paste0(input$server_ip,'/',cdmDbName)
+                                                                         ,dbms = input$sqltype
+                                                                         ,port = input$port
+                                                                         ,user = input$usr
+                                                                         ,password = input$pw
+                                                                         ,schema = cdmDbSchema)
+      }
+      else if(input$sqltype == 'sql server'){
+        connectionDetails <<- DatabaseConnector::createConnectionDetails(server = input$server_ip
+                                                                         ,dbms = input$sqltype
+                                                                         ,port = input$port
+                                                                         ,user = input$usr
+                                                                         ,password = input$pw
+                                                                         ,schema = input$dw_db)
+      }
       connection <<- DatabaseConnector::connect(connectionDetails = connectionDetails)
     })
     
@@ -264,7 +280,7 @@ shinyApp(
                        incProgress(1,message = 'create Rds')
                      })
       }
-
+      
     })
     
     observe({
