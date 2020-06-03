@@ -12,7 +12,7 @@ shinyApp(
     
     tabPanel('gemini'
              ,useShinyjs()
-             #,includeCSS(file.path(.libPaths()[1],'GEMINI','www/gemini.css'))
+             ,includeCSS(file.path(.libPaths()[1],'gemini','www/gemini.css'))
              
              ,fluidRow(
                column(5,offset = 1
