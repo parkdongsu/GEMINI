@@ -36,7 +36,7 @@ shinyApp(
                          ,uiOutput("sqltype")
                          ,textInput("server_ip","Server IP",placeholder = '127.0.0.1')
                          ,textInput("port","port",'',placeholder = '1433')
-                         ,textInput("dw_db","DW database",'',placeholder = 'cdmName.schema')
+                         ,textInput("dw_db","CDM database",'',placeholder = 'cdmName.schema')
                          ,textInput("usr","USER ID",'',placeholder = 'db id')
                          ,passwordInput("pw","PASSWORD",'',placeholder = 'db password')
                          ,actionButton('actionBtn','Create Rds')
