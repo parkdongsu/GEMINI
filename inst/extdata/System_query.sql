@@ -14,9 +14,12 @@ SELECT '@tbl_name' as attribute_name , count(*) as count,round(count(*)/CONVERT(
             FROM @cdm_database_schema.@tbl_name;
 
 --POSTGRESQL SYSTEM QUERY
-SELECT '@tbl_name' as attribute_name, count(*) AS count, round((count(*)/
-(SELECT sum(n_live_tup)
- FROM pg_stat_all_tables WHERE schemaname='@cdm_database_schema' AND (relname='person' OR relname='death' OR relname='visit_occurrence'
-													  OR relname='condition_occurrence' OR relname='drug_exposure'
-													  OR relname='drug_era')))*100,2) as ratio
+SELECT '@tbl_name' as attribute_name, count(*) AS count, ROUND(CAST((count(*)/  (
+	SELECT sum(reltuples)
+	FROM pg_class
+	WHERE (oid='@cdm_database_schema.person'::regclass
+	or oid='@cdm_database_schema.visit_occurrence'::regclass
+	or oid='@cdm_database_schema.condition_occurrence'::regclass
+	or oid='@cdm_database_schema.drug_exposure'::regclass
+	or oid='@cdm_database_schema.drug_era'::regclass)))*100 AS NUMERIC),2) as ratio
 FROM @cdm_database_schema.@tbl_name;

@@ -63,29 +63,7 @@ shinyApp(
                        column(4
                               ,offset = 1
                               ,tags$h3('Target File')))
-                     ,fluidRow(
-                       column(4
-                              ,offset = 1
-                              ,align='left'
-                              ,verbatimTextOutput(outputId = 'geminiSet_text1',placeholder = T)
-                       )
-                       ,column(6
-                               ,align='left'
-                               ,actionButton('geminiSet_button1','click')
-                       )
-                     )
-                     ,fluidRow(
-                       column(4
-                              ,offset = 1
-                              ,align='left'
-                              ,verbatimTextOutput(outputId = 'geminiSet_text2',placeholder = T)
-                       )
-                       ,column(6
-                               ,align='left'
-                               ,actionButton('geminiSet_button2','click')
-                       )
-                     )
-                     
+
                      ,fluidRow(
                        column(12
                               ,align='left'
