@@ -190,7 +190,7 @@ person_data <- function(connection){
     progress <- prg_plus(progressBar,progress)
 
     person_tbl <- list(persontbl_record, persontbl_person_ratio, persontbl_gender, persontbl_min_age, persontbl_max_age, persontbl_race, persontbl_ethnicity,
-                       persontbl_location, persontbl_location, persontbl_provider)
+                       persontbl_location, persontbl_provider, persontbl_care_site)
     #error part
     return(person_tbl)
     close(progress_bar)
