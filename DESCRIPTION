@@ -9,9 +9,7 @@ Imports:
     plotly,
     knitr,
     ggplot2,
-    rmarkdown,
-    shiny,
-    shinyjs
+    rmarkdown
 suggests:
     devtools,
     roxygen2
