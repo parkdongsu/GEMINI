@@ -286,7 +286,7 @@ shinyApp(
     observeEvent(input$geminiAnalysis_button,{
       tmpdir <<- tempdir()
       setwd(tmpdir)
-      gemini::gemini(dbCount = length(analysisFilePath),name = name,analysisFilePath = analysisFilePath)
+      gemini::gemini(name = name, analysisFilePath = analysisFilePath)
       
     })
     
