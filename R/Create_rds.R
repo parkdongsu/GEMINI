@@ -15,7 +15,26 @@ create_rds<- function(connectionDetails, work_dir,schema_name){
                  disconnect(connection)
              })
 }
-
+get_csv <- function(file_name){
+  dir.create('rds_csv')
+  unzip(zipfile = file_name, exdir = "rds_csv")
+  rds_files <- list.files(path="./rds_csv", pattern = NULL)
+  setwd("./rds_csv")
+  for (rds in rds_files ){
+    
+    x = readRDS(file = rds)
+    print(x)
+    rds_csv = strsplit(rds, split=".rds")
+    rds_csv = paste0(rds_csv, ".csv")
+    write.csv(
+      x,              # 파일에 저장할 데이터 프레임 또는 행렬
+      file=rds_csv,        # 데이터를 저장할 파일명
+      row.names=TRUE  # TRUE면 행 이름을 CSV 파일에 포함하여 저장한다.
+    )
+  }
+  file.remove(rds_files)
+  setwd("../")
+}
 save_data <- function(connection, workDir, schemaName){
     dir.create(file.path(workDir, "Gemini RDS"), showWarnings = FALSE)
     dir.create(file.path(workDir, "Gemini RDS",schemaName), showWarnings = FALSE)
@@ -39,6 +58,7 @@ save_data <- function(connection, workDir, schemaName){
     # Disconnect DB
     ################################################################################
     DatabaseConnector::disconnect(connection)
+    get_csv(paste0(workDir,schemaName,".zip"))
 }
 
 
