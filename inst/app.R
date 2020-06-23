@@ -41,13 +41,7 @@ shinyApp(
                          ,passwordInput("pw","PASSWORD",'',placeholder = 'db password')
                          ,actionButton('actionBtn','Create Rds')
                          ,downloadButton("dbConnection_btn", "Download")
-                       )
-                       ,column(
-                         id='databaseConnect_log_ui'
-                         ,4
-                         ,align='center'
-                         ,verbatimTextOutput(outputId = 'createRdsLog',placeholder = T)
-                         
+                         ,downloadButton("csv_download", "Download csv file")
                        )
                      )
                      
@@ -198,14 +192,6 @@ shinyApp(
       analysisFilePath <<- c(defalutFilePathValue,filePathValue$path)
     })
     
-    
-    ##Gemini Logic
-    
-    
-    ##Create RDS File UI
-    output$createRdsLog <- renderText({
-      'my Log!'
-    })
     ##Create RDS File Logic
     
     
@@ -277,7 +263,29 @@ shinyApp(
       },
       content = function(fname) {
         setwd(file.path(tmpdir,'Gemini RDS',schema_name))
-        fs <- './'
+        fs <- list.files(path = getwd(),pattern = '*.rds')
+        zip(zipfile= fname, files=fs)
+      },
+      contentType = "application/zip"
+    )
+    
+    observe({
+      flag <- input$actionBtn[[1]]
+      if(flag == 0){
+        disable('csv_download')
+      }
+      else{
+        enable('csv_download')
+      }
+    })
+    
+    output$csv_download <- downloadHandler(
+      filename = function() {
+        paste(paste0(input$dw_db,'_csv'), "zip", sep=".")
+      },
+      content = function(fname) {
+        setwd(file.path(tmpdir,'Gemini RDS',schema_name))
+        fs <- list.files(path = getwd(),pattern = '*.csv')
         zip(zipfile= fname, files=fs)
       },
       contentType = "application/zip"

@@ -15,25 +15,14 @@ create_rds<- function(connectionDetails, work_dir,schema_name){
                  disconnect(connection)
              })
 }
-get_csv <- function(file_name){
-  dir.create('rds_csv')
-  unzip(zipfile = file_name, exdir = "rds_csv")
-  rds_files <- list.files(path="./rds_csv", pattern = NULL)
-  setwd("./rds_csv")
-  for (rds in rds_files ){
-    
-    x = readRDS(file = rds)
-    print(x)
-    rds_csv = strsplit(rds, split=".rds")
-    rds_csv = paste0(rds_csv, ".csv")
-    write.csv(
-      x,              # 파일에 저장할 데이터 프레임 또는 행렬
-      file=rds_csv,        # 데이터를 저장할 파일명
-      row.names=TRUE  # TRUE면 행 이름을 CSV 파일에 포함하여 저장한다.
-    )
+get_csv <- function(workDir){
+  rdsFileName <- list.files(path = workDir,pattern = '.rds')
+  rdsFilePath <- paste0(workDir,rdsFileName)
+  for(i in 1:length(rdsFilePath)){
+    filename <- substr(x = rdsFileName[i],start = 1,gregexpr(pattern = '\\.',text = rdsFileName[i])[[1]]-1)
+    filename <- paste0(workDir,filename,'.csv')
+    write.csv(x = readRDS(file = rdsFilePath[i]),file = filename,row.names = T)
   }
-  file.remove(rds_files)
-  setwd("../")
 }
 save_data <- function(connection, workDir, schemaName){
     dir.create(file.path(workDir, "Gemini RDS"), showWarnings = FALSE)
@@ -41,7 +30,8 @@ save_data <- function(connection, workDir, schemaName){
     workDir <- file.path(workDir, "Gemini RDS",schemaName,'/')
     table_name <- c('person','death','visit_occurrence','condition_occurrence','drug_exposure','drug_era')
     process_time <- sapply(table_name, function(x){extract_cdm(connection,workDir,x)})
-
+    get_csv(workDir = workDir)
+    
     ################################################################################
     # File Saving
     ################################################################################
@@ -58,7 +48,7 @@ save_data <- function(connection, workDir, schemaName){
     # Disconnect DB
     ################################################################################
     DatabaseConnector::disconnect(connection)
-    get_csv(paste0(workDir,schemaName,".zip"))
+    
 }
 
 
