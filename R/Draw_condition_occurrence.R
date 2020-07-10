@@ -44,7 +44,7 @@ dev.off() # It protect previous jpg file to not change current jpg image.
 # condition_occurrence end_date
 ################################################################################
 # 2999, NA Problem issue
-if (length(std_conditiontbl_end[is.na(std_conditiontbl_end$visitYear)]) != 0) {
+if (isFALSE(is.na(std_conditiontbl_end$visitYear)) == F) {
     std_conditiontbl_na_end <<- std_conditiontbl_end[is.na(std_conditiontbl_end$visitYear), 2]
     temp_std_s <<- 2
 } else {
@@ -58,7 +58,7 @@ if (length(std_conditiontbl_end[std_conditiontbl_end$visitYear == 2999, ]$visitY
     std_conditiontbl_over_end <<- NA
     temp_std_e <<- nrow(std_conditiontbl_end)
 }
-if (length(tar_conditiontbl_end[is.na(tar_conditiontbl_end$visitYear)]) != 0) {
+if (isFALSE(is.na(tar_conditiontbl_end$visitYear)) == F) {
     tar_conditiontbl_na_end <<- tar_conditiontbl_end[is.na(tar_conditiontbl_end$visitYear), 2]
     temp_tar_s <<- 2
 } else {
