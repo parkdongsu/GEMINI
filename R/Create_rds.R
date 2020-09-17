@@ -6,8 +6,8 @@
 #'
 #' @import DatabaseConnector
 #' @import SqlRender
-create_rds_env<- function(){
-	connectionDetails<-DatabaseConnector::createConnectionDetails(server = Sys.getenv("SERVER_IP")
+create_rds_env<- function(work_dir='.'){
+    connectionDetails<-DatabaseConnector::createConnectionDetails(server = Sys.getenv("SERVER_IP")
                                                                        ,dbms = Sys.getenv("DBMS")
                                                                        ,user = Sys.getenv("USER")
                                                                        ,password = Sys.getenv("PASSWORD")
