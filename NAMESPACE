@@ -2,6 +2,7 @@
 
 export(condition_occurrence_data)
 export(create_rds)
+export(create_rds_env)
 export(death_data)
 export(drug_era_data)
 export(drug_exposure_data)
