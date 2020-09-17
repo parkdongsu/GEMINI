@@ -7,11 +7,11 @@
 #' @import DatabaseConnector
 #' @import SqlRender
 create_rds_env<- function(){
-	connectionDetails<-DatabaseConnector::createConnectionDetails(server = sys.getenv("SERVER_IP")
-                                                                       ,dbms = sys.getenv("DBMS")
-                                                                       ,user = sys.getenv("USER")
-                                                                       ,password = sys.getenv("PASSWORD")
-                                                                       ,schema = sys.getenv("SCHEMA"))
+	connectionDetails<-DatabaseConnector::createConnectionDetails(server = Sys.getenv("SERVER_IP")
+                                                                       ,dbms = Sys.getenv("DBMS")
+                                                                       ,user = Sys.getenv("USER")
+                                                                       ,password = Sys.getenv("PASSWORD")
+                                                                       ,schema = Sys.getenv("SCHEMA"))
     connection <- DatabaseConnector::connect(connectionDetails)
     schema_name <- connectionDetails$schema
     tryCatch(save_data(connection, work_dir, schema_name),
