@@ -6,6 +6,20 @@
 #'
 #' @import DatabaseConnector
 #' @import SqlRender
+create_rds_env<- function(work_dir="."){
+    connectionDetails<-DatabaseConnector::createConnectionDetails(server = Sys.getenv("SERVER_IP")
+                                                                  ,dbms = Sys.getenv("DBMS")
+                                                                  ,user = Sys.getenv("USER")
+                                                                  ,password = Sys.getenv("PASSWORD")
+                                                                  ,schema = Sys.getenv("SCHEMA"))
+    connection <- DatabaseConnector::connect(connectionDetails)
+    schema_name <- connectionDetails$schema
+    tryCatch(save_data(connection, work_dir, schema_name),
+             error = function(e){
+                 print(e)
+                 disconnect(connection)
+             })
+}
 create_rds<- function(connectionDetails, work_dir,schema_name){
     cat("Set directory to create rds files.\n")
     connection <- DatabaseConnector::connect(connectionDetails)
