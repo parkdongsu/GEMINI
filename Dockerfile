@@ -43,6 +43,6 @@ RUN R -e "install.packages('dplyr')"
 RUN R -e "install.packages('stringi')"
 RUN R -e "install.packages('openssl')"
 RUN R -e "install.packages('jose')"
-RUN R -e "devtools::install_github('parkdongsu/gemini', ref='g_temp')"
+RUN R -e "devtools::install_github('parkdongsu/gemini', ref='geminiUI')"
 RUN mkdir /root/gemini
 RUN wget https://raw.githubusercontent.com/embed-Rayn/GEMINI/master/R/create_rds_script.R
