@@ -1,10 +1,10 @@
 library(SqlRender)
 library(DatabaseConnector)
-connectionDetails<-DatabaseConnector::createConnectionDetails(server = Sys.getenv("SERVER_IP")
-                                                              ,dbms = Sys.getenv("DBMS")
-                                                              ,user = Sys.getenv("USER")
-                                                              ,password = Sys.getenv("PASSWORD")
-                                                              ,schema = Sys.getenv("SCHEMA"))
+connectionDetails<-DatabaseConnector::createConnectionDetails(server = Sys.getenv("CDM_URL")
+                                                                ,dbms = "postgresql"
+                                                                ,user = Sys.getenv("CDM_USER")
+                                                                ,password = Sys.getenv("CDM_PW")
+                                                                ,schema = Sys.getenv("CDM_DATABASE"))
 connection <- DatabaseConnector::connect(connectionDetails)
 schema_name <- connectionDetails$schema
 queryRender <- function(sqlquery, tblName = "", AttName = "", comparedAttName = "", startName = "", endName = "", conn) {
