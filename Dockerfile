@@ -46,4 +46,4 @@ RUN R -e "install.packages('jose')"
 RUN R -e "devtools::install_github('parkdongsu/gemini', ref='g_temp')"
 RUN mkdir /root/gemini
 RUN wget https://raw.githubusercontent.com/parkdongsu/GEMINI/docker_env/R/create_rds_script.R
-CMD ["Rscript" "create_rds_script.R"]
+CMD ["/bin/bash", "-c", "Rscript", "create_rds_script.R"]
