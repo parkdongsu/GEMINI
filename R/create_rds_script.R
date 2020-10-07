@@ -10,9 +10,7 @@ connectionDetails <- DatabaseConnector::createConnectionDetails(dbms = dbms,
                                                                 user = user,
                                                                 password = pw,
                                                                 schema= Sys.getenv("CDM_SCHEMA")
-                                                                )
-connection <- DatabaseConnector::connect(connectionDetails)
-schema_name <- connectionDetails$schema
+)
 queryRender <- function(sqlquery, tblName = "", AttName = "", comparedAttName = "", startName = "", endName = "", conn) {
   # Unset parameter call warning message
   options(warn = -1)
@@ -764,18 +762,7 @@ drug_era_data <- function(connection){
   close(progressBar)
   return(drug_eratbl)
 }
-create_rds_env<- function(work_dir="/root/gemini"){
-  dbms <- "postgresql"
-  user <- Sys.getenv("CDM_USER")
-  pw <- Sys.getenv("CDM_PW")
-  port <- '5432'
-  server <- paste0("jdbc:postgresql://", Sys.getenv("CDM_URL"),":",port, "/", Sys.getenv("CDM_DATABASE"))
-  connectionDetails <- DatabaseConnector::createConnectionDetails(dbms = dbms,
-                                                                  connectionString = server,
-                                                                  user = user,
-                                                                  password = pw,
-                                                                  schema= Sys.getenv("CDM_SCHEMA")
-                                                                  )
+create_rds_env<- function(work_dir="/root/gemini", connectionDetails){
   connection <- DatabaseConnector::connect(connectionDetails)
   schema_name <- connectionDetails$schema
   tryCatch(save_data(connection, work_dir, schema_name),
@@ -910,5 +897,5 @@ rds_maker <- function(workDir,tbl,tableName){
   )
   mapply(saveRDS, object = data_list, file = rds_path)
 }
-person_data(connection)
-create_rds_env()
+#person_data(connection)
+create_rds_env(connectionDetails=connectionDetails)
