@@ -764,8 +764,8 @@ create_rds_env<- function(work_dir="/root/gemini"){
   dbms <- "postgresql"
   user <- Sys.getenv("CDM_USER")
   pw <- Sys.getenv("CDM_PW")
-  server <- paste0("jdbc:postgresql://", Sys.getenv("CDM_URL"),":",port, "/", Sys.getenv("CDM_DATABASE"))
   port <- '5433'
+  server <- paste0("jdbc:postgresql://", Sys.getenv("CDM_URL"),":",port, "/", Sys.getenv("CDM_DATABASE"))
   connectionDetails <- DatabaseConnector::createConnectionDetails(dbms = dbms,
                                                                   connectionString = server,
                                                                   user = user,
