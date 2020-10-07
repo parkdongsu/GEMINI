@@ -761,12 +761,17 @@ drug_era_data <- function(connection){
   return(drug_eratbl)
 }
 create_rds_env<- function(work_dir="/root/gemini"){
-  connectionDetails<-DatabaseConnector::createConnectionDetails(server = Sys.getenv("CDM_URL")
-                                                                ,dbms = "postgresql"
-                                                                ,user = Sys.getenv("CDM_USER")
-                                                                ,password = Sys.getenv("CDM_PW")
-                                                                ,schema = Sys.getenv("CDM_DATABASE")
-                                                                ,port=5432)
+  dbms <- "postgresql"
+  user <- Sys.getenv("CDM_USER")
+  pw <- Sys.getenv("CDM_PW")
+  server <- paste0("jdbc:postgresql://", Sys.getenv("CDM_URL"),":",port, "/", Sys.getenv("CDM_DATABASE"))
+  port <- '5432'
+  connectionDetails <- DatabaseConnector::createConnectionDetails(dbms = dbms,
+                                                                  connectionString = server,
+                                                                  user = user,
+                                                                  password = pw
+                                                                  schema= Sys.getenv("CDM_SCHEMA")
+                                                                  )
   connection <- DatabaseConnector::connect(connectionDetails)
   schema_name <- connectionDetails$schema
   tryCatch(save_data(connection, work_dir, schema_name),
