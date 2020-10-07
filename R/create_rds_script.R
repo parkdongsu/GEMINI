@@ -3,8 +3,7 @@ library(DatabaseConnector)
 dbms <- "postgresql"
 user <- Sys.getenv("CDM_USER")
 pw <- Sys.getenv("CDM_PW")
-port <- '5432'
-server <- paste0("jdbc:postgresql://", Sys.getenv("CDM_URL"),":",port, "/", Sys.getenv("CDM_DATABASE"))
+server <- paste0("jdbc:postgresql://", Sys.getenv("CDM_URL"), "/", Sys.getenv("CDM_DATABASE"))
 connectionDetails <- DatabaseConnector::createConnectionDetails(dbms = dbms,
                                                                 connectionString = server,
                                                                 user = user,
