@@ -4,7 +4,9 @@ connectionDetails<-DatabaseConnector::createConnectionDetails(server = Sys.geten
                                                                 ,dbms = "postgresql"
                                                                 ,user = Sys.getenv("CDM_USER")
                                                                 ,password = Sys.getenv("CDM_PW")
-                                                                ,schema = Sys.getenv("CDM_DATABASE"))
+                                                                ,schema = Sys.getenv("CDM_DATABASE")
+                                                                ,port=5432
+                                                              )
 connection <- DatabaseConnector::connect(connectionDetails)
 schema_name <- connectionDetails$schema
 queryRender <- function(sqlquery, tblName = "", AttName = "", comparedAttName = "", startName = "", endName = "", conn) {
@@ -763,7 +765,8 @@ create_rds_env<- function(work_dir="/root/gemini"){
                                                                 ,dbms = "postgresql"
                                                                 ,user = Sys.getenv("CDM_USER")
                                                                 ,password = Sys.getenv("CDM_PW")
-                                                                ,schema = Sys.getenv("CDM_DATABASE"))
+                                                                ,schema = Sys.getenv("CDM_DATABASE")
+                                                                ,port=5432)
   connection <- DatabaseConnector::connect(connectionDetails)
   schema_name <- connectionDetails$schema
   tryCatch(save_data(connection, work_dir, schema_name),
