@@ -1,7 +1,7 @@
 library(SqlRender)
 library(DatabaseConnector)
 connectionDetails<-DatabaseConnector::createConnectionDetails(server = Sys.getenv("CDM_URL")
-                                                                ,dbms = "sql server"
+                                                                ,dbms = "postgresql"
                                                                 ,user = Sys.getenv("CDM_USER")
                                                                 ,password = Sys.getenv("CDM_PW")
                                                                 ,schema = Sys.getenv("CDM_DATABASE"))
@@ -760,7 +760,7 @@ drug_era_data <- function(connection){
 }
 create_rds_env<- function(work_dir="/root/gemini"){
   connectionDetails<-DatabaseConnector::createConnectionDetails(server = Sys.getenv("CDM_URL")
-                                                                ,dbms = "sql server"
+                                                                ,dbms = "postgresql"
                                                                 ,user = Sys.getenv("CDM_USER")
                                                                 ,password = Sys.getenv("CDM_PW")
                                                                 ,schema = Sys.getenv("CDM_DATABASE"))
