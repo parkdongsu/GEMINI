@@ -30,7 +30,7 @@ DRUG ERA
 ```R
 install.packages("devtools")
 library(devtools)
-install_github("https://github.com/ABMI/GEMINI.git", ref="g_temp")
+install_github("https://github.com/ABMI/GEMINI.git", ref="geminiUI")
 library(gemini)
 ```
 
